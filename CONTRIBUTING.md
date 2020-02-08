@@ -1,4 +1,5 @@
 ## Default rules: https://chris.beams.io/posts/git-commit/
+## Project-specific rules:
 1. Use ```git merge```, not ```git rebase```
 2. Push only when finished and tested whole block
 3. If u want to merge to ```master``` or other **not your** branch, make pull request
