@@ -1,0 +1,185 @@
+#for clang-format 8
+BasedOnStyle: Google
+
+---
+Language: Cpp
+
+#DisableFormat: false
+
+#AccessModifierOffset: -1
+#AlignAfterOpenBracket: Align
+AlignEscapedNewlines: DontAlign
+AlignTrailingComments: false
+#? not present in v8, in despite of BinPackArguments
+#AllowAllArgumentsOnNextLine: true
+#? not present in v8, has no effect if ConstructorInitializerAllOnOneLineOrOnePerLine is false
+#AllowAllConstructorInitializersOnNextLine: true
+#? in despite of BinPackParameters
+AllowAllParametersOfDeclarationOnNextLine: false
+#AllowShortBlocksOnASingleLine: false
+#AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+#AllowShortIfStatementsOnASingleLine: true
+#? not present in v8
+#AllowShortLambdasOnASingleLine: Empty
+#AllowShortLoopsOnASingleLine: true
+AlwaysBreakBeforeMultilineStrings: false
+#AlwaysBreakTemplateDeclarations: Yes
+#? function call
+BinPackArguments: false
+#? function declaration
+BinPackParameters: false
+#BreakBeforeBraces: Attach
+#? ignored if BreakBeforeBraces is not Custom
+BraceWrapping:
+  #? not present in v8
+  #AfterCaseLabel: false
+  #AfterClass: false
+  #? bool in v8
+  AfterControlStatement: false
+  #AfterEnum: false
+  #AfterFunction: false
+  #AfterNamespace: false
+  #? = AfterControlStatement
+  #AfterObjCDeclaration: false
+  #AfterStruct: false
+  #AfterUnion: false
+  #AfterExternBlock: false
+  #BeforeCatch : false
+  #BeforeElse : false
+#BreakAfterJavaFieldAnnotations: false
+#BreakBeforeBinaryOperators: None
+#? not present in v8
+#BreakBeforeInheritanceComma: false
+#BreakBeforeTernaryOperators: true
+#BreakConstructorInitializers: BeforeColon
+#? not present in v8
+#BreakConstructorInitializersBeforeComma: false
+#BreakInheritanceList: BeforeColon
+BreakStringLiterals: false
+#ColumnLimit: 1000
+#ConstructorInitializerAllOnOneLineOrOnePerLine: true
+#ConstructorInitializerIndentWidth: 4
+#ContinuationIndentWidth: 4
+#Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+#? works only for namespaces with > 1 line
+#FixNamespaceComments: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '^"pch.h"$'
+    Priority:        -100
+  - Regex:           '^<.*\.h>$'
+    Priority:        1
+#  - Regex:           '^<ext/.*\.h>'
+#    Priority:        2
+  - Regex:           '^<.*>$'
+    Priority:        2
+  - Regex:           '.*'
+    Priority:        3
+#IndentCaseLabels: true
+#IndentWidth: 2
+KeepEmptyLinesAtTheStartOfBlocks: true
+#MaxEmptyLinesToKeep: 1
+#! Penalties:
+#PenaltyBreakTemplateDeclaration: 0
+PenaltyBreakBeforeFirstCallParameter: 2
+PenaltyBreakAssignment: 1
+#PenaltyBreakFirstLessLess: 120
+PenaltyExcessCharacter: 1000
+#PenaltyBreakComment: 1000000
+PenaltyReturnTypeOnItsOwnLine: 1000005
+#? don't work even with PenaltyExcessCharacter: 1
+#PenaltyBreakString: 1000010
+#! Penalties
+PointerAlignment: Right
+#? it doesn't cut comments, but inserts a space after slashes, so true
+#ReflowComments: true
+#SortIncludes: true
+#SpaceBeforeCpp11BracedList: false
+#Standard: Auto
+#TabWidth: 8
+#UseTab: Never
+
+---
+
+Language: JavaScript
+
+DisableFormat: false
+
+#AlignAfterOpenBracket: Align
+AlignEscapedNewlines: DontAlign
+AlignTrailingComments: false
+#? not present in v8, in despite of BinPackArguments
+#AllowAllArgumentsOnNextLine: true
+#? not present in v8, has no effect if ConstructorInitializerAllOnOneLineOrOnePerLine is false
+#AllowAllConstructorInitializersOnNextLine: true
+#? in despite of BinPackParameters
+AllowAllParametersOfDeclarationOnNextLine: false
+#AllowShortBlocksOnASingleLine: false
+#AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+#AllowShortIfStatementsOnASingleLine: true
+#? not present in v8
+#AllowShortLambdasOnASingleLine: Empty
+#AllowShortLoopsOnASingleLine: true
+AlwaysBreakBeforeMultilineStrings: false
+#? function call
+BinPackArguments: false
+#? function declaration
+BinPackParameters: false
+#BreakBeforeBraces: Attach
+#? ignored if BreakBeforeBraces is not Custom
+BraceWrapping:
+  #? not present in v8
+  #AfterCaseLabel: false
+  #AfterClass: false
+  #? bool in v8
+  AfterControlStatement: false
+  #AfterEnum: false
+  #AfterFunction: false
+  #AfterNamespace: false
+  #? = AfterControlStatement
+  #AfterObjCDeclaration: false
+  #AfterStruct: false
+  #AfterUnion: false
+  #AfterExternBlock: false
+  #BeforeCatch : false
+  #BeforeElse : false
+#BreakAfterJavaFieldAnnotations: false
+#BreakBeforeBinaryOperators: None
+#? not present in v8
+#BreakBeforeInheritanceComma: false
+#BreakBeforeTernaryOperators: true
+#BreakConstructorInitializers: BeforeColon
+#? not present in v8
+#BreakConstructorInitializersBeforeComma: false
+#BreakInheritanceList: BeforeColon
+BreakStringLiterals: false
+#ColumnLimit: 1000
+#ConstructorInitializerAllOnOneLineOrOnePerLine: true
+#ConstructorInitializerIndentWidth: 4
+#ContinuationIndentWidth: 4
+#? works only for namespaces with > 1 line
+#IndentCaseLabels: true
+#IndentWidth: 2
+JavaScriptQuotes: Double
+JavaScriptWrapImports: false
+KeepEmptyLinesAtTheStartOfBlocks: true
+#MaxEmptyLinesToKeep: 1
+#! Penalties:
+#PenaltyBreakTemplateDeclaration: 0
+PenaltyBreakBeforeFirstCallParameter: 2
+PenaltyBreakAssignment: 1
+#PenaltyBreakFirstLessLess: 120
+PenaltyExcessCharacter: 1000
+#PenaltyBreakComment: 1000000
+PenaltyReturnTypeOnItsOwnLine: 1000005
+#? don't work even with PenaltyExcessCharacter: 1
+#PenaltyBreakString: 1000010
+#! Penalties
+#? it doesn't cut comments, but inserts a space after slashes, so true
+#ReflowComments: true
+#TabWidth: 8
+#UseTab: Never
+...
