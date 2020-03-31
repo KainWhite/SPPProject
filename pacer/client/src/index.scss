@@ -4,3 +4,14 @@ body {
   background-color: rgb(240, 240, 240);
   font-family: 'Montserrat', sans-serif;
 }
+
+.ModalContainer {
+  width: 400px;
+  height: 650px;
+  background-color: rgb(52, 123, 141);
+}
+
+.CloseButton {
+  float: right;
+  cursor: pointer;
+}
