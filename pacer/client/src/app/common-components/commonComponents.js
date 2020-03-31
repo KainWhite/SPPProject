@@ -2,37 +2,37 @@
 import React from 'react';
 
 class ModalContainer extends React.Component {
-    // constructor(props) {
-    //   super(props);
-    // }
-
-    render() {
-      return (
-        <div className="ModalContainer">
-          <CloseButton onClose={this.props.onClose}/>
-          {this.props.children}
-        </div>
-      );
-    }
-}
-
-class CloseButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.props.onClose();
-  }
-
   render() {
     return (
-      <div className="CloseButton" onClick={this.handleClick}>
-        ❌
+      <div className="ModalContainer">
+        <CloseButton onClose={this.props.onClose}/>
+        {this.props.children}
       </div>
     );
   }
 }
 
-export {ModalContainer}
+class CloseButton extends React.Component {
+  render() {
+    return (
+      <div className="CloseButton" onClick={this.props.onClose}>
+        <span>❌</span>
+      </div>
+    );
+  }
+}
+
+// Maybe rename?
+class FormElement extends React.Component {
+  render() {
+    return (
+      <label>
+          {this.props.title}
+          <br />
+          <input name={this.props.name} type={this.props.type} onChange={this.props.onChange}/>
+      </label>
+    );
+  }
+}
+
+export {ModalContainer, FormElement}
