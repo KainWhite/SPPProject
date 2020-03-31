@@ -33,6 +33,7 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2"
   }
 }
