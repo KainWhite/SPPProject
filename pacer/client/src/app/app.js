@@ -11,11 +11,12 @@ class App extends React.Component {
     super(props);
 
     this.state = {  authorized: AuthorizedEnum.unauthorized
-                  , registering: false
+                    // Display status of modal windows is an app state
+                  , showLogin: false
+                  , showRegister: false              
                   , };
 
     this.handleSwitchToRegister = this.handleSwitchToRegister.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   getAuthorizedState() {
@@ -24,24 +25,24 @@ class App extends React.Component {
   }
   
   handleSwitchToRegister() {
-    this.setState({registering: true});
-  }
-
-  // TODO DAY->ANY: Make modals close adequately
-  handleCloseModal() {
-    alert("I was closed :(");
+    this.setState({  showRegister: true
+                   , showLogin: false});                     
   }
 
   render() {
-    if (this.state.authorized === AuthorizedEnum.authorized) {
-      return <DefaultApp/>;
-    } else {
-      const isRegistering = this.state.registering;
-      return (isRegistering ? 
-          <RegisterScreen onClose={this.handleCloseModal}/> 
-        : <LoginScreen onSwitchToRegister={this.handleSwitchToRegister} onClose={this.handleCloseModal}/>
-      );
-    }
+    return (
+      // Just a container, put everything here
+      <>
+        
+        {/* TEMP - example of showing login window (do the same in side menu) */}
+        <button onClick={() => this.setState({showLogin: true})}>Show login window</button>
+
+        {/* Rendering modals: */}
+        {this.state.showLogin && <LoginScreen onSwitchToRegister={this.handleSwitchToRegister} onClose={() => this.setState({showLogin: false})}/>}
+        {this.state.showRegister && <RegisterScreen onClose={() => this.setState({showRegister: false})}/>}
+
+      </>
+    );
   }
 }
 

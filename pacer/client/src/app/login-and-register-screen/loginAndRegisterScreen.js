@@ -10,7 +10,7 @@ class LoginScreen extends React.Component{
   }
 
   handleSubmit(event) {
-    // ...
+    // Back-end calls here
     event.preventDefault();
   }
 
@@ -39,7 +39,7 @@ class RegisterScreen extends React.Component{
   }
 
   handleSubmit(event) {
-    // ...
+    // Back-end calls here
     event.preventDefault();
   }
 
