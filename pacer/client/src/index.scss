@@ -3,15 +3,86 @@
 body {
   background-color: rgb(240, 240, 240);
   font-family: 'Montserrat', sans-serif;
+  margin: 0 auto;
 }
 
-.ModalContainer {
-  width: 400px;
-  height: 650px;
+.ModalWindow {
+  min-width: 300px;
   background-color: rgb(52, 123, 141);
+  z-index: 1;
+  overflow: auto;
+}
+
+.ModalWindowContainer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ModalWindowContentWrapper {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+}
+
+.Aligner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AlignedItem {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .CloseButton {
-  float: right;
   cursor: pointer;
+}
+
+.CloseButtonWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.AboutTextArea {
+  resize: none;
+}
+
+.FormAlignedItem {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.FormAlignedItem:last-child {
+  margin-bottom: 0px;
+}
+
+.FormAlignedItem:first-child {
+  margin-top: 0px;
+}
+
+.FormSpan {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.FormInput {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.FormTextArea {
+  resize: none;
+  min-height: 100px;
 }

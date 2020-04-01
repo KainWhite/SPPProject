@@ -1,18 +1,13 @@
 import React from 'react';
 
-import {ModalContainer} from '../common-components/commonComponents';
+import {ModalWindow} from '../common-components/commonComponents';
 import {FormElement} from '../common-components/commonComponents';
 
 class LoginScreen extends React.Component{
   constructor(props) {
     super(props);
-    //this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  // handleClose() {
-  //   alert("Yep, i can close :)");
-  // }
 
   handleSubmit(event) {
     // ...
@@ -21,17 +16,17 @@ class LoginScreen extends React.Component{
 
   render() {
     return (
-      <ModalContainer onClose={this.props.onClose}>
-      <h2>Log in</h2>
-      <form onSubmit={this.handleSubmit}>
-        <FormElement title="Email:" name="email" type="email"/> <br />
-        <FormElement title="Password:" name="password" type="password"/> <br />
-        <input type="submit" value="Log in"/>
+      <ModalWindow onClose={this.props.onClose}>
+      <h2 className="AlignedItem">Log in</h2>
+      <form className="AlignedItem Aligner" onSubmit={this.handleSubmit}>
+        <FormElement title="Email:" name="email" type="email"/>
+        <FormElement title="Password:" name="password" type="password"/>
+        <input className="FormAlignedItem" type="submit" value="Log in"/>
       </form>
-      <button onClick={this.props.onSwitchToRegister}>
-        Register
+      <button className="AlignedItem" onClick={this.props.onSwitchToRegister}>
+          Register
       </button>
-      </ModalContainer>
+      </ModalWindow>
     );
   }
 }
@@ -39,14 +34,9 @@ class LoginScreen extends React.Component{
 class RegisterScreen extends React.Component{
   constructor(props) {
     super(props);
-    //this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
-
-  // handleClose() {
-  //   alert("Yep, i can close too:)");
-  // }
 
   handleSubmit(event) {
     // ...
@@ -66,23 +56,21 @@ class RegisterScreen extends React.Component{
 
   render() {
     return (
-      <ModalContainer onClose={this.props.onClose}>
-      <h2>Register</h2>
-      <form onSubmit={this.handleSubmit}>
-        <FormElement title="Email:" name="email" type="email"/> <br />
-        <FormElement title="Password:" name="password" type="password" onChange={this.handleInputChange}/> <br />
-        <FormElement title="Confirm password:" name="confirmPassword" type="password" onChange={this.handleInputChange}/> <br />
-        <FormElement title="Nickname:" name="nickname" type="text"/> <br />
-        <FormElement title="Age:" name="age" type="text" onChange={this.handleInputChange}/> <br />
-        <label>
-          About:
-          <br />
-          <textarea value=""/>
+      <ModalWindow onClose={this.props.onClose}>
+      <h2 className="AlignedItem">Register</h2>
+      <form className="AlignedItem Aligner" onSubmit={this.handleSubmit}>
+        <FormElement title="Email:" name="email" type="email"/>
+        <FormElement title="Password:" name="password" type="password" onChange={this.handleInputChange}/>
+        <FormElement title="Confirm password:" name="confirmPassword" type="password" onChange={this.handleInputChange}/>
+        <FormElement title="Nickname:" name="nickname" type="text"/>
+        <FormElement title="Age:" name="age" type="text" onChange={this.handleInputChange}/>
+        <label className="FormAlignedItem Aligner">
+          <span className="FormSpan">About:</span>
+          <textarea className="FormInput FormTextArea"/>
         </label>
-        <br />
-        <input type="submit" value="Register"/>
+        <input className="FormAlignedItem" type="submit" value="Register"/>
       </form>
-      </ModalContainer>
+      </ModalWindow>
     );
   }
 }

@@ -1,12 +1,16 @@
 // Maybe need to split this one into separate files
 import React from 'react';
 
-class ModalContainer extends React.Component {
+class ModalWindow extends React.Component {
   render() {
     return (
-      <div className="ModalContainer">
+      <div className="ModalWindowContainer">
+        <div className="ModalWindow">
         <CloseButton onClose={this.props.onClose}/>
-        {this.props.children}
+        <div className="ModalWindowContentWrapper Aligner">
+          {this.props.children}
+        </div>
+        </div>
       </div>
     );
   }
@@ -15,8 +19,8 @@ class ModalContainer extends React.Component {
 class CloseButton extends React.Component {
   render() {
     return (
-      <div className="CloseButton" onClick={this.props.onClose}>
-        <span>❌</span>
+      <div className="CloseButtonWrapper">
+        <span className="CloseButton" onClick={this.props.onClose}>❌</span>
       </div>
     );
   }
@@ -26,13 +30,12 @@ class CloseButton extends React.Component {
 class FormElement extends React.Component {
   render() {
     return (
-      <label>
-          {this.props.title}
-          <br />
-          <input name={this.props.name} type={this.props.type} onChange={this.props.onChange}/>
+      <label className="FormAlignedItem Aligner">
+          <span className="FormSpan">{this.props.title}</span>
+          <input className="FormInput" name={this.props.name} type={this.props.type} onChange={this.props.onChange}/>
       </label>
     );
   }
 }
 
-export {ModalContainer, FormElement}
+export {ModalWindow, FormElement}
