@@ -73,7 +73,7 @@ class RegisterScreen extends React.Component{
     return (
       <ModalWindow onClose={this.props.onClose}>
         <h2 className="AlignedItem">Register</h2>
-        <UserDataForm submitText="Register" onSubmit={this.handleSubmit}/>
+        <UserDataForm submitText="Register" onSubmit={this.handleSubmit} userData={{}}/>
       </ModalWindow>
     );
   }

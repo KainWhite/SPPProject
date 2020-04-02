@@ -52,7 +52,7 @@ class UserDataForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
 
-    this.state = {}
+    this.state = this.props.userData;
   }
 
   handleSubmit(event) {
@@ -93,7 +93,7 @@ class UserDataForm extends React.Component {
           <TemplateForm formTemplate={formTemplate} onChange={this.handleInputChange} data={userData}/>
           <label className="FormAlignedItem Aligner">
             <span className="FormSpan">About:</span>
-            <textarea name="about" className="FormInput FormTextArea" onChange={this.handleInputChange}/>
+            <textarea value={userData.about} name="about" className="FormInput FormTextArea" onChange={this.handleInputChange}/>
           </label>
           <input className="FormAlignedItem" type="submit" value={this.props.submitText}/>
         </form>
