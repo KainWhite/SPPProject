@@ -11,7 +11,13 @@ class EditableUserProfile extends React.Component{
       this.handleUpdateAvatar = this.handleUpdateAvatar.bind(this);
       this.handleInputChange = this.handleInputChange.bind(this);
 
-      this.state = {imgFileName: ""};
+      const user = this.props.user;
+      this.state = {  imgFileName: ""
+                    , imgUrl: user.imgUrl  
+                    , email: user.email
+                    , nickname: user.nickname
+                    , age: user.age
+                    , about: user.about};
     }
   
     handleSubmit(userData) {
@@ -37,19 +43,24 @@ class EditableUserProfile extends React.Component{
       event.preventDefault();
     }
 
+    getUserData() {
+      const userData = {  email: this.state.email
+                        , nickname: this.state.nickname
+                        , age: this.state.age
+                        , about: this.state.about
+                        , imgUrl: this.state.imgUrl};
+      return userData;
+    }
+
     render() {
-      const user = this.props.user;
-      const userData = {  email: user.email
-                        , nickname: user.nickname
-                        , age: user.age
-                        , about: user.about};
+      const userData = this.getUserData();
 
       return (
         <ModalWindow onClose={this.props.onClose}>
           <h2 className="AlignedItem">Edit Profile</h2>
           <div className="AlignedItem">
             <div className="Aligner">
-              <RoundImage imgUrl={user.imgUrl} alt="User avatar"/>
+              <RoundImage imgUrl={userData.imgUrl} alt="User avatar"/>
             </div>
           </div>
           <form className="AlignedItem Aligner" onSubmit={this.handleUpdateAvatar}>

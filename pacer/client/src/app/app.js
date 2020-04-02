@@ -7,6 +7,7 @@ import {LoginScreen} from './login-and-register-screen/loginAndRegisterScreen';
 import {RegisterScreen} from './login-and-register-screen/loginAndRegisterScreen';
 import {UserProfile} from './profile-screen/userProfile';
 import {EditableUserProfile} from './profile-screen/editableUserProfile';
+import {SettingsScreen} from './settings-screen/settingsScreen';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends React.Component {
                   , showRegister: false
                   , showUserProfile: false
                   , showEditableUserProfile: false
+                  , showSettings: false
                   , };
 
     this.handleSwitchToRegister = this.handleSwitchToRegister.bind(this);
@@ -36,6 +38,7 @@ class App extends React.Component {
   render() {
     // TEMP
     const user = {email: "jason@born.com", imgUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg", age: 20, nickname: "NaRuTo2003", about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."};
+    const userSettings = {searchRadius: 10};
 
     return (
       // Just a container, put everything here
@@ -45,12 +48,14 @@ class App extends React.Component {
         <button onClick={() => this.setState({showLogin: true})}>Show login window</button>
         <button onClick={() => this.setState({showUserProfile: true})}>Show user profile</button>
         <button onClick={() => this.setState({showEditableUserProfile: true})}>Show editable user profile</button>
+        <button onClick={() => this.setState({showSettings: true})}>Show user settings</button>
 
         {/* Rendering modals: */}
         {this.state.showLogin && <LoginScreen onSwitchToRegister={this.handleSwitchToRegister} onClose={() => this.setState({showLogin: false})}/>}
         {this.state.showRegister && <RegisterScreen onClose={() => this.setState({showRegister: false})}/>}
         {this.state.showUserProfile && <UserProfile user={user} onClose={() => this.setState({showUserProfile: false})}/>}
         {this.state.showEditableUserProfile && <EditableUserProfile user={user} onClose={() => this.setState({showEditableUserProfile: false})}/>}
+        {this.state.showSettings && <SettingsScreen data={userSettings} onClose={() => this.setState({showSettings: false})}/>}
 
       </>
     );
