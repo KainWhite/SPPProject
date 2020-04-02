@@ -13,9 +13,9 @@ class App extends React.Component {
 
     this.state = {  authorized: AuthorizedEnum.unauthorized
                     // Display status of modal windows is an app state
-                  , showLogin: false
+                  , showLogin: true
                   , showRegister: false   
-                  , showUserProfile: true           
+                  , showUserProfile: false           
                   , };
 
     this.handleSwitchToRegister = this.handleSwitchToRegister.bind(this);
