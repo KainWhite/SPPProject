@@ -6,7 +6,7 @@ class ModalWindow extends React.Component {
     return (
       <div className="ModalWindowContainer">
         <div className="ModalWindow">
-        <CloseButton onClose={this.props.onClose}/>
+        {this.props.onClose !== undefined && <CloseButton onClose={this.props.onClose}/>}
         <div className="ModalWindowContentWrapper Aligner">
           {this.props.children}
         </div>
