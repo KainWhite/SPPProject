@@ -13,6 +13,7 @@ body {
 
 .ModalWindow {
   min-width: 300px;
+  width: 20%;
   background-color: rgb(52, 123, 141);
   z-index: 1;
   overflow: auto;
@@ -92,4 +93,13 @@ body {
 .FormTextArea {
   resize: none;
   min-height: 100px;
+}
+
+.RoundImage {
+  max-width: 50%;
+  border-radius: 50%;
+}
+
+.AboutP {
+  word-break: break-all;
 }

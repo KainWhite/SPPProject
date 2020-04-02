@@ -26,7 +26,7 @@ class CloseButton extends React.Component {
   }
 }
 
-// Maybe rename?
+// (Text + edit)
 class FormElement extends React.Component {
   render() {
     return (
@@ -38,4 +38,12 @@ class FormElement extends React.Component {
   }
 }
 
-export {ModalWindow, FormElement}
+class RoundImage extends React.Component {
+  render() {
+    return (
+      <img className="RoundImage" src={this.props.imgUrl} alt={this.props.alt}></img>
+    );
+  }
+}
+
+export {ModalWindow, FormElement, RoundImage}
