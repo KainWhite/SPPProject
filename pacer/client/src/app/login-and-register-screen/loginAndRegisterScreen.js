@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {ModalWindow} from '../common-components/commonComponents';
-import {UserDataForm} from '../common-components/commonComponents';
-import {TemplateForm} from '../common-components/commonComponents';
+import {ModalWindow} from '../common-components/modalWindow';
+import {UserDataForm} from '../common-components/userDataForm';
+import {TemplateForm} from '../common-components/templateForm';
 
 class LoginScreen extends React.Component{
   constructor(props) {

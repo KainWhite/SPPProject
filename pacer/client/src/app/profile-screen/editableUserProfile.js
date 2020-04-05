@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {ModalWindow} from '../common-components/commonComponents';
-import {UserDataForm} from '../common-components/commonComponents';
-import {RoundImage} from '../common-components/commonComponents';
+import {ModalWindow} from '../common-components/modalWindow';
+import {UserDataForm} from '../common-components/userDataForm';
+import {RoundImage} from '../common-components/roundImage';
 
 class EditableUserProfile extends React.Component{
     constructor(props) {

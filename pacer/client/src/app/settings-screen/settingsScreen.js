@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {ModalWindow} from '../common-components/commonComponents';
-import {TemplateForm} from '../common-components/commonComponents';
+import {ModalWindow} from '../common-components/modalWindow';
+import {TemplateForm} from '../common-components/templateForm';
 
 class SettingsScreen extends React.Component{
   constructor(props) {

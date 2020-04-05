@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {ModalWindow} from '../common-components/commonComponents';
-import {RoundImage} from '../common-components/commonComponents';
+import {ModalWindow} from '../common-components/modalWindow';
+import {RoundImage} from '../common-components/roundImage';
 
 class UserProfile extends React.Component{
   constructor(props) {
