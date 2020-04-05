@@ -1,10 +1,11 @@
 .ModalWindow {
     min-width: 300px;
     width: 20%;
-    background-color: rgb(52, 123, 141);
+    background-color: rgb(255, 255, 255);
     z-index: 1;
     overflow: auto;
     border-radius: 5px;
+    border: 1px solid gray;
   }
   
   .ModalWindowContainer {
@@ -20,8 +21,9 @@
   
   .ModalWindowContentWrapper {
     width: 100%;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
     box-sizing: border-box;
   }
   
