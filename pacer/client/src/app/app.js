@@ -8,6 +8,7 @@ import {RegisterScreen} from './login-and-register-screen/loginAndRegisterScreen
 import {UserProfile} from './profile-screen/userProfile';
 import {EditableUserProfile} from './profile-screen/editableUserProfile';
 import {SettingsScreen} from './settings-screen/settingsScreen';
+import {ChatScreen} from "./chat/chat-screen";
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends React.Component {
                   , showUserProfile: false
                   , showEditableUserProfile: false
                   , showSettings: false
+                  , showChat: false
                   , };
 
     this.handleSwitchToRegister = this.handleSwitchToRegister.bind(this);
@@ -49,6 +51,7 @@ class App extends React.Component {
         <button onClick={() => this.setState({showUserProfile: true})}>Show user profile</button>
         <button onClick={() => this.setState({showEditableUserProfile: true})}>Show editable user profile</button>
         <button onClick={() => this.setState({showSettings: true})}>Show user settings</button>
+        <button onClick={() => this.setState({showChat: true})}>Show chat</button>
 
         {/* Rendering modals: */}
         {this.state.showLogin && <LoginScreen onSwitchToRegister={this.handleSwitchToRegister} onClose={() => this.setState({showLogin: false})}/>}
@@ -56,6 +59,7 @@ class App extends React.Component {
         {this.state.showUserProfile && <UserProfile user={user} onClose={() => this.setState({showUserProfile: false})}/>}
         {this.state.showEditableUserProfile && <EditableUserProfile user={user} onClose={() => this.setState({showEditableUserProfile: false})}/>}
         {this.state.showSettings && <SettingsScreen data={userSettings} onClose={() => this.setState({showSettings: false})}/>}
+        {this.state.showChat && <ChatScreen onClose={() => this.setState({showChat: false})}/>}
 
       </>
     );

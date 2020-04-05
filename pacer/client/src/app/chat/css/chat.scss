@@ -1,0 +1,50 @@
+.ModalWindow {
+  width: unset;
+}
+
+.chat__screen {
+  display: flex;
+  width: 90vw;
+  height: 75vh;
+}
+
+.chat__users {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 35%;
+}
+
+.chat__users-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid gray;
+}
+
+.chat__users-nickname {
+  margin: 0;
+  padding: 0 0 0 1rem;
+}
+
+.chat__history {
+  flex-basis: 65%;
+  padding: 1rem 2rem;
+}
+
+.chat__history-message {
+  display: flex;
+}
+
+.chat__history-msg-text {
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.chat__history-msg-left {
+  justify-content: flex-start;
+}
+
+.chat__history-msg-right {
+  justify-content: flex-end;
+}
