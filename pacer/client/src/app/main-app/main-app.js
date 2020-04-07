@@ -1,9 +1,25 @@
 import React from 'react';
+import {Topbar} from './topbar/topbar.js';
 
-class DefaultApp extends React.Component {
+class MainApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidepaneVisible: false,
+    }
+  }
+
+  toggleSidepane() {
+    this.setState({
+      sidepaneVisible: !this.state.sidepaneVisible,
+    });
+  }
+
   render() {
-    return <div>DefaultApp</div>
+    return (
+      <Topbar toggleSidepane={() => this.toggleSidepane()}/>
+    );
   }
 }
 
-export {DefaultApp}
+export {MainApp}
