@@ -1,0 +1,66 @@
+@import "../../common-components/constants";
+
+.main-header {
+  margin-left: 0;
+  transition-duration: 0.3s;
+
+  .main-menu {
+    background-color: $menuBackgroundColor;
+    color: $menuColor;
+    display: flex;
+    justify-content: center;
+
+    .main-menu__item_logo {
+      display: flex;
+      font-family: Lobster;
+      font-size: 30px;
+      transition-duration: 0.3s;
+
+      &:hover {
+        color: $mainColorHover;
+      }
+    }
+
+    @media screen and (max-width: 999px) {
+      .main-menu__item_logo {
+        margin-right: auto;
+      }
+    }
+    @media screen and (min-width: 1000px) {
+      .main-menu__item_logo {
+        margin-right: 60px;
+      }
+    }
+
+    .main-menu__toggle-btn {
+      color: $menuColor;
+      background-color: inherit;
+      border: none;
+      cursor: pointer;
+      margin-right: 0;
+      padding: 20px;
+      outline: none;
+
+      &:hover {
+        color: $mainColorHover;
+      }
+    }
+
+    @media screen and (min-width: 1000px) {
+      .main-menu__menu-btn {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    .main-menu {
+      border-top: 5px solid $mainColorHover;
+    }
+  }
+}
+@media screen and (min-width: 1000px) {
+  .main-header {
+    margin-left: 0 !important;
+  }
+}
