@@ -15,7 +15,7 @@
       font-family: Lobster;
       font-size: 30px;
       transition-duration: 0.3s;
-
+      align-items: center;
       &:hover {
         color: $mainColorHover;
       }
@@ -23,6 +23,7 @@
 
     @media screen and (max-width: 999px) {
       .main-menu__item_logo {
+        margin-left: auto;
         margin-right: auto;
       }
     }
@@ -47,7 +48,7 @@
     }
 
     @media screen and (min-width: 1000px) {
-      .main-menu__menu-btn {
+      .main-menu__toggle-btn {
         display: none;
       }
     }
