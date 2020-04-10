@@ -1,0 +1,22 @@
+@import "../../../common-components/constants";
+
+.sidepane__item {
+  display: flex;
+  width: 100%;
+  font-weight: bold;
+  font-size: 15px;
+  transition-duration: 0.3s;
+  &:hover {
+    background-color: $mainColorHover;
+  }
+  .sidepane__btn {
+    width: 100%;
+    color: $menuColor;
+    background-color: inherit;
+    font: inherit;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    outline: none;
+  }
+}

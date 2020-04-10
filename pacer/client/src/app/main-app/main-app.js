@@ -1,23 +1,44 @@
 import React from 'react';
-import {Topbar} from './topbar/topbar.js';
+import {Topbar} from './topbar/topbar';
+import {Sidepane} from './sidepane/sidepane';
 
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       sidepaneVisible: false,
+      sidepaneStyle: {
+        width: 0,
+      },
     }
   }
 
   toggleSidepane() {
-    this.setState({
-      sidepaneVisible: !this.state.sidepaneVisible,
+    const sidepaneStyle = {};
+    const topbarStyle = {};
+    if (this.state.sidepaneVisible) {
+      sidepaneStyle.width = '0';
+      topbarStyle.marginLeft = '0';
+    } else {
+      sidepaneStyle.width = '200px'; // sidepane.offsetWidth + 'px';
+      topbarStyle.marginLeft = '200px';
+    }
+    this.setState((state) => {
+      return {
+        sidepaneVisible: !state.sidepaneVisible,
+        sidepaneStyle: sidepaneStyle,
+        topbarStyle: topbarStyle,
+      }
     });
   }
 
   render() {
     return (
-      <Topbar toggleSidepane={() => this.toggleSidepane()}/>
+      <React.Fragment>
+        <Sidepane sidepaneStyle={this.state.sidepaneStyle}/>
+        <Topbar topbarStyle={this.state.topbarStyle}
+                toggleSidepane={() => this.toggleSidepane()}/>
+      </React.Fragment>
     );
   }
 }
