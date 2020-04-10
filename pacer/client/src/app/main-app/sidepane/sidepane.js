@@ -5,21 +5,25 @@ import './sidepane.scss'
 class Sidepane extends React.Component {
   constructor(props) {
     super(props);
+    console.log("sidepane: " + props.profileClick);
   }
 
   render() {
     return (
       <div className="sidepane" style={this.props.sidepaneStyle}>
         <ul className="sidepane__list">
-          <SidepaneItem caption="Chats"
-                        id="sidepaneItemChats"
-                        onClick={() => this.props.chatsClick}/>
           <SidepaneItem caption="Profile"
                         id="sidepaneItemProfile"
-                        onClick={() => this.props.profileClick}/>
+                        onClick={this.props.profileClick}/>
+          <SidepaneItem caption="Chats"
+                        id="sidepaneItemChats"
+                        onClick={this.props.chatsClick}/>
+          <SidepaneItem caption="Settings"
+                        id="sidepaneItemSettings"
+                        onClick={this.props.settingsClick}/>
           <SidepaneItem caption="Log out"
                         id="sidepaneItemLogOut"
-                        onClick={() => this.props.captionClick}/>
+                        onClick={this.props.logoutClick}/>
         </ul>
       </div>
     );

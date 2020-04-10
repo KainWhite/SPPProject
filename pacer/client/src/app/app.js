@@ -43,7 +43,9 @@ class App extends React.Component {
     return (
       // Just a container, put everything here
       <>
-        <MainApp/>
+        <MainApp profileClick={() => this.setState({showUserProfile: true})}
+                 settingsClick={() => this.setState({showSettings: true})}
+                 logoutClick={() => this.setState({authorized: AuthorizedEnum.unauthorized})}/>
         {/* TEMP - example of showing modal window (do the same in side menu) */}
         <button onClick={() => this.setState({showLogin: true})}>Show login window</button>
         <button onClick={() => this.setState({showUserProfile: true})}>Show user profile</button>
