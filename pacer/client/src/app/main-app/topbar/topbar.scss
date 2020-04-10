@@ -10,6 +10,26 @@
     display: flex;
     justify-content: center;
 
+    .main-menu__toggle-btn {
+      color: $menuColor;
+      background-color: inherit;
+      border: none;
+      cursor: pointer;
+      margin-right: 0;
+      padding: 20px;
+      outline: none;
+
+      &:hover {
+        color: $mainColorHover;
+      }
+    }
+
+    @media screen and (min-width: 1000px) {
+      .main-menu__toggle-btn {
+        display: none;
+      }
+    }
+
     .main-menu__item_logo {
       display: flex;
       font-family: Lobster;
@@ -30,26 +50,6 @@
     @media screen and (min-width: 1000px) {
       .main-menu__item_logo {
         margin-right: 60px;
-      }
-    }
-
-    .main-menu__toggle-btn {
-      color: $menuColor;
-      background-color: inherit;
-      border: none;
-      cursor: pointer;
-      margin-right: 0;
-      padding: 20px;
-      outline: none;
-
-      &:hover {
-        color: $mainColorHover;
-      }
-    }
-
-    @media screen and (min-width: 1000px) {
-      .main-menu__toggle-btn {
-        display: none;
       }
     }
   }
