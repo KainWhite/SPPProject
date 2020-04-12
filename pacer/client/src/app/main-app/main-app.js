@@ -11,6 +11,7 @@ class MainApp extends React.Component {
         width: 0,
       },
     }
+    console.log("mainapp: " + props.profileClick);
   }
 
   toggleSidepane() {
@@ -35,7 +36,10 @@ class MainApp extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Sidepane sidepaneStyle={this.state.sidepaneStyle}/>
+        <Sidepane sidepaneStyle={this.state.sidepaneStyle}
+                  profileClick={this.props.profileClick}
+                  settingsClick={this.props.settingsClick}
+                  logoutClick={this.props.logoutClick}/>
         <Topbar topbarStyle={this.state.topbarStyle}
                 toggleSidepane={() => this.toggleSidepane()}/>
       </React.Fragment>
