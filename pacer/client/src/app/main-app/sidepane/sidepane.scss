@@ -1,0 +1,54 @@
+@import "../../common-components/constants";
+
+.sidepane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  z-index: 998;
+  height: 100%;
+  width: 0;
+  color: $menuColor;
+  background-color: $menuBackgroundColor;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  .sidepane__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    position: relative;
+    background-color: #464340;
+    color: $menuColor;
+    .sidepane__input {
+      padding: 10px 5px;
+      background-color: inherit;
+      color: inherit;
+      font-family: inherit;
+      border: none;
+      outline: none;
+    }
+    .sidepane__search-btn {
+      color: $menuColor;
+      background-color: inherit;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      outline: none;
+      &:hover {
+        color: $mainColorHover;
+        transition-duration: 0.3s;
+      }
+    }
+  }
+  .sidepane__list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .sidepane {
+    width: 0 !important;
+  }
+}

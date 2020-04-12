@@ -2,7 +2,7 @@ import React from 'react';
 
 import './app.scss';
 import {AuthorizedEnum} from './authorized-enum.js';
-import {DefaultApp} from './default-app/default-app'
+import {MainApp} from './main-app/main-app'
 import {LoginScreen} from './login-and-register-screen/loginAndRegisterScreen';
 import {RegisterScreen} from './login-and-register-screen/loginAndRegisterScreen';
 import {UserProfile} from './profile-screen/userProfile';
@@ -31,10 +31,10 @@ class App extends React.Component {
     let authorized; // todo call backend here to get it
     this.setState({authorized: authorized});
   }
-  
+
   handleSwitchToRegister() {
     this.setState({  showRegister: true
-                   , showLogin: false});                     
+                   , showLogin: false});
   }
 
   render() {
@@ -45,7 +45,9 @@ class App extends React.Component {
     return (
       // Just a container, put everything here
       <>
-        
+        <MainApp profileClick={() => this.setState({showUserProfile: true})}
+                 settingsClick={() => this.setState({showSettings: true})}
+                 logoutClick={() => this.setState({authorized: AuthorizedEnum.unauthorized})}/>
         {/* TEMP - example of showing modal window (do the same in side menu) */}
         <button onClick={() => this.setState({showLogin: true})}>Show login window</button>
         <button onClick={() => this.setState({showUserProfile: true})}>Show user profile</button>
