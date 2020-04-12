@@ -13,12 +13,40 @@ class ChatScreen extends React.Component {
 
     users = [
         {
-            nickname: 'lol',
+            nickname: 'Daniil Yaskevich',
             imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            lastMessage: 'Some text message',
+            msgTime: '1:10 PM',
         },
         {
-            nickname: 'kek',
+            nickname: 'Nikita Bitkin',
             imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            lastMessage: 'Some text message',
+            msgTime: '1:10 PM',
+        },
+        {
+            nickname: 'Anton Kimaev',
+            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            lastMessage: 'Some text message',
+            msgTime: '1:10 PM',
+        },
+        {
+            nickname: 'Anton Kimaev',
+            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            lastMessage: 'Some text message',
+            msgTime: '1:10 PM',
+        },
+        {
+            nickname: 'Anton Kimaev',
+            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            lastMessage: 'Some text message',
+            msgTime: '1:10 PM',
+        },
+        {
+            nickname: 'Anton Kimaev',
+            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            lastMessage: 'Some text message',
+            msgTime: '1:10 PM',
         },
     ];
 
@@ -26,6 +54,46 @@ class ChatScreen extends React.Component {
         {
             text: 'first message',
             author: 'left',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        {
+            text: 'second message',
+            author: 'right',
         },
         {
             text: 'second message',
