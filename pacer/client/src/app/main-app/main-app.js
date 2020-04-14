@@ -1,6 +1,7 @@
 import React from 'react';
 import {Topbar} from './topbar/topbar';
 import {Sidepane} from './sidepane/sidepane';
+import {YandexMap} from './map/map';
 
 class MainApp extends React.Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class MainApp extends React.Component {
         width: 0,
       },
     }
-    console.log("mainapp: " + props.profileClick);
   }
 
   toggleSidepane() {
@@ -42,6 +42,7 @@ class MainApp extends React.Component {
                   logoutClick={this.props.logoutClick}/>
         <Topbar topbarStyle={this.state.topbarStyle}
                 toggleSidepane={() => this.toggleSidepane()}/>
+        <YandexMap/>
       </React.Fragment>
     );
   }
