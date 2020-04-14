@@ -49,6 +49,6 @@
 }
 @media screen and (min-width: 1000px) {
   .sidepane {
-    width: 0 !important;
+    border-top: 5px solid $mainColorHover;
   }
 }
