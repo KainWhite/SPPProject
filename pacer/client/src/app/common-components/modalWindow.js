@@ -6,11 +6,11 @@ import {CloseButton} from './closeButton';
 class ModalWindow extends React.Component {
   render() {
     return (
-      <div className="ModalWindowContainer">
-        <div className="ModalWindow">
+      <div className="ModalWindowContainer" onClick={this.props.onClose}>
+        <div className="ModalWindow" onClick={(e) => e.stopPropagation()}>
             {this.props.onClose !== undefined && <CloseButton onClose={this.props.onClose}/>}
             <div className="ModalWindowContentWrapper Aligner">
-            {this.props.children}
+              {this.props.children}
             </div>
         </div>
       </div>
