@@ -12,7 +12,6 @@ class MainApp extends React.Component {
         width: 0,
       },
     }
-    console.log("mainapp: " + props.profileClick);
   }
 
   toggleSidepane() {

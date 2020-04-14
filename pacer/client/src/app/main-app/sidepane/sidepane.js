@@ -5,7 +5,6 @@ import './sidepane.scss'
 class Sidepane extends React.Component {
   constructor(props) {
     super(props);
-    console.log("sidepane: " + props.profileClick);
   }
 
   render() {
