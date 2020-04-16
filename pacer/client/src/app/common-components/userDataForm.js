@@ -6,18 +6,16 @@ import {TemplateForm} from './templateForm';
 class UserDataForm extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = this.props.userData;
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.props.onSubmit(this.getUserData());
   }
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
 
     this.setState({
