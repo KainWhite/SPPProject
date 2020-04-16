@@ -1,4 +1,4 @@
-.ModalWindow {
+.chat__window {
   width: unset;
 }
 
@@ -52,8 +52,15 @@
   margin: 0 0 0.5rem 0;
 }
 
-.chat__users-image {
+.chat__users-img-container {
   flex-basis: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat__users-image {
+  max-width: 100%;
 }
 
 .chat__users-metrics {
@@ -78,6 +85,7 @@
   border-radius: 5px;
   border: 1px solid gray;
   padding: 1rem;
+  max-width: 75%;
 }
 
 .chat__history-msg-left {
@@ -90,7 +98,7 @@
 
 @media only screen and (max-width: 840px) {
   .chat__history {
-    display: none;
+    flex-basis: 100%;
   }
 
   .chat__users {
