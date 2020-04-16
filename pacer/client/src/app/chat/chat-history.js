@@ -6,6 +6,18 @@ class ChatHistory extends React.Component {
         super(props);
     }
 
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({  });
+    }
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
     loadHistory = () => {
         let history = [];
 
@@ -24,6 +36,9 @@ class ChatHistory extends React.Component {
         return (
             <div className="chat__history">
                 {this.loadHistory()}
+                <div style={{ float:"left", clear: "both" }}
+                     ref={(el) => { this.messagesEnd = el; }}>
+                </div>
             </div>
         );
     }

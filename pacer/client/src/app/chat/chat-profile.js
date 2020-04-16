@@ -9,7 +9,7 @@ class ChatProfile extends React.Component {
 
     render() {
         return (
-            <div className='chat__users-profile'>
+            <div className='chat__users-profile' onClick={this.props.onClick}>
                 <div className='chat__users-img-container'>
                     <RoundImage className='chat__users-image' imgUrl={this.props.imgUrl} alt="User avatar"/>
                 </div>
