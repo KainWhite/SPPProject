@@ -6,10 +6,9 @@ import {RoundImage} from '../common-components/roundImage';
 class UserProfile extends React.Component{
   constructor(props) {
     super(props);
-    this.handleOpenChat = this.handleOpenChat.bind(this);
   }
 
-  handleOpenChat(event) {
+  handleOpenChat = (event) => {
     // Back-end calls here
     event.preventDefault();
   }

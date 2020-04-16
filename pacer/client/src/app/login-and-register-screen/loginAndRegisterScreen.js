@@ -52,20 +52,18 @@ class AuthScreen extends React.Component {
 class LoginScreen extends React.Component{
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {}
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     const loginData = this.getLoginData();
     this.props.loginHandler(loginData);
 
     event.preventDefault();
   }
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
     
     this.setState({
