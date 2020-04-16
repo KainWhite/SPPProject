@@ -9,10 +9,12 @@ class ChatUsers extends React.Component {
     loadUsers = () => {
         let users = [];
 
+        //temp
+        let i = 0;
         for (let user of this.props.users) {
             users.push(
                 <ChatProfile imgUrl={user.imgUrl} nickname={user.nickname}
-                             key={user.nickname} lastMessage={user.lastMessage} msgTime={user.msgTime}/>
+                             key={i++} lastMessage={user.lastMessage} msgTime={user.msgTime}/>
             );
         }
 

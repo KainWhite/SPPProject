@@ -103,7 +103,7 @@ class ChatScreen extends React.Component {
 
     render() {
         return (
-            <ModalWindow onClose={this.props.onClose}>
+            <ModalWindow className='chat__window' onClose={this.props.onClose}>
                 {/* temp users for now. they should come from caller */}
                 <div className="chat__screen">
                     <ChatUsers users={this.users}/>

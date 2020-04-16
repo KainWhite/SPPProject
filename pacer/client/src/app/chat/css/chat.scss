@@ -1,4 +1,4 @@
-.ModalWindow {
+.chat__window {
   width: unset;
 }
 
@@ -52,8 +52,15 @@
   margin: 0 0 0.5rem 0;
 }
 
-.chat__users-image {
+.chat__users-img-container {
   flex-basis: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat__users-image {
+  max-width: 100%;
 }
 
 .chat__users-metrics {

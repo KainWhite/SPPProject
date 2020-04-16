@@ -9,9 +9,11 @@ class ChatHistory extends React.Component {
     loadHistory = () => {
         let history = [];
 
+        //temp
+        let i = 0;
         for (let msg of this.props.history) {
             history.push(
-                <ChatMessage message={msg.text} by={msg.author} key={msg}/>
+                <ChatMessage message={msg.text} by={msg.author} key={i++}/>
             );
         }
 
