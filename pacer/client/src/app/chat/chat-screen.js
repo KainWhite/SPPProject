@@ -9,6 +9,20 @@ import "./css/chat.scss"
 class ChatScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isUserOpen: true,
+            isHistoryOpen: window.innerWidth > 840,
+            history: [
+                {
+                    text: 'first message',
+                    author: 'left',
+                },
+                {
+                    text: 'second message',
+                    author: 'right',
+                },
+            ],
+        }
     }
 
     users = [
@@ -101,13 +115,47 @@ class ChatScreen extends React.Component {
         },
     ];
 
+    history2 = [
+        {
+            text: 'first message',
+            author: 'left',
+        },
+        {
+            text: 'second message',
+            author: 'right',
+        },
+        ]
+
+    reloadHistory = (user) => {
+        //getHistoryFromDB();
+        this.setState({history: [
+                {
+                    text: 'second message',
+                    author: 'right',
+                },
+            ]});
+        if (window.innerWidth < 841) {
+            this.setState( {
+                isUserOpen: false,
+                isHistoryOpen: true,
+            })
+        }
+    };
+
+    returnToUsers = () => {
+        this.setState( {
+            isUserOpen: true,
+            isHistoryOpen: false,
+        })
+    }
+
     render() {
         return (
             <ModalWindow className='chat__window' onClose={this.props.onClose}>
                 {/* temp users for now. they should come from caller */}
                 <div className="chat__screen">
-                    <ChatUsers users={this.users}/>
-                    <ChatHistory history={this.history}/>
+                    {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
+                    {this.state.isHistoryOpen && <ChatHistory history={this.state.history} onBackClick={() => this.returnToUsers}/>}
                 </div>
             </ModalWindow>
         );

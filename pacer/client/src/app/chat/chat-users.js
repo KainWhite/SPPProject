@@ -2,19 +2,14 @@ import React from 'react';
 import {ChatProfile} from "./chat-profile";
 
 class ChatUsers extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     loadUsers = () => {
         let users = [];
-
         //temp
         let i = 0;
         for (let user of this.props.users) {
             users.push(
                 <ChatProfile imgUrl={user.imgUrl} nickname={user.nickname}
-                             key={i++} lastMessage={user.lastMessage} msgTime={user.msgTime}/>
+                             key={i++} lastMessage={user.lastMessage} msgTime={user.msgTime} onClick={this.props.onUserClick}/>
             );
         }
 
@@ -24,9 +19,6 @@ class ChatUsers extends React.Component {
     render() {
         return (
             <div className="chat__users">
-                {/*<div className='chat__users-header'>*/}
-                {/*    <h1 className='chat__users-title'>Chats</h1>*/}
-                {/*</div>*/}
                 {this.loadUsers()}
             </div>
         );

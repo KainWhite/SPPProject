@@ -41,12 +41,12 @@ class App extends React.Component {
     return (
       // Just a container, put everything here
       <>
-        {/*{this.state.authorized === AuthorizedEnum.unauthorized ?*/}
-        {/*    <AuthScreen authHandler={this.setAuthorizedState}/>*/}
-        {/*  : <MainApp profileClick={() => this.setState({showUserProfile: true})}*/}
-        {/*    settingsClick={() => this.setState({showSettings: true})}*/}
-        {/*    logoutClick={() => this.setState({authorized: AuthorizedEnum.unauthorized})}/>*/}
-        {/*}*/}
+        {this.state.authorized === AuthorizedEnum.unauthorized ?
+            <AuthScreen authHandler={this.setAuthorizedState}/>
+          : <MainApp profileClick={() => this.setState({showUserProfile: true})}
+            settingsClick={() => this.setState({showSettings: true})}
+            logoutClick={() => this.setState({authorized: AuthorizedEnum.unauthorized})}/>
+        }
 
         {/* TEMP - example of showing modal window (do the same in side menu) */}
         <button onClick={() => this.setState({showLogin: true})}>Show login window</button>
@@ -56,10 +56,10 @@ class App extends React.Component {
         <button onClick={() => this.setState({showChat: true})}>Show chat</button>
 
         {/* Rendering modals: */}
-        {/*{ {this.state.showUserProfile && <UserProfile user={user} onClose={() => this.setState({showUserProfile: false})}/>}*/}
+        {/* {this.state.showUserProfile && <UserProfile user={user} onClose={() => this.setState({showUserProfile: false})}/>}
         {this.state.showEditableUserProfile && <EditableUserProfile user={user} onClose={() => this.setState({showEditableUserProfile: false})}/>}
         {this.state.showSettings && <SettingsScreen data={userSettings} onClose={() => this.setState({showSettings: false})}/>}
-        {this.state.showChat && <ChatScreen onClose={() => this.setState({showChat: false})}/>} }
+        {this.state.showChat && <ChatScreen onClose={() => this.setState({showChat: false})}/>} */}
 
       </>
     );

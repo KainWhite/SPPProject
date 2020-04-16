@@ -98,7 +98,7 @@
 
 @media only screen and (max-width: 840px) {
   .chat__history {
-    display: none;
+    flex-basis: 100%;
   }
 
   .chat__users {
