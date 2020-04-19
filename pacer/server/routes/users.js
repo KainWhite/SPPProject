@@ -16,27 +16,10 @@ router.get('/', function(req, res, next) {
 
 // GET user by id
 router.get('/:userId', function(req, res, next) {
-  // usersDAO.getById(req.params.userId, (err, user) => {
-  //   if (err) next(err);
-  //   res.json(user);
-  // })
-  let userdata = {
-    email: "eqxbar11b1oss@gmail.com",
-    password: "12345678",
-    confirmPassword: "12345678",
-    nickname: "as1s1sds",
-    age: 1,
-    about: "asd",
-    latitude: 1,
-    longitude: 1,
-  }
-  usersDAO.create(userdata, (err, userId) => {
+  usersDAO.getById(req.params.userId, (err, user) => {
     if (err) next(err);
-    usersDAO.getById(userId, (err, user) => {
-      if (err) next(err);
-      res.json(user);
-    })
-  });
+    res.json(user);
+  })
 });
 
 module.exports = router;
