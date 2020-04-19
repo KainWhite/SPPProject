@@ -7,57 +7,56 @@ class YandexMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myCoordinates: [0, 0],
-      usersNearbyCoordinates: [],
+      myCoordinates: null,
+      usersNearby: [],
     }
   }
 
+  updateMyCoordinates() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({
+        myCoordinates: [position.coords.latitude, position.coords.longitude]
+      });
+    })
+  }
+
   componentDidMount() {
-    this.serverPollCoordsTimerID = setInterval(() => {
-      /*call server for getting users coords with setstate here*/
+    this.updateMyCoordinates();
+    this.getUsersNearbyTimerID = setInterval(() => {
+      /*call server for getting users with setstate here*/
     }, 10000);
-    this.pushMyCoordsTimerID = setInterval(() => {
+    this.sendMyCoordsTimerID = setInterval(() => {
       /*push my coords to server with setstate here*/
     }, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.serverPollCoordsTimerID);
-    clearInterval(this.pushMyCoordsTimerID);
-  }
-
-  setCurrentPosition(ymaps) {
-    ymaps.geolocation.get({
-      provider: 'browser',
-      mapStateAutoApply: true
-    }).then(res => {
-      this.setState({
-       myCoordinates: res.geoObjects.get(0).geometry.getCoordinates(),
-      });
-    }, err => {
-      console.error("coordinates are not set due to ", err);
-    });
+    clearInterval(this.getUsersNearbyTimerID);
+    clearInterval(this.sendMyCoordsTimerID);
   }
 
   render() {
-    const usersNearbyPlacemarks = this.state.usersNearbyCoordinates
-        .map(usersNearbyCoordinate =>
-          <Placemark geometry={usersNearbyCoordinate.coordinates}
-                     key={usersNearbyCoordinate.name}/>
+    const usersNearbyPlacemarks = this.state.usersNearby
+        .map(userNearby =>
+          <Placemark geometry={userNearby.coordinates}
+                     key={userNearby.name}/>
     );
     return (
       <div className="map">
         <YMaps query={{
                lang: "en_US",
                apikey: "f8a4a7fe-f442-4a37-af5a-a4dec57c863f"}}>
-          <Map state={{center: this.state.myCoordinates, zoom: 12}}
-               height="100%"
-               width="100%"
-               modules={["geolocation", "geocode"]}
-               onLoad={(ymaps) => {this.setCurrentPosition(ymaps);}}>
-            {this.state.myCoordinates && <Placemark geometry={this.state.myCoordinates}/>}
-            {usersNearbyPlacemarks}
-          </Map>
+          {
+            this.state.myCoordinates && (
+              <Map state={{center: this.state.myCoordinates, zoom: 12}}
+                   height="100%"
+                   width="100%"
+                   modules={["geolocation", "geocode"]}>
+                <Placemark geometry={this.state.myCoordinates}/>
+                {usersNearbyPlacemarks}
+              </Map>
+            )
+          }
         </YMaps>
       </div>
     );
