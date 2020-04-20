@@ -21,7 +21,11 @@ class App extends React.Component {
                   , showEditableUserProfile: false
                   , showSettings: false
                   , showChat: false
-                  , };
+                  , currentUser: {
+                    coordinates: null,
+                    username: "Current User",
+                    photoUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
+                  }};
   }
 
   getAuthorizedState() {
@@ -43,9 +47,12 @@ class App extends React.Component {
       <>
         {this.state.authorized === AuthorizedEnum.unauthorized ?
             <AuthScreen authHandler={this.setAuthorizedState}/>
-          : <MainApp profileClick={() => this.setState({showUserProfile: true})}
-            settingsClick={() => this.setState({showSettings: true})}
-            logoutClick={() => this.setState({authorized: AuthorizedEnum.unauthorized})}/>
+          : <MainApp currentUser={this.state.currentUser}
+                     profileClick={() => this.setState({showUserProfile: true})}
+                     settingsClick={() => this.setState({showSettings: true})}
+                     logoutClick={() => this.setState({
+                       authorized: AuthorizedEnum.unauthorized
+                     })}/>
         }
 
         {/* TEMP - example of showing modal window (do the same in side menu) */}
