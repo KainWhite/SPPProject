@@ -1,16 +1,12 @@
-.chat__window {
-  width: unset;
-}
-
 ::-webkit-scrollbar {
   width: 0;
 }
 
 .chat__screen {
   display: flex;
-  width: 90vw;
-  height: 75vh;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .chat__users {
@@ -41,7 +37,7 @@
 }
 
 .chat__users-content {
-  flex-basis: 70%;
+  flex-basis: 65%;
   display: flex;
   flex-flow: column;
   padding: 0 0 0 2rem;
@@ -64,7 +60,7 @@
 }
 
 .chat__users-metrics {
-  flex-basis: 15%;
+  flex-basis: 20%;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -77,8 +73,35 @@
   scrollbar-width: none;
 }
 
+.chat__history-user {
+  display: flex;
+  justify-content: center;
+}
+
 .chat__history-message {
   display: flex;
+}
+
+.chat__history-arrow {
+  display: none;
+  align-self: center;
+  flex-basis: 10%;
+}
+
+.chat__history-profile{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.chat__history-nickname{
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.chat__history-status {
+  font-size: 0.8rem;
 }
 
 .chat__history-msg-text {
@@ -103,5 +126,14 @@
 
   .chat__users {
     flex-basis: 100%;
+  }
+
+  .chat__history-arrow {
+    display: flex;
+    flex-basis: unset;
+  }
+
+  .chat__history-profile {
+    flex-basis: 80%;
   }
 }

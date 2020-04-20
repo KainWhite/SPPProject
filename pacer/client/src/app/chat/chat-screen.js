@@ -25,6 +25,12 @@ class ChatScreen extends React.Component {
         }
     }
 
+    currentUser = {
+        nickname: 'Daniil Yaskevich',
+        imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+        status: 'online',
+    };
+
     users = [
         {
             nickname: 'Daniil Yaskevich',
@@ -151,13 +157,10 @@ class ChatScreen extends React.Component {
 
     render() {
         return (
-            <ModalWindow className='chat__window' onClose={this.props.onClose}>
-                {/* temp users for now. they should come from caller */}
                 <div className="chat__screen">
                     {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
-                    {this.state.isHistoryOpen && <ChatHistory history={this.state.history} onBackClick={() => this.returnToUsers}/>}
+                    {this.state.isHistoryOpen && <ChatHistory user={this.currentUser} history={this.state.history} onBackClick={() => this.returnToUsers}/>}
                 </div>
-            </ModalWindow>
         );
     }
 }
