@@ -7,9 +7,6 @@ import {RoundImage} from '../common-components/roundImage';
 class EditableUserProfile extends React.Component{
     constructor(props) {
       super(props);
-      this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleUpdateAvatar = this.handleUpdateAvatar.bind(this);
-      this.handleInputChange = this.handleInputChange.bind(this);
 
       const user = this.props.user;
       this.state = {  imgFileName: ""
@@ -20,20 +17,20 @@ class EditableUserProfile extends React.Component{
                     , about: user.about};
     }
   
-    handleSubmit(userData) {
+    handleSubmit = (userData) => {
       
       // check userData and call some back-end
       console.log(userData)
     }
 
-    handleUpdateAvatar(event) {
+    handleUpdateAvatar = (event) => {
       // upload image to server
       console.log(this.state.imgFileName);
 
       event.preventDefault();
     }
     
-    handleInputChange(event) {
+    handleInputChange = (event) => {
       const target = event.target;
   
       this.setState({

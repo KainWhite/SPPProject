@@ -42,7 +42,8 @@ class MainApp extends React.Component {
                   logoutClick={this.props.logoutClick}/>
         <Topbar topbarStyle={this.state.topbarStyle}
                 toggleSidepane={() => this.toggleSidepane()}/>
-        <YandexMap/>
+        <YandexMap currentUser={this.props.currentUser}
+                   profileClick={this.props.profileClick}/>
       </React.Fragment>
     );
   }

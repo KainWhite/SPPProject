@@ -6,13 +6,11 @@ import {TemplateForm} from '../common-components/templateForm';
 class SettingsScreen extends React.Component{
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = this.props.data;
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     // Back-end calls here
     const settingsData = this.getSettingsData();
     console.log(settingsData);
@@ -20,7 +18,7 @@ class SettingsScreen extends React.Component{
     event.preventDefault();
   }
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
     
     this.setState({
