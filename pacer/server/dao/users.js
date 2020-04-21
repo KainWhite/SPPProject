@@ -104,9 +104,8 @@ class UsersDAO {
                                     , userData.about
                                     , userData.latitude
                                     , userData.longitude], function (err, result) {
-            console.log("ASDASD");
             if (err) { 
-                callback(err, undefined);
+                callback(err.sqlMessage, undefined);
                 return;
             }
             callback(err, result.insertId);
