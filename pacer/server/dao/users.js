@@ -69,6 +69,15 @@ class UsersDAO {
         })
     }
 
+    getByEmail(userEmail, callback) {
+        const sql = 'select * from users where Email = ' + this.connection.escape(userEmail);
+        
+        this.connection.query(sql, function (err, result) {
+            const user = err || (result.length == 0) ? undefined : new User(result[0]);
+            callback(err, user);
+        })
+    }
+
     // returns newely created object's id on success
     create(userData, callback) {
         const sql =   'insert into users (`Email`, `PasswordHash`, `Salt`, `Nickname`, `Age`, `About`, `Latitude`, `Longitude`) VALUES' 

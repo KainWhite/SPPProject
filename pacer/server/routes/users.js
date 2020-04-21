@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 // GET user by id
 router.get('/:userId', function(req, res, next) {
   usersDAO.getById(req.params.userId, (err, user) => {
-    if (err) {
+    if (err || !user) {
       res.json({error: "Invalid id or user not found."});
       return;
     }
@@ -43,7 +43,7 @@ router.post('/', function(req, res, next) {
     }
 
     usersDAO.getById(newId, (err, user) => {
-      if (err) {
+      if (err || !user) {
         res.json({error: "Something went wrong."});
         return;
       }
