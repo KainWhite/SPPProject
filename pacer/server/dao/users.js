@@ -29,6 +29,11 @@ var sha512 = function(password, salt){
     };
 };
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 let instance = null;
 
 class UsersDAO {
@@ -69,7 +74,10 @@ class UsersDAO {
         const sql =   'insert into users (`Email`, `PasswordHash`, `Salt`, `Nickname`, `Age`, `About`, `Latitude`, `Longitude`) VALUES' 
                     + '(?, ?, ?, ?, ?, ?, ?, ?)';
         
-        // check email for validity
+        if (!validateEmail(userData.email)) {
+            callback("Invalid email provided.", undefined);
+            return;
+        }
 
         if (userData.password.length < 8) {
             callback("Password is too short (8 characters min).", undefined);
@@ -96,6 +104,7 @@ class UsersDAO {
                                     , userData.about
                                     , userData.latitude
                                     , userData.longitude], function (err, result) {
+            console.log("ASDASD");
             if (err) { 
                 callback(err, undefined);
                 return;
