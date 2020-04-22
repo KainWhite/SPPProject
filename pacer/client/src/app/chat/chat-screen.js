@@ -12,16 +12,7 @@ class ChatScreen extends React.Component {
         this.state = {
             isUserOpen: true,
             isHistoryOpen: window.innerWidth > 840,
-            history: [
-                {
-                    text: 'first message',
-                    author: 'left',
-                },
-                {
-                    text: 'second message',
-                    author: 'right',
-                },
-            ],
+            history: [],
         }
     }
 
@@ -159,7 +150,9 @@ class ChatScreen extends React.Component {
         return (
                 <div className="chat__screen">
                     {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
-                    {this.state.isHistoryOpen && <ChatHistory user={this.currentUser} history={this.state.history} onBackClick={() => this.returnToUsers}/>}
+                    {this.state.isHistoryOpen && (this.props.userToChat != null || this.state.history.length !== 0) &&
+                    <ChatHistory user={this.currentUser} history={this.state.history}
+                                 onBackClick={() => this.returnToUsers}/>}
                 </div>
         );
     }
