@@ -3,10 +3,6 @@ import {SidepaneItem} from './sidepane-item/sidepane-item';
 import './sidepane.scss'
 
 class Sidepane extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="sidepane" style={this.props.sidepaneStyle}>
@@ -17,6 +13,9 @@ class Sidepane extends React.Component {
           <SidepaneItem caption="Chats"
                         id="sidepaneItemChats"
                         onClick={this.props.chatsClick}/>
+          <SidepaneItem caption="Map"
+                        id="sidepaneItemMap"
+                        onClick={this.props.mapClick}/>
           <SidepaneItem caption="Settings"
                         id="sidepaneItemSettings"
                         onClick={this.props.settingsClick}/>
