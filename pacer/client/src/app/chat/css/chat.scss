@@ -33,6 +33,7 @@
   flex-direction: row;
   align-items: center;
   padding: 1rem;
+  min-height: 135px;
   border: 1px solid gray;
 }
 
@@ -119,6 +120,12 @@
   justify-content: flex-end;
 }
 
+@media only screen and (max-width: 1300px) {
+  .chat__users-profile {
+    min-height: 100px;
+  }
+}
+
 @media only screen and (max-width: 840px) {
   .chat__history {
     flex-basis: 100%;
@@ -126,6 +133,10 @@
 
   .chat__users {
     flex-basis: 100%;
+  }
+
+  .chat__users-profile {
+    min-height: unset;
   }
 
   .chat__history-arrow {
