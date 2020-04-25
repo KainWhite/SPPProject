@@ -11,13 +11,13 @@ class YandexMap extends React.Component {
       currentUser: this.props.currentUser,
       usersNearby: [{
         coordinates: [53.91, 27.56],
-        username: "Active User Nearby",
-        photoUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
+        nickname: "Active User Nearby",
+        imgUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
         isOnline: true,
       },{
         coordinates: [53.89, 27.54],
-        username: "Inactive User Nearby",
-        photoUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
+        nickname: "Inactive User Nearby",
+        imgUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
         isOnline: false,
       }],
     }
@@ -32,7 +32,7 @@ class YandexMap extends React.Component {
         }
       }));
     })
-    this.currentUserCoordinatesUpdated = true;
+    this.currentUserCoordinatesSet = true;
   }
 
   componentDidMount() {
@@ -54,11 +54,13 @@ class YandexMap extends React.Component {
     const usersNearbyPlacemarks = this.state.usersNearby
       .map(userNearby =>
         <Placemark geometry={userNearby.coordinates}
-                   key={userNearby.username}
+                   key={userNearby.nickname}
                    properties={{
                      balloonContent: new PlacemarkBalloon({
                        user: userNearby,
                        currentUser: this.state.currentUser,
+                       profileClick: this.props.profileClick,
+                       chatClick: this.props.chatClick,
                      }).renderAsString(),
                    }}
                    options={{
@@ -73,8 +75,9 @@ class YandexMap extends React.Component {
                lang: "en_US",
                apikey: "f8a4a7fe-f442-4a37-af5a-a4dec57c863f"}}>
           {
-            this.currentUserCoordinatesUpdated && (
+            this.currentUserCoordinatesSet && (
               <Map state={{center: this.state.currentUser.coordinates, zoom: 12}}
+                   options={{autoFitToViewport: 'always'}}
                    height="100%"
                    width="100%"
                    modules={["geolocation", "geocode"]}>
@@ -84,6 +87,8 @@ class YandexMap extends React.Component {
                              balloonContent: new PlacemarkBalloon({
                                user: this.state.currentUser,
                                currentUser: this.state.currentUser,
+                               profileClick: this.props.profileClick,
+                               chatClick: this.props.chatClick,
                              }).renderAsString(),
                            }}
                            options={{

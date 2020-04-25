@@ -8,7 +8,7 @@ class Topbar extends React.Component {
 
   render() {
     return (
-      <header className="main-header" style={this.props.topbarStyle}>
+      <header className="main-header">
         <nav className="main-menu">
           <button className="main-menu__toggle-btn"
                   onClick={() => this.props.toggleSidepane()}>
