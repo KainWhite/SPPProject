@@ -10,11 +10,37 @@ class ChatScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            width: 0,
+            height: 0,
             isUserOpen: true,
-            isHistoryOpen: window.innerWidth > 840,
+            isHistoryOpen: false,
             history: [],
         }
     }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions = () =>{
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
+        if (window.innerWidth < 841) {
+            this.setState( {
+                isUserOpen: !this.state.isHistoryOpen,
+            });
+        } else {
+            this.setState( {
+                isUserOpen: true,
+                isHistoryOpen: (this.props.userToChat != null || this.state.history.length !== 0),
+            });
+        }
+    }
+
 
     currentUser = {
         nickname: 'Daniil Yaskevich',
@@ -61,68 +87,6 @@ class ChatScreen extends React.Component {
         },
     ];
 
-    history = [
-        {
-            text: 'first message',
-            author: 'left',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-    ];
-
-    history2 = [
-        {
-            text: 'first message',
-            author: 'left',
-        },
-        {
-            text: 'second message',
-            author: 'right',
-        },
-        ]
-
     reloadHistory = (user) => {
         //getHistoryFromDB();
         this.setState({history: [
@@ -130,13 +94,7 @@ class ChatScreen extends React.Component {
                     text: 'second message',
                     author: 'right',
                 },
-            ]});
-        if (window.innerWidth < 841) {
-            this.setState( {
-                isUserOpen: false,
-                isHistoryOpen: true,
-            })
-        }
+            ], isHistoryOpen: true});
     };
 
     returnToUsers = () => {
@@ -150,7 +108,7 @@ class ChatScreen extends React.Component {
         return (
                 <div className="chat__screen">
                     {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
-                    {this.state.isHistoryOpen && (this.props.userToChat != null || this.state.history.length !== 0) &&
+                    {this.state.isHistoryOpen &&
                     <ChatHistory user={this.currentUser} history={this.state.history}
                                  onBackClick={() => this.returnToUsers}/>}
                 </div>
