@@ -7,8 +7,8 @@ class User {
         this.nickname = responceObject.Nickname;
         this.age = responceObject.Age;
         this.about = responceObject.About;
-        this.imageUrl = responceObject.ImageUrl;
-        this.isOnline = responceObject.IsOnline;
+        this.imageUrl = responceObject.ImageUrl;    
+        this.isOnline = responceObject.IsOnline[0] == true;
         this.latitude = responceObject.Latitude;
         this.longitude = responceObject.Longitude;
         this.idRole = responceObject.ID_UserRole;
