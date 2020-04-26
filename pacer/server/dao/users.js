@@ -117,8 +117,60 @@ class UsersDAO {
                 callback(err.sqlMessage, undefined);
                 return;
             }
-            callback(err, result.insertId);
+            callback(undefined, result.insertId);
         })
+    }
+
+    // same, returns id of updated user
+    update(user, callback) {
+        const sql = 'update users set `Email` = ?, `PasswordHash` = ?, `Nickname` = ?, `Age` = ?, ' +
+                    '`About` = ?, `ImageUrl` = ?, `IsOnline` = ?, `Latitude` = ?, `Longitude` = ? where `ID_User` = ' + this.connection.escape(user.id);
+        
+        // Check user for existance
+        this.getById(user.id, (_, oldUser) => {
+            if (oldUser == undefined) {
+                callback("User doesn't exist!");
+                return;
+            }
+
+            if (!validateEmail(user.email)) {
+                callback("Invalid email provided.");
+                return;
+            }
+    
+            if (user.password.length < 8) {
+                callback("Password is too short (8 characters min).");
+                return;
+            }
+    
+            if (user.password !== user.confirmPassword) {
+                callback("Passwords do not match.");
+                return;
+            }
+    
+            if (user.age <= 0) {
+                callback("Invalid age.");
+                return;
+            }
+            
+            var passwordData = sha512(user.password, oldUser.salt);
+    
+            this.connection.query(sql, [  user.email
+                                        , passwordData.passwordHash
+                                        , user.nickname
+                                        , user.age
+                                        , user.about
+                                        , user.imageUrl
+                                        , user.isOnline
+                                        , user.latitude
+                                        , user.longitude], function (err, result) {
+                if (err) { 
+                    callback(err.sqlMessage);
+                    return;
+                }
+                callback(undefined);
+            })
+        });
     }
 }
 

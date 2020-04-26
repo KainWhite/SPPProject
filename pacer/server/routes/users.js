@@ -54,4 +54,25 @@ router.post('/', function(req, res, next) {
   })
 });
 
+// Update user
+router.put('/:userId', function(req, res, next) {
+  req.body.id = req.params.userId;
+  usersDAO.update(req.body, (err) => {
+    if (err) {
+      res.json({error: err});
+      return;
+    }
+
+    usersDAO.getById(req.params.userId, (err, user) => {
+      if (err || !user) {
+        res.json({error: "Something went wrong."});
+        return;
+      }
+      delete user.passwordHash;
+      delete user.salt;
+      res.json(user);
+    })
+  })
+});
+
 module.exports = router;
