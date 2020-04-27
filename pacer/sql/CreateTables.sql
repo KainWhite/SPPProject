@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`Users` (
   `ID_User` INT NOT NULL AUTO_INCREMENT,
   `Email` VARCHAR(128) NOT NULL,
-  `PasswordHash` VARCHAR(256) NOT NULL,
+  `PasswordHash` VARCHAR(512) NOT NULL,
   `Salt` VARCHAR(256) NOT NULL,
   `Nickname` VARCHAR(64) NOT NULL,
   `Age` INT NOT NULL,
@@ -39,9 +39,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Users` (
   `IsOnline` BIT(1) NOT NULL DEFAULT 1,
   `Latitude` DOUBLE NOT NULL,
   `Longitude` DOUBLE NOT NULL,
-  `ID_UserRole` INT NOT NULL,
+  `ID_UserRole` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`ID_User`),
   INDEX `ID_UserRole_idx` (`ID_UserRole` ASC) VISIBLE,
+  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+  UNIQUE INDEX `Nickname_UNIQUE` (`Nickname` ASC) VISIBLE,
   CONSTRAINT `ID_UserRole`
     FOREIGN KEY (`ID_UserRole`)
     REFERENCES `mydb`.`UserRoles` (`ID_UserRole`)
