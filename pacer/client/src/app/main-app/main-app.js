@@ -99,10 +99,13 @@ class MainApp extends React.Component {
           {
             this.state.mainContainer === MainContainerEnum.map ?
               <YandexMap currentUser={this.props.currentUser}
-                         profileClick={(userToShowProfile) => this.setState({
-                           userToShowProfile: userToShowProfile,
-                           modalWindow: ModalWindowEnum.profileUser,
-                         })}
+                         profileClick={(userToShowProfile) => {
+                           console.log(userToShowProfile)
+                           this.setState({
+                             userToShowProfile: userToShowProfile,
+                             modalWindow: ModalWindowEnum.profileUser,
+                           });
+                         }}
                          chatClick={(userToChat) => this.showChat(userToChat)}/> :
               <ChatScreen currentUser={this.props.currentUser}
                           userToChat={this.state.userToChat}/>
