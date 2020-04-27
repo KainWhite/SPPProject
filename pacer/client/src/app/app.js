@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = {
       authorized: AuthorizedEnum.unauthorized,
       currentUser: {
+        id: 0,
         coordinates: null,
         nickname: "Current User",
         imgUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
