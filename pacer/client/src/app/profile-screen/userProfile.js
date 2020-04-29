@@ -9,7 +9,8 @@ class UserProfile extends React.Component{
   }
 
   handleOpenChat = (event) => {
-    // Back-end calls here
+    this.props.chatClick(this.props.user);
+    this.props.onClose();
     event.preventDefault();
   }
 
@@ -25,7 +26,7 @@ class UserProfile extends React.Component{
           <span className="Aligner">{this.props.user.nickname}, {this.props.user.age} y.o.</span>
         </div>
         <p className="AlignedItem AboutP">{this.props.user.about}</p>
-        <button className="AlignedItem" onClick={this.props.handleOpenChat}>
+        <button className="AlignedItem" onClick={this.handleOpenChat}>
             Go chat
         </button>
       </ModalWindow>
