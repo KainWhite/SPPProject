@@ -66,6 +66,7 @@ class MainApp extends React.Component {
                                     })}/>;
       case ModalWindowEnum.profileUser:
         return <UserProfile user={this.state.userToShowProfile}
+                            chatClick={(userToChat) => this.showChat(userToChat)}
                             onClose={() => this.setState({
                               modalWindow: ModalWindowEnum.none,
                             })}/>;
