@@ -3,10 +3,41 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const multer = require("multer");
 
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// uploading files
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "./public/images");
+  },
+  filename: function(req, file, cb) {
+    console.log(file);
+    cb(null, file.originalname);
+  }
+});
+
+var upload = multer({ //multer settings
+  storage: storage,
+  fileFilter: function (req, file, callback) {
+      var ext = path.extname(file.originalname);
+      if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+          return callback(new Error('Only images are allowed'))
+      }
+      callback(null, true)
+  },
+  limits:{
+      fileSize: 1024 * 1024
+  }
+}).single('profilepic');
+
+app.post("/uploadImage", upload, (req, res) => {
+  console.log(" file disk uploaded");
+  res.send("file disk upload success");
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
