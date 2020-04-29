@@ -12,13 +12,13 @@ class YandexMap extends React.Component {
         id: 1,
         coordinates: [53.91, 27.56],
         nickname: "Active User Nearby",
-        imgUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
+        imgUrl: "http://localhost:3000/images/notFound.jpg",
         isOnline: true,
       },{
         id: 2,
         coordinates: [53.89, 27.54],
         nickname: "Inactive User Nearby",
-        imgUrl: "https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg",
+        imgUrl: "http://localhost:3000/images/notFound.jpg",
         isOnline: false,
       }],
     }

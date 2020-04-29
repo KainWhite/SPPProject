@@ -44,44 +44,44 @@ class ChatScreen extends React.Component {
 
     currentUser = {
         nickname: 'Daniil Yaskevich',
-        imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+        imgUrl: 'http://localhost:3000/images/notFound.jpg',
         status: 'online',
     };
 
     users = [
         {
             nickname: 'Daniil Yaskevich',
-            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            imgUrl: 'http://localhost:3000/images/notFound.jpg',
             lastMessage: 'Some text message',
             msgTime: '1:10 PM',
         },
         {
             nickname: 'Nikita Bitkin',
-            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            imgUrl: 'http://localhost:3000/images/notFound.jpg',
             lastMessage: 'Some text message',
             msgTime: '1:10 PM',
         },
         {
             nickname: 'Anton Kimaev',
-            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            imgUrl: 'http://localhost:3000/images/notFound.jpg',
             lastMessage: 'Some text message',
             msgTime: '1:10 PM',
         },
         {
             nickname: 'Anton Kimaev',
-            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            imgUrl: 'http://localhost:3000/images/notFound.jpg',
             lastMessage: 'Some text message',
             msgTime: '1:10 PM',
         },
         {
             nickname: 'Anton Kimaev',
-            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            imgUrl: 'http://localhost:3000/images/notFound.jpg',
             lastMessage: 'Some text message',
             msgTime: '1:10 PM',
         },
         {
             nickname: 'Anton Kimaev',
-            imgUrl: 'https://i.pinimg.com/originals/4e/73/20/4e73208be9f326816a787de2e04db80a.jpg',
+            imgUrl: 'http://localhost:3000/images/notFound.jpg',
             lastMessage: 'Some text message',
             msgTime: '1:10 PM',
         },
