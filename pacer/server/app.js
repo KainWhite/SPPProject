@@ -5,9 +5,36 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const multer = require("multer");
 
+var jwt = require('jwt-simple')
+var config = require('./appConfig.json')
+
+const UsersDAO = require('./dao/users');
+const usersDAO = new UsersDAO();
+
 var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
 
 var app = express();
+
+// auth middleware
+app.use(function (req, res, next) {
+  // URLs available for everyone
+  if (req.url == "/login" || req.url == '/users/create' || req.url.indexOf("/public") == 0) {
+    return next();
+  }
+
+  if (!req.headers['x-auth']) {return res.json({error: "Not authorised."})}
+    try {
+      var email = jwt.decode(req.headers['x-auth'], config.secretKey).email;
+    } 
+    catch(err) {return res.json({error: "Invalid token."})}
+
+    usersDAO.getByEmail(email, (err, user) => {
+      if (err) {return res.json({error: "Invalid token."})}
+      req.user = user;
+      next();
+    })
+})
 
 // uploading files
 var storage = multer.diskStorage({
@@ -15,7 +42,7 @@ var storage = multer.diskStorage({
     cb(null, "./public/images");
   },
   filename: function(req, file, cb) {
-    console.log(file);
+    //console.log(file);
     cb(null, file.originalname);
   }
 });
@@ -25,6 +52,7 @@ var upload = multer({ //multer settings
   fileFilter: function (req, file, callback) {
       var ext = path.extname(file.originalname);
       if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+          // error 500
           return callback(new Error('Only images are allowed'))
       }
       callback(null, true)
@@ -35,8 +63,7 @@ var upload = multer({ //multer settings
 }).single('profilepic');
 
 app.post("/uploadImage", upload, (req, res) => {
-  console.log(" file disk uploaded");
-  res.send("file disk upload success");
+  res.json({fileUrl: "images/" + req.file.originalname});
 });
 
 // view engine setup
@@ -50,6 +77,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
