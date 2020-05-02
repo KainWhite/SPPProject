@@ -10,7 +10,7 @@ class EditableUserProfile extends React.Component{
 
       const user = this.props.user;
       this.state = {  imgFileName: ""
-                    , imgUrl: user.imgUrl  
+                    , imageUrl: user.imageUrl  
                     , email: user.email
                     , nickname: user.nickname
                     , age: user.age
@@ -45,7 +45,7 @@ class EditableUserProfile extends React.Component{
                         , nickname: this.state.nickname
                         , age: this.state.age
                         , about: this.state.about
-                        , imgUrl: this.state.imgUrl};
+                        , imageUrl: this.state.imageUrl};
       return userData;
     }
 
@@ -57,7 +57,7 @@ class EditableUserProfile extends React.Component{
           <h2 className="AlignedItem">Edit Profile</h2>
           <div className="AlignedItem">
             <div className="Aligner">
-              <RoundImage imgUrl={userData.imgUrl} alt="User avatar"/>
+              <RoundImage imgUrl={userData.imageUrl} alt="User avatar"/>
             </div>
           </div>
           <form className="AlignedItem Aligner" onSubmit={this.handleUpdateAvatar}>

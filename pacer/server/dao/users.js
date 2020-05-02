@@ -50,7 +50,7 @@ class UsersDAO {
         const sql = 'select * from users where Email = ' + this.connection.escape(userEmail);
         
         this.connection.query(sql, function (err, result) {
-            const user = err || (result.length == 0) ? undefined : new User(result[0]);
+            const user = (err || (result.length == 0)) ? undefined : new User(result[0]);
             callback(err, user);
         })
     }

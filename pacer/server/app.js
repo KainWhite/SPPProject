@@ -16,10 +16,18 @@ var loginRouter = require('./routes/login');
 
 var app = express();
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-auth');
+
+  next();
+});
+
 // auth middleware
 app.use(function (req, res, next) {
   // URLs available for everyone
-  if (req.url == "/login" || req.url == '/users/create' || req.url.indexOf("/public") == 0) {
+  if (req.url == "/login" || req.url == '/users/create' || req.url.indexOf("/images") == 0) {
     return next();
   }
 

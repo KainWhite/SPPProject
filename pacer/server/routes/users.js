@@ -35,9 +35,9 @@ router.get('/:userId', function(req, res, next) {
 });
 
 // Create user
-router.post('/', function(req, res, next) {
+router.post('/create', function(req, res, next) {
   usersDAO.create(req.body, (err, newId) => {
-    if (err) {
+    if (err || newId == undefined) {
       res.json({error: err});
       return;
     }

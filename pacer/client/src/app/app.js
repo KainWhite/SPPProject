@@ -2,6 +2,7 @@ import React from 'react';
 import {AuthorizedEnum} from './authorized-enum.js';
 import {MainApp} from './main-app/main-app'
 import {AuthScreen} from './login-and-register-screen/loginAndRegisterScreen';
+import API from './api';
 
 import './app.scss';
 
@@ -24,13 +25,15 @@ class App extends React.Component {
     };
   }
 
+  // redundant (?)
   getAuthorizedState() {
     let authorized; // todo call backend here to get it
     this.setState({authorized: authorized});
   }
 
-  setAuthorizedState = (newState) => {
-    this.setState({authorized: newState});
+  onAuthorized = (newState, user, token) => {
+    API.defaults.headers.common['x-auth'] = token;
+    this.setState({authorized: newState, currentUser: user});
   }
 
   render() {
@@ -38,11 +41,14 @@ class App extends React.Component {
       <React.Fragment>
         {
           this.state.authorized === AuthorizedEnum.unauthorized ?
-            <AuthScreen authHandler={this.setAuthorizedState}/> :
+            <AuthScreen authHandler={this.onAuthorized}/> :
             <MainApp currentUser={this.state.currentUser}
-                     logoutClick={() => this.setState({
-                       authorized: AuthorizedEnum.unauthorized
-                     })}/>
+                     logoutClick={() => {
+                        this.setState({
+                          authorized: AuthorizedEnum.unauthorized,
+                          currentUser: undefined});
+                        delete API.defaults.headers.common['x-auth'];
+                      }}/>
         }
       </React.Fragment>
     );
