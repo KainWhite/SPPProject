@@ -1,5 +1,7 @@
 import React from 'react';
 
+import API from '../api';
+
 import {ModalWindow} from '../common-components/modalWindow';
 import {UserDataForm} from '../common-components/userDataForm';
 import {RoundImage} from '../common-components/roundImage';
@@ -17,25 +19,56 @@ class EditableUserProfile extends React.Component{
                     , about: user.about};
     }
   
-    handleSubmit = (userData) => {
-      
+    handleSubmit = (userData) => {      
       // check userData and call some back-end
       console.log(userData)
     }
 
-    handleUpdateAvatar = (event) => {
-      // upload image to server
-      console.log(this.state.imgFileName);
-
+    handleUpdateAvatar = async (event) => {
       event.preventDefault();
+      
+      const file = this.state.imgFileName;
+
+      if (file != '') {
+        let formData = new FormData();
+        formData.append('profilepic', file);
+
+        try {
+          let response = await API.post(`uploadImage`, formData, 
+          { headers: {
+              "Content-Type": "multipart/form-data"}});
+    
+          let user = this.props.user;
+          user.imageUrl = response.data.fileUrl;
+
+          let avatarResponce = await API.put(`users/profile/updateAvatar`, {id: user.id, imageUrl: user.imageUrl}, 
+          { headers: {
+              "Content-Type": "application/json"}});
+
+          if (!avatarResponce.data.error) {
+            this.props.onUserUpdate(avatarResponce.data.user); 
+            this.setState({imageUrl: user.imageUrl}) 
+          }
+      
+        } catch(err) {
+          console.log(err);
+        }
+      }
     }
     
     handleInputChange = (event) => {
       const target = event.target;
-  
-      this.setState({
-        [target.name]: target.value
-      });
+      
+      if (event.target.files) {
+        this.setState({
+          imgFileName: target.files[0]
+        });
+      }
+      else {
+        this.setState({
+          [target.name]: target.value
+        });
+      }
   
       event.preventDefault();
     }
@@ -57,11 +90,11 @@ class EditableUserProfile extends React.Component{
           <h2 className="AlignedItem">Edit Profile</h2>
           <div className="AlignedItem">
             <div className="Aligner">
-              <RoundImage imgUrl={userData.imageUrl} alt="User avatar"/>
+              <RoundImage imgUrl={this.state.imageUrl} alt="User avatar"/>
             </div>
           </div>
           <form className="AlignedItem Aligner" onSubmit={this.handleUpdateAvatar}>
-            <input className="FormAlignedItem FormInput" value={this.state.imgFileName} name="imgFileName" type="file" onChange={this.handleInputChange}/>
+            <input className="FormAlignedItem FormInput" name="imgFileName" type="file" onChange={this.handleInputChange}/>
             <input className="FormAlignedItem FormInput" type="submit" value="Upload"/>
           </form>
           <UserDataForm submitText="Save" onSubmit={this.handleSubmit} userData={userData}/>
