@@ -17,7 +17,7 @@ router.post ('/', function(req, res, next){
         var email = req.body.email;
         var password = req.body.password;
         usersDAO.getByEmail(email, (err, user) => {
-            if (err) {
+            if (err || user == undefined) {
                 return res.json({error: "Such user doesn't exist."});
             }
             
@@ -25,7 +25,11 @@ router.post ('/', function(req, res, next){
             if (hash.passwordHash == user.passwordHash) {
                 // success
                 var token = jwt.encode({email: email}, config.secretKey)
-                res.json({token: token})
+
+                delete user.passwordHash;
+                delete user.salt;
+
+                res.json({token: token, currentUser: user})
             }
             else {
                 return res.json({error: "Invalid password."});

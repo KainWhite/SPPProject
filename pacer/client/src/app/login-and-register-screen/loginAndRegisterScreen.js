@@ -1,5 +1,7 @@
 import React from 'react';
 
+import API from '../api';
+
 import {AuthorizedEnum} from '../authorized-enum.js';
 import {UserDataForm} from '../common-components/userDataForm';
 import {TemplateForm} from '../common-components/templateForm';
@@ -14,15 +16,43 @@ class AuthScreen extends React.Component {
                   , };
   }
 
-  handleLogin = (loginData) => {
-    console.log(loginData);
+  handleLogin = async (loginData) => {
+    try {
+      const response = await API.post(`login`, loginData, 
+      { headers: {
+          "Content-Type": "application/json"}});
 
-    // Everything's ok, user authorized
-    this.props.authHandler(AuthorizedEnum.authorized);
+      if (!response.data.error) {
+        const token = response.data.token;
+        const currentUser = response.data.currentUser;
+        
+        this.props.authHandler(AuthorizedEnum.authorized, currentUser, token);
+      }
+  
+    } catch(err) {
+      console.log(err);
+    }
   }
 
-  handleRegister = (registerData) => {
+  handleRegister = async (registerData) => {
     console.log(registerData);
+
+    // @KainWhite goes here :)
+    registerData.latitude = 1;
+    registerData.longitude = 1;
+
+    try {
+      const response = await API.post(`users/create`, registerData, 
+      { headers: {
+          "Content-Type": "application/json"}});
+      console.log(response)
+      if (!response.data.error) {
+        this.handleLogin({email: registerData.email, password: registerData.password})
+      }
+  
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   handleSwitchToRegister = () => {
