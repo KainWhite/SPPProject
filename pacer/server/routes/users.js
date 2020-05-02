@@ -70,7 +70,7 @@ router.put('/:userId', function(req, res, next) {
       }
       delete user.passwordHash;
       delete user.salt;
-      res.json(user);
+      res.json({user: user});
     })
   })
 });
@@ -84,7 +84,7 @@ router.put('/profile/updateAvatar', function(req, res, next) {
       res.json({error: "err"});
       return;
     }
-    
+
     usersDAO.getById(id, (err, user) => {
       if (err || !user) {
         res.json({error: "Something went wrong."});

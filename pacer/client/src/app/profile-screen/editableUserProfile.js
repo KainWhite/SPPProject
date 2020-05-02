@@ -19,9 +19,32 @@ class EditableUserProfile extends React.Component{
                     , about: user.about};
     }
   
-    handleSubmit = (userData) => {      
-      // check userData and call some back-end
-      console.log(userData)
+    handleSubmit = async (userData) => {      
+      
+      if (!userData.password || !userData.confirmPassword) return;
+
+      let user = this.props.user;
+      user.email = userData.email ? userData.email : user.email;
+      user.nickname = userData.nickname ? userData.nickname : user.nickname;
+      user.age = userData.age ? userData.age : user.age;
+      user.about = userData.about ? userData.about : user.about;
+      user.password = userData.password;
+      user.confirmPassword = userData.confirmPassword;
+
+      try {
+        let response = await API.put("users/" + this.props.user.id, user, 
+        { headers: {
+            "Content-Type": "application/json"}});
+          
+        console.log(response.data);  
+
+        if (!response.data.error) {
+          this.props.onUserUpdate(response.data.user); 
+        }    
+    
+      } catch(err) {
+        console.log(err);
+      }
     }
 
     handleUpdateAvatar = async (event) => {
