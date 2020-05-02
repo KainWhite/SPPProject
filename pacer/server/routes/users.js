@@ -70,7 +70,29 @@ router.put('/:userId', function(req, res, next) {
       }
       delete user.passwordHash;
       delete user.salt;
-      res.json(user);
+      res.json({user: user});
+    })
+  })
+});
+
+// Update avatar
+router.put('/profile/updateAvatar', function(req, res, next) {
+  const id = req.body.id;
+
+  usersDAO.updateAvatar(id, req.body.imageUrl, (err) => {
+    if (err) {
+      res.json({error: "err"});
+      return;
+    }
+
+    usersDAO.getById(id, (err, user) => {
+      if (err || !user) {
+        res.json({error: "Something went wrong."});
+        return;
+      }
+      delete user.passwordHash;
+      delete user.salt;
+      res.json({user: user});
     })
   })
 });

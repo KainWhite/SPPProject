@@ -36,6 +36,11 @@ class App extends React.Component {
     this.setState({authorized: newState, currentUser: user});
   }
 
+  onUserUpdate = (newUser) => {
+    console.log(newUser);
+    this.setState({currentUser: newUser});
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -43,6 +48,7 @@ class App extends React.Component {
           this.state.authorized === AuthorizedEnum.unauthorized ?
             <AuthScreen authHandler={this.onAuthorized}/> :
             <MainApp currentUser={this.state.currentUser}
+                     onUserUpdate={this.onUserUpdate}
                      logoutClick={() => {
                         this.setState({
                           authorized: AuthorizedEnum.unauthorized,

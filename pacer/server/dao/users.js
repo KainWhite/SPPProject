@@ -98,7 +98,6 @@ class UsersDAO {
         })
     }
 
-    // same, returns id of updated user
     update(user, callback) {
         const sql = 'update users set `Email` = ?, `PasswordHash` = ?, `Nickname` = ?, `Age` = ?, ' +
                     '`About` = ?, `ImageUrl` = ?, `IsOnline` = ?, `Latitude` = ?, `Longitude` = ? where `ID_User` = ' + this.connection.escape(user.id);
@@ -147,6 +146,18 @@ class UsersDAO {
                 }
                 callback(undefined);
             })
+        });
+    }
+
+    updateAvatar(id, imageUrl, callback) {
+        const sql = 'update users set `ImageUrl` = ? where `ID_User` = ' + this.connection.escape(id);
+        
+        this.connection.query(sql, [imageUrl], function (err, result) {
+            if (err) { 
+                callback(err.sqlMessage);
+                return;
+            }
+            callback(undefined);
         });
     }
 }

@@ -17,6 +17,7 @@ var loginRouter = require('./routes/login');
 var app = express();
 
 app.use(function (req, res, next) {
+
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-auth');
@@ -71,7 +72,7 @@ var upload = multer({ //multer settings
 }).single('profilepic');
 
 app.post("/uploadImage", upload, (req, res) => {
-  res.json({fileUrl: "images/" + req.file.originalname});
+  res.json({fileUrl: "http://localhost:3000/images/" + req.file.originalname});
 });
 
 // view engine setup
