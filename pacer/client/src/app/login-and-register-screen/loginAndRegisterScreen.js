@@ -13,7 +13,7 @@ class AuthScreen extends React.Component {
     super(props);
 
     this.state = {  showRegister: false
-                  , };
+                  , errorMsg: ""};
   }
 
   handleLogin = async (loginData) => {
@@ -25,12 +25,14 @@ class AuthScreen extends React.Component {
       if (!response.data.error) {
         const token = response.data.token;
         const currentUser = response.data.currentUser;
-        
+        this.setState({errorMsg: ""});
         this.props.authHandler(AuthorizedEnum.authorized, currentUser, token);
+      } else {
+        this.setState({errorMsg: response.data.error});
       }
   
     } catch(err) {
-      console.log(err);
+      this.setState({errorMsg: "Sorry, something went wrong on server :("});
     }
   }
 
@@ -48,10 +50,14 @@ class AuthScreen extends React.Component {
       console.log(response)
       if (!response.data.error) {
         this.handleLogin({email: registerData.email, password: registerData.password})
+        this.setState({errorMsg: ""});
+      }
+      else {
+        this.setState({errorMsg: response.data.error});
       }
   
     } catch(err) {
-      console.log(err);
+      this.setState({errorMsg: "Sorry, something went wrong on server :("});
     }
   }
 
@@ -70,8 +76,8 @@ class AuthScreen extends React.Component {
       <div className="authAligner">
         <div className="authScreen">
           {this.state.showRegister ?
-              <RegisterScreen registerHandler={this.handleRegister} onSwitchToLogin={this.handleSwitchToLogin}/> 
-            : <LoginScreen loginHandler={this.handleLogin} onSwitchToRegister={this.handleSwitchToRegister}/> 
+              <RegisterScreen registerHandler={this.handleRegister} onSwitchToLogin={this.handleSwitchToLogin} errorMsg={this.state.errorMsg}/> 
+            : <LoginScreen loginHandler={this.handleLogin} onSwitchToRegister={this.handleSwitchToRegister} errorMsg={this.state.errorMsg}/> 
           }
         </div>
       </div>
@@ -124,6 +130,7 @@ class LoginScreen extends React.Component{
           <button className="AlignedItem" onClick={this.props.onSwitchToRegister}>
               Register
           </button>
+          <span className="ErrorSpan">{this.props.errorMsg}</span>
         </>
     );
   }
@@ -141,7 +148,8 @@ class RegisterScreen extends React.Component{
         <UserDataForm submitText="Register" onSubmit={this.props.registerHandler} userData={{}}/>
         <button className="AlignedItem" onClick={this.props.onSwitchToLogin}>
               Back to log in
-          </button>
+        </button>
+        <span className="ErrorSpan">{this.props.errorMsg}</span>
       </>
     );
   }
