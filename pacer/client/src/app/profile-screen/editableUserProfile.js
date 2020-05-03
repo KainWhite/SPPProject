@@ -32,6 +32,7 @@ class EditableUserProfile extends React.Component{
       user.confirmPassword = userData.confirmPassword;
 
       try {
+        console.log("Hello, i am going to send update user data :)");  
         let response = await API.put("users/" + this.props.user.id, user, 
         { headers: {
             "Content-Type": "application/json"}});
@@ -57,12 +58,13 @@ class EditableUserProfile extends React.Component{
         formData.append('profilepic', file);
 
         try {
-          let response = await API.post(`uploadImage`, formData, 
+          let response = await API.post(`upload-image`, formData, 
           { headers: {
               "Content-Type": "multipart/form-data"}});
     
           let user = this.props.user;
           user.imageUrl = response.data.fileUrl;
+          console.log("Avatar url: " + response.data.error)
 
           let avatarResponce = await API.put(`users/profile/updateAvatar`, {id: user.id, imageUrl: user.imageUrl}, 
           { headers: {
