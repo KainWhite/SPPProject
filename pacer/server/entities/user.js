@@ -7,7 +7,7 @@ class User {
         this.nickname = responseObject.Nickname;
         this.age = responseObject.Age;
         this.about = responseObject.About;
-        this.imageUrl = responseObject.ImageUrl;
+        this.imageUrl = responseObject.ImageUrl ? responseObject.ImageUrl : "http://localhost:3000/images/notFound.jpg";  
         this.isOnline = responseObject.IsOnline[0] === true;
         this.latitude = responseObject.Latitude;
         this.longitude = responseObject.Longitude;

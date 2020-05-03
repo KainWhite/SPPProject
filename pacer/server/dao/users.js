@@ -1,33 +1,10 @@
 const mysql = require('mysql')
-const crypto = require('crypto');
 const User = require('../entities/user');
+const utility = require('../utility/sha512');
+const sha512 = utility.sha512;
+const genRandomString = utility.genRandomString;
 
-/**
- * generates random string of characters i.e salt
- * @function
- * @param {number} length - Length of the random string.
- */
-const genRandomString = function(length){
-    return crypto.randomBytes(Math.ceil(length/2))
-            .toString('hex') /** convert to hexadecimal format */
-            .slice(0,length);   /** return required number of characters */
-};
-
-/**
- * hash password with sha512.
- * @function
- * @param {string} password - List of required fields.
- * @param {string} salt - Data to be validated.
- */
-const sha512 = function(password, salt){
-    const hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
-    hash.update(password);
-    const value = hash.digest('hex');
-    return {
-        salt:salt,
-        passwordHash:value
-    };
-};
+const config = require('../appConfig.json')
 
 function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,12 +19,12 @@ class UsersDAO {
             instance = this;
 
             this.connection = mysql.createConnection({
-                host: 'localhost',
-                user: 'root',
-                password: 'roottoor',
-                database: 'mydb'
+                host: config.DB.host,
+                user: config.DB.user,
+                password: config.DB.password,
+                database: config.DB.database
             });
-            this.connection.connect()
+            this.connection.connect();
         }
 
         return instance;
@@ -57,7 +34,7 @@ class UsersDAO {
         let sql = 'select * from users';
         this.connection.query(sql, function (err, rows, fields) {
             callback(err, err ? undefined : rows.map((obj) => new User(obj)));
-        })
+        });
     }
 
     getById(userId, callback) {
@@ -73,9 +50,9 @@ class UsersDAO {
         const sql = 'select * from users where Email = ' + this.connection.escape(userEmail);
 
         this.connection.query(sql, function (err, result) {
-            const user = err || (result.length === 0) ? undefined : new User(result[0]);
+            const user = (err || (result.length == 0)) ? undefined : new User(result[0]);
             callback(err, user);
-        })
+        });
     }
 
     // returns newely created object's id on success
@@ -121,7 +98,6 @@ class UsersDAO {
         })
     }
 
-    // same, returns id of updated user
     update(user, callback) {
         const sql = 'update users set `Email` = ?, `PasswordHash` = ?, `Nickname` = ?, `Age` = ?, ' +
                     '`About` = ?, `ImageUrl` = ?, `IsOnline` = ?, `Latitude` = ?, `Longitude` = ? where `ID_User` = ' + this.connection.escape(user.id);
@@ -170,6 +146,18 @@ class UsersDAO {
                 }
                 callback(undefined);
             })
+        });
+    }
+
+    updateAvatar(id, imageUrl, callback) {
+        const sql = 'update users set `ImageUrl` = ? where `ID_User` = ' + this.connection.escape(id);
+        
+        this.connection.query(sql, [imageUrl], function (err, result) {
+            if (err) { 
+                callback(err.sqlMessage);
+                return;
+            }
+            callback(undefined);
         });
     }
 }

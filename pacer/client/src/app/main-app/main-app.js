@@ -61,6 +61,7 @@ class MainApp extends React.Component {
         return;
       case ModalWindowEnum.profileSelf:
         return <EditableUserProfile user={this.props.currentUser}
+                                    onUserUpdate={this.props.onUserUpdate}
                                     onClose={() => this.setState({
                                       modalWindow: ModalWindowEnum.none,
                                     })}/>;
