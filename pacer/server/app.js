@@ -1,18 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const multer = require("multer");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const multer = require('multer');
 
-var usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 // uploading files
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./public/images");
+    cb(null, './public/images');
   },
   filename: function(req, file, cb) {
     console.log(file);
@@ -20,7 +20,7 @@ var storage = multer.diskStorage({
   }
 });
 
-var upload = multer({ //multer settings
+const upload = multer({ //multer settings
   storage: storage,
   fileFilter: function (req, file, callback) {
       var ext = path.extname(file.originalname);

@@ -1,5 +1,5 @@
-var mysql = require('mysql')
-var crypto = require('crypto');
+const mysql = require('mysql')
+const crypto = require('crypto');
 const User = require('../entities/user');
 
 /**
@@ -7,7 +7,7 @@ const User = require('../entities/user');
  * @function
  * @param {number} length - Length of the random string.
  */
-var genRandomString = function(length){
+const genRandomString = function(length){
     return crypto.randomBytes(Math.ceil(length/2))
             .toString('hex') /** convert to hexadecimal format */
             .slice(0,length);   /** return required number of characters */
@@ -19,10 +19,10 @@ var genRandomString = function(length){
  * @param {string} password - List of required fields.
  * @param {string} salt - Data to be validated.
  */
-var sha512 = function(password, salt){
-    var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
+const sha512 = function(password, salt){
+    const hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
     hash.update(password);
-    var value = hash.digest('hex');
+    const value = hash.digest('hex');
     return {
         salt:salt,
         passwordHash:value
@@ -30,7 +30,7 @@ var sha512 = function(password, salt){
 };
 
 function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 
@@ -46,7 +46,7 @@ class UsersDAO {
                 user: 'root',
                 password: 'roottoor',
                 database: 'mydb'
-            })
+            });
             this.connection.connect()
         }
 
@@ -62,27 +62,27 @@ class UsersDAO {
 
     getById(userId, callback) {
         const sql = 'select * from users where ID_User = ' + this.connection.escape(userId);
-        
+
         this.connection.query(sql, function (err, result) {
-            const user = err || (result.length == 0) ? undefined : new User(result[0]);
+            const user = err || (result.length === 0) ? undefined : new User(result[0]);
             callback(err, user);
         })
     }
 
     getByEmail(userEmail, callback) {
         const sql = 'select * from users where Email = ' + this.connection.escape(userEmail);
-        
+
         this.connection.query(sql, function (err, result) {
-            const user = err || (result.length == 0) ? undefined : new User(result[0]);
+            const user = err || (result.length === 0) ? undefined : new User(result[0]);
             callback(err, user);
         })
     }
 
     // returns newely created object's id on success
     create(userData, callback) {
-        const sql =   'insert into users (`Email`, `PasswordHash`, `Salt`, `Nickname`, `Age`, `About`, `Latitude`, `Longitude`) VALUES' 
+        const sql =   'insert into users (`Email`, `PasswordHash`, `Salt`, `Nickname`, `Age`, `About`, `Latitude`, `Longitude`) VALUES'
                     + '(?, ?, ?, ?, ?, ?, ?, ?)';
-        
+
         if (!validateEmail(userData.email)) {
             callback("Invalid email provided.", undefined);
             return;
@@ -102,8 +102,8 @@ class UsersDAO {
             callback("Invalid age.", undefined);
             return;
         }
-        
-        var passwordData = sha512(userData.password, genRandomString(256));
+
+        const passwordData = sha512(userData.password, genRandomString(256));
 
         this.connection.query(sql, [  userData.email
                                     , passwordData.passwordHash
@@ -113,7 +113,7 @@ class UsersDAO {
                                     , userData.about
                                     , userData.latitude
                                     , userData.longitude], function (err, result) {
-            if (err) { 
+            if (err) {
                 callback(err.sqlMessage, undefined);
                 return;
             }
@@ -125,10 +125,10 @@ class UsersDAO {
     update(user, callback) {
         const sql = 'update users set `Email` = ?, `PasswordHash` = ?, `Nickname` = ?, `Age` = ?, ' +
                     '`About` = ?, `ImageUrl` = ?, `IsOnline` = ?, `Latitude` = ?, `Longitude` = ? where `ID_User` = ' + this.connection.escape(user.id);
-        
+
         // Check user for existance
         this.getById(user.id, (_, oldUser) => {
-            if (oldUser == undefined) {
+            if (oldUser === undefined) {
                 callback("User doesn't exist!");
                 return;
             }
@@ -137,24 +137,24 @@ class UsersDAO {
                 callback("Invalid email provided.");
                 return;
             }
-    
+
             if (user.password.length < 8) {
                 callback("Password is too short (8 characters min).");
                 return;
             }
-    
+
             if (user.password !== user.confirmPassword) {
                 callback("Passwords do not match.");
                 return;
             }
-    
+
             if (user.age <= 0) {
                 callback("Invalid age.");
                 return;
             }
-            
-            var passwordData = sha512(user.password, oldUser.salt);
-    
+
+            const passwordData = sha512(user.password, oldUser.salt);
+
             this.connection.query(sql, [  user.email
                                         , passwordData.passwordHash
                                         , user.nickname
@@ -164,7 +164,7 @@ class UsersDAO {
                                         , user.isOnline
                                         , user.latitude
                                         , user.longitude], function (err, result) {
-                if (err) { 
+                if (err) {
                     callback(err.sqlMessage);
                     return;
                 }

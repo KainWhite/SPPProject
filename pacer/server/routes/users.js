@@ -1,8 +1,8 @@
 const UsersDAO = require('../dao/users');
 const usersDAO = new UsersDAO();
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const bodyparser = require('body-parser');
 router.use(bodyparser.json());
 
