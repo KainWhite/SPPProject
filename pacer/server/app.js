@@ -3,77 +3,15 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const multer = require('multer');
 
-const jwt = require('jwt-simple')
-const config = require('./app-config.json')
-
-const UsersDAO = require('./dao/users');
-const usersDAO = new UsersDAO();
+const authHandler = require('./middleware/auth-handler');
+const cors = require('./middleware/cors');
 
 const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
+const imageUploadRouter = require('./routes/upload-image');
 
 const app = express();
-
-app.use(function (req, res, next) {
-
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-auth');
-
-  next();
-});
-
-// auth middleware
-app.use(function (req, res, next) {
-  // URLs available for everyone
-  if (req.url == "/login" || req.url == '/users/create' || req.url.indexOf("/images") == 0) {
-    return next();
-  }
-
-  if (!req.headers['x-auth']) {return res.json({error: "Not authorised."})}
-    try {
-      var email = jwt.decode(req.headers['x-auth'], config.secretKey).email;
-    }
-    catch(err) {return res.json({error: "Invalid token."})}
-
-    usersDAO.getByEmail(email, (err, user) => {
-      if (err) {return res.json({error: "Invalid token."})}
-      req.user = user;
-      next();
-    })
-})
-
-// uploading files
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './public/images');
-  },
-  filename: function(req, file, cb) {
-    //console.log(file);
-    cb(null, file.originalname);
-  }
-});
-
-const upload = multer({ //multer settings
-  storage: storage,
-  fileFilter: function (req, file, callback) {
-      var ext = path.extname(file.originalname);
-      if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-          // error 500
-          return callback(new Error('Only images are allowed'))
-      }
-      callback(null, true)
-  },
-  limits:{
-      fileSize: 1024 * 1024
-  }
-}).single('profilepic');
-
-app.post("/uploadImage", upload, (req, res) => {
-  res.json({fileUrl: "http://localhost:3000/images/" + req.file.originalname});
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -85,6 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ORDER IS IMPORTANT!
+app.use(cors);
+app.use(authHandler);
+
+app.use('/upload-image', imageUploadRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 
