@@ -6,7 +6,7 @@ const logger = require('morgan');
 const multer = require('multer');
 
 const jwt = require('jwt-simple')
-const config = require('./appConfig.json')
+const config = require('./app-config.json')
 
 const UsersDAO = require('./dao/users');
 const usersDAO = new UsersDAO();
@@ -35,7 +35,7 @@ app.use(function (req, res, next) {
   if (!req.headers['x-auth']) {return res.json({error: "Not authorised."})}
     try {
       var email = jwt.decode(req.headers['x-auth'], config.secretKey).email;
-    } 
+    }
     catch(err) {return res.json({error: "Invalid token."})}
 
     usersDAO.getByEmail(email, (err, user) => {

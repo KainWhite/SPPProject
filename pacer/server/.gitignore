@@ -28,6 +28,3 @@ benchmarks/graphs
 
 #public images
 public/images
-
-#app creds
-appConfig.json

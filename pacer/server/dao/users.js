@@ -4,7 +4,7 @@ const utility = require('../utility/sha512');
 const sha512 = utility.sha512;
 const genRandomString = utility.genRandomString;
 
-const config = require('../appConfig.json')
+const config = require('../app-config.json')
 
 function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -151,9 +151,9 @@ class UsersDAO {
 
     updateAvatar(id, imageUrl, callback) {
         const sql = 'update users set `ImageUrl` = ? where `ID_User` = ' + this.connection.escape(id);
-        
+
         this.connection.query(sql, [imageUrl], function (err, result) {
-            if (err) { 
+            if (err) {
                 callback(err.sqlMessage);
                 return;
             }
