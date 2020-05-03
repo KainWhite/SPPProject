@@ -56,9 +56,10 @@ ENGINE = InnoDB;
 -- Table `pacer_database`.`user_settings`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pacer_database`.`user_settings` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `search_radius` INT NOT NULL DEFAULT 10,
-  PRIMARY KEY (`user_id`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `pacer_database`.`user` (`id`)
