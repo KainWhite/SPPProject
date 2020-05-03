@@ -113,6 +113,37 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Messages` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Add default values
+-- -----------------------------------------------------
+INSERT INTO `mydb`.`userroles` (`ID_UserRole`, `Name`) VALUES ('1', 'user');
+INSERT INTO `mydb`.`Users` (
+  `ID_User`,
+  `Email`,
+  `PasswordHash`,
+  `Salt`,
+  `Nickname`,
+  `Age`,
+  `About`,
+  `ImageUrl`,
+  `IsOnline`,
+  `Latitude`,
+  `Longitude`,
+  `ID_UserRole`)
+VALUES (
+  '1',
+  'a@a.com',
+  'c230ca90b201a526ab2b93d0f5f4aa6bd9c6c7c47c2529c035678bc7d1b1cb86a616bfbef440f7fce091d8d849805d95873327d82823fded7ab19695abe8e361',
+  '644f561b521af7bce3c99bbd56b2d04b168aa53e276685fe013c401ee9ba96257614e9e3e0c89c2e0db6cf8f08f87aee23cb240004dc29c2fde9dae17a3a4dcb92a56c57042867e535f793e68985192d91c09d63ba1e4ef25a982a85c1510cd054a54258767948c249f8b0965c315967f043f70645eba720703ad592ce77b8cf',
+  'User',
+  '54',
+  'I\'m too old for this',
+  'http://localhost:3001/images/notFound.jpg',
+  '0',
+  '53.91',
+  '27.56',
+  '1');
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
