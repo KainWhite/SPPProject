@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `pacer_database`.`message` (
   INDEX `message_ix_user_sender_id` (`user_sender_id` ASC) VISIBLE,
   CONSTRAINT `chat_id`
     FOREIGN KEY (`chat_id`)
-    REFERENCES `pacer_database`.`chat` (`chat_id`)
+    REFERENCES `pacer_database`.`chat` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `user_sender_id`
@@ -130,7 +130,7 @@ INSERT INTO `pacer_database`.`user` (
   `is_online`,
   `latitude`,
   `longitude`,
-  `id`)
+  `role_id`)
 VALUES (
   '1',
   'a@a.com',
