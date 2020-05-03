@@ -1,17 +1,17 @@
 class User {
-    constructor(responceObject) {
-        this.id = responceObject.ID_User;
-        this.email = responceObject.Email;
-        this.passwordHash = responceObject.PasswordHash;
-        this.salt = responceObject.Salt;
-        this.nickname = responceObject.Nickname;
-        this.age = responceObject.Age;
-        this.about = responceObject.About;
-        this.imageUrl = responceObject.ImageUrl ? responceObject.ImageUrl : "http://localhost:3000/images/notFound.jpg";    
-        this.isOnline = responceObject.IsOnline[0] == true;
-        this.latitude = responceObject.Latitude;
-        this.longitude = responceObject.Longitude;
-        this.idRole = responceObject.ID_UserRole;
+    constructor(responseObject) {
+        this.id = responseObject.ID_User;
+        this.email = responseObject.Email;
+        this.passwordHash = responseObject.PasswordHash;
+        this.salt = responseObject.Salt;
+        this.nickname = responseObject.Nickname;
+        this.age = responseObject.Age;
+        this.about = responseObject.About;
+        this.imageUrl = responseObject.ImageUrl ? responseObject.ImageUrl : "http://localhost:3000/images/notFound.jpg";  
+        this.isOnline = responseObject.IsOnline[0] === true;
+        this.latitude = responseObject.Latitude;
+        this.longitude = responseObject.Longitude;
+        this.idRole = responseObject.ID_UserRole;
     }
 }
 

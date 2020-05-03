@@ -1,20 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const multer = require("multer");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const multer = require('multer');
 
-var jwt = require('jwt-simple')
-var config = require('./appConfig.json')
+const jwt = require('jwt-simple')
+const config = require('./appConfig.json')
 
 const UsersDAO = require('./dao/users');
 const usersDAO = new UsersDAO();
 
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
+const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 
-var app = express();
+const app = express();
 
 app.use(function (req, res, next) {
 
@@ -46,9 +46,9 @@ app.use(function (req, res, next) {
 })
 
 // uploading files
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./public/images");
+    cb(null, './public/images');
   },
   filename: function(req, file, cb) {
     //console.log(file);
@@ -56,7 +56,7 @@ var storage = multer.diskStorage({
   }
 });
 
-var upload = multer({ //multer settings
+const upload = multer({ //multer settings
   storage: storage,
   fileFilter: function (req, file, callback) {
       var ext = path.extname(file.originalname);
