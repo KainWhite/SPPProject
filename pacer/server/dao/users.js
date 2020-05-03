@@ -1,10 +1,9 @@
-const mysql = require('mysql')
+const mysql = require('mysql');
 const User = require('../entities/user');
 const utility = require('../utility/sha512');
 const sha512 = utility.sha512;
 const genRandomString = utility.genRandomString;
-
-const config = require('../app-config.json')
+const config = require('../app-config.json');
 
 function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -31,33 +30,36 @@ class UsersDAO {
     }
 
     getAll(callback) {
-        let sql = 'select * from users';
+        let sql = 'select * from user';
         this.connection.query(sql, function (err, rows, fields) {
             callback(err, err ? undefined : rows.map((obj) => new User(obj)));
         });
     }
 
     getById(userId, callback) {
-        const sql = 'select * from users where ID_User = ' + this.connection.escape(userId);
+        const sql = 'select * from user where id = '
+            + this.connection.escape(userId);
 
         this.connection.query(sql, function (err, result) {
-            const user = err || (result.length === 0) ? undefined : new User(result[0]);
+            const user = err || (result.length === 0)
+                ? undefined : new User(result[0]);
             callback(err, user);
         })
     }
 
     getByEmail(userEmail, callback) {
-        const sql = 'select * from users where Email = ' + this.connection.escape(userEmail);
+        const sql = 'select * from user where email = ' + this.connection.escape(userEmail);
 
         this.connection.query(sql, function (err, result) {
-            const user = (err || (result.length == 0)) ? undefined : new User(result[0]);
+            const user = (err || (result.length === 0))
+                ? undefined : new User(result[0]);
             callback(err, user);
         });
     }
 
     // returns newely created object's id on success
     create(userData, callback) {
-        const sql =   'insert into users (`Email`, `PasswordHash`, `Salt`, `Nickname`, `Age`, `About`, `Latitude`, `Longitude`) VALUES'
+        const sql =   'insert into user (`email`, `password_hash`, `salt`, `nickname`, `age`, `about`, `latitude`, `longitude`) VALUES'
                     + '(?, ?, ?, ?, ?, ?, ?, ?)';
 
         if (!validateEmail(userData.email)) {
@@ -99,8 +101,8 @@ class UsersDAO {
     }
 
     update(user, callback) {
-        const sql = 'update users set `Email` = ?, `PasswordHash` = ?, `Nickname` = ?, `Age` = ?, ' +
-                    '`About` = ?, `ImageUrl` = ?, `IsOnline` = ?, `Latitude` = ?, `Longitude` = ? where `ID_User` = ' + this.connection.escape(user.id);
+        const sql = 'update user set `email` = ?, `password_hash` = ?, `nickname` = ?, `age` = ?, ' +
+                    '`about` = ?, `image_url` = ?, `is_online` = ?, `latitude` = ?, `longitude` = ? where `id` = ' + this.connection.escape(user.id);
 
         // Check user for existance
         this.getById(user.id, (_, oldUser) => {
@@ -150,8 +152,7 @@ class UsersDAO {
     }
 
     updateAvatar(id, imageUrl, callback) {
-        const sql = 'update users set `ImageUrl` = ? where `ID_User` = ' + this.connection.escape(id);
-
+        const sql = 'update user set `image_url` = ? where `id` = ' + this.connection.escape(id);
         this.connection.query(sql, [imageUrl], function (err, result) {
             if (err) {
                 callback(err.sqlMessage);
