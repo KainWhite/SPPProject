@@ -59,9 +59,19 @@
     min-height: 100px;
   }
   
-  .RoundImage {
-    max-width: 50%;
+  .image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
     border-radius: 50%;
+  }
+
+  .img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
   }
   
   .AboutP {

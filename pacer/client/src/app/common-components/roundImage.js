@@ -5,17 +5,21 @@ import './commonComponents.scss';
 class RoundImage extends React.Component {
   renderAsString() {
     return `
-      <img class="RoundImage ${this.props.className}"
-           src="${this.props.imgUrl}"
-           alt="${this.props.alt}"/>
+      <div class="image-cropper">
+        <img class="img ${this.props.className}"
+             src="${this.props.imgUrl}"
+             alt="${this.props.alt}"/>
+      </div>
     `;
   }
 
   render() {
     return (
-      <img className={"RoundImage " + this.props.className}
-           src={this.props.imgUrl}
-           alt={this.props.alt}/>
+      <div className="image-cropper">
+        <img className={"img " + this.props.className}
+             src={this.props.imgUrl}
+             alt={this.props.alt}/>
+      </div>
     );
   }
 }
