@@ -1,0 +1,9 @@
+{
+    "DB": {
+        "host": "localhost",
+        "user": "root",
+        "password": "roottoor",
+        "database": "mydb"
+    },
+    "secretKey": "MIICWwIBAAKBgQDOzBs6GxaxZZPYtYnj2obPEuWj9ou+P+XELpph7G2ifzty+Vpa02CLGV8kxyRDoR0v0W/cKh/+8J6ijsQoFtW++kDqF2INX2aW12GMj9zDhI7iObIBNEnHG+98+iLdHrp2QpngkiWYF1/6Mbyk6ovbblUsYY0JatozlhqWi1DtWwIDAQABAoGAXjVdsfrlO6uqzu7lAohrIaraMvf+cY1qfxU7/6BV0dFko9w07Wueb7//OCIAw06CnWYsL4CBUwMLQcMIWbsNZEDWdFT7AQFILybaEbVGsD8/8YSvXHgHitpVEXtnIJdMXvxOJn5QFbF4412wcNVg+jD1Q+r6NKwHFahKOgxIXgECQQD8Qm0dcvDj1JUw6um708KHqgwmIHFVsOInb/kfKxm+eInXr3Q9L8sCqjJL3mIeT2dzUGpPsXE3tUxTgZ9FGQbTAkEA0d0bMpmW48Hh95oYaER/bYbabUjXJVqVpGD1CNpwQFFfT11drsOxFJXGDtseQT7J+7WOe8k2vXhNMvVpxg96WQJAXKzWw4PvxfPan68eEbg5dnfdoMA4gv/KBi0X/ABso9JK6ed2r+f4EFGQyti3eWU4n1/CvuZ0rr+3e9JaPht0qwJACSyiUL74IrLKHxnkcUJ1U6NujxJ9HUvteMcoTx/FgnpMMVsCim5RonW9t86Kbw3ApLlWJkEwnG3S6iRiYF8y2QJAXyYPwh5FIGrK6F38SuaunxIg5uc00sWkZsU/Om9JswjyFD+Od1V+EXgHIz8CheMwQKTq9UI9kJTiOZG78GxuEQ=="
+}
