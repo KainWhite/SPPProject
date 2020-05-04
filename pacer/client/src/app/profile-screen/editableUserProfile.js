@@ -12,15 +12,15 @@ class EditableUserProfile extends React.Component{
 
       const user = this.props.user;
       this.state = {  imgFileName: ""
-                    , imageUrl: user.imageUrl  
+                    , imageUrl: user.imageUrl
                     , email: user.email
                     , nickname: user.nickname
                     , age: user.age
                     , about: user.about};
     }
-  
-    handleSubmit = async (userData) => {      
-      
+
+    handleSubmit = async (userData) => {
+
       if (!userData.password || !userData.confirmPassword) return;
 
       let user = this.props.user;
@@ -32,25 +32,24 @@ class EditableUserProfile extends React.Component{
       user.confirmPassword = userData.confirmPassword;
 
       try {
-        console.log("Hello, i am going to send update user data :)");  
-        let response = await API.put("users/" + this.props.user.id, user, 
+        let response = await API.put("users/" + this.props.user.id, user,
         { headers: {
             "Content-Type": "application/json"}});
-          
-        console.log(response.data);  
+
+        console.log(response.data);
 
         if (!response.data.error) {
-          this.props.onUserUpdate(response.data.user); 
-        }    
-    
+          this.props.onUserUpdate(response.data.user);
+        }
+
       } catch(err) {
         console.log(err);
       }
-    }
+    };
 
     handleUpdateAvatar = async (event) => {
       event.preventDefault();
-      
+
       const file = this.state.imgFileName;
 
       if (file != '') {
@@ -58,45 +57,43 @@ class EditableUserProfile extends React.Component{
         formData.append('profilepic', file);
 
         try {
-          let response = await API.post(`upload-image`, formData, 
+          let response = await API.post(`upload-image`, formData,
           { headers: {
               "Content-Type": "multipart/form-data"}});
-    
+
           let user = this.props.user;
           user.imageUrl = response.data.fileUrl;
-          console.log("Avatar url: " + response.data.error)
+          console.log("Avatar url: " + response.data.error);
 
-          let avatarResponce = await API.put(`users/profile/updateAvatar`, {id: user.id, imageUrl: user.imageUrl}, 
+          let avatarResponce = await API.put(`users/${user.id}/update-avatar`, {imageUrl: user.imageUrl},
           { headers: {
               "Content-Type": "application/json"}});
 
           if (!avatarResponce.data.error) {
-            this.props.onUserUpdate(avatarResponce.data.user); 
-            this.setState({imageUrl: user.imageUrl}) 
+            this.props.onUserUpdate(avatarResponce.data.user);
+            this.setState({imageUrl: user.imageUrl});
           }
-      
         } catch(err) {
           console.log(err);
         }
       }
-    }
-    
+    };
+
     handleInputChange = (event) => {
       const target = event.target;
-      
+
       if (event.target.files) {
         this.setState({
           imgFileName: target.files[0]
         });
-      }
-      else {
+      } else {
         this.setState({
           [target.name]: target.value
         });
       }
-  
+
       event.preventDefault();
-    }
+    };
 
     getUserData() {
       const userData = {  email: this.state.email
