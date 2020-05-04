@@ -1,4 +1,5 @@
 const UserDAO = require('../dao/user-dao');
+const PublicUser = require('../entities/user');
 const jwt = require('jwt-simple')
 const sha512 = require('../utility/sha512').sha512;
 const config = require('../app-config.json')
@@ -31,7 +32,7 @@ loginRouter.post ('/', async function(req, res, next) {
     delete user.passwordHash;
     delete user.salt;
 
-    res.json({token: token, currentUser: user})
+    res.json({token: token, currentUser: new PublicUser(user)})
   }
   else {
     res.json({error: "Invalid password."});
