@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {ModalWindow} from '../common-components/modalWindow';
 import {ChatUsers} from './chat-users';
 import {ChatHistory} from './chat-history';
 
@@ -27,14 +26,14 @@ class ChatScreen extends React.Component {
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
-    updateWindowDimensions = () =>{
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    updateWindowDimensions = () => {
+        this.setState({width: window.innerWidth, height: window.innerHeight});
         if (window.innerWidth < 841) {
-            this.setState( {
+            this.setState({
                 isUserOpen: !this.state.isHistoryOpen,
             });
         } else {
-            this.setState( {
+            this.setState({
                 isUserOpen: true,
                 isHistoryOpen: (this.props.userToChat != null || this.state.history.length !== 0),
             });
@@ -89,29 +88,88 @@ class ChatScreen extends React.Component {
 
     reloadHistory = (user) => {
         //getHistoryFromDB();
-        this.setState({history: [
+        this.setState({
+            history: [
                 {
                     text: 'second message',
                     author: 'right',
+                    id: 1,
                 },
-            ], isHistoryOpen: true});
+                {
+                    text: 'second message',
+                    author: 'left',
+                    id: 2,
+                },
+                {
+                    text: 'second message',
+                    author: 'right',
+                    id: 3,
+                },
+                {
+                    text: 'second message',
+                    author: 'left',
+                    id: 4,
+                },
+                {
+                    text: 'second message',
+                    author: 'right',
+                    id: 5,
+                },
+                {
+                    text: 'second message',
+                    author: 'left',
+                    id: 6,
+                },
+                {
+                    text: 'second message',
+                    author: 'right',
+                    id: 7,
+                },
+                {
+                    text: 'second message',
+                    author: 'left',
+                    id: 8,
+                },
+                {
+                    text: 'second message',
+                    author: 'right',
+                    id: 9,
+                },
+                {
+                    text: 'second message',
+                    author: 'left',
+                    id: 10,
+                },
+            ], isHistoryOpen: true, isUserOpen: this.state.width > 841
+        });
     };
 
     returnToUsers = () => {
-        this.setState( {
+        this.setState({
             isUserOpen: true,
             isHistoryOpen: false,
         })
     }
 
+    onMessageSend = (message) => {
+        let history = this.state.history;
+        history.push({
+                text: message,
+                author: 'right',
+                id: 11
+            }
+        );
+        this.setState({history: history});
+    }
+
     render() {
         return (
-                <div className="chat__screen">
-                    {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
-                    {this.state.isHistoryOpen &&
-                    <ChatHistory user={this.currentUser} history={this.state.history}
-                                 onBackClick={() => this.returnToUsers}/>}
-                </div>
+            <div className="chat__screen">
+                {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
+                {this.state.isHistoryOpen &&
+                <ChatHistory user={this.currentUser} history={this.state.history}
+                             onBackClick={() => this.returnToUsers} onMessageSend={this.onMessageSend}/>}
+            </div>
         );
     }
 }
