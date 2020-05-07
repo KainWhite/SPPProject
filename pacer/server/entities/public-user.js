@@ -14,3 +14,5 @@ class PublicUser {
       this.roleId = user.roleId;
     }
 }
+
+module.exports = PublicUser;
