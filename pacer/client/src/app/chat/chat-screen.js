@@ -4,6 +4,7 @@ import {ChatUsers} from './chat-users';
 import {ChatHistory} from './chat-history';
 
 import "./css/chat.scss"
+import API from "../api";
 
 class ChatScreen extends React.Component {
     constructor(props) {
@@ -151,7 +152,7 @@ class ChatScreen extends React.Component {
         })
     }
 
-    onMessageSend = (message) => {
+    onMessageSend = async (message) => {
         let history = this.state.history;
         history.push({
                 text: message,
@@ -161,6 +162,34 @@ class ChatScreen extends React.Component {
         );
         this.setState({history: history});
     }
+
+    handleSubmit = async (userData) => {
+
+        if (!userData.password || !userData.confirmPassword) return;
+
+        let user = this.props.user;
+        user.email = userData.email ? userData.email : user.email;
+        user.nickname = userData.nickname ? userData.nickname : user.nickname;
+        user.age = userData.age ? userData.age : user.age;
+        user.about = userData.about ? userData.about : user.about;
+        user.password = userData.password;
+        user.confirmPassword = userData.confirmPassword;
+
+        try {
+            let response = await API.put("chat/" + this.props.user.id, user,
+                { headers: {
+                        "Content-Type": "application/json"}});
+
+            console.log(response.data);
+
+            if (!response.data.error) {
+                this.props.onUserUpdate(response.data.user);
+            }
+
+        } catch(err) {
+            console.log(err);
+        }
+    };
 
     render() {
         return (

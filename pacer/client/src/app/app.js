@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      authorized: AuthorizedEnum.unauthorized,
+      authorized: AuthorizedEnum.authorized,
       currentUser: {
         id: 0,
         coordinates: null,
