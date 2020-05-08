@@ -1,5 +1,5 @@
 const UserDAO = require('../dao/user-dao');
-const PublicUser = require('../entities/user');
+const PublicUser = require('../entities/public-user');
 const express = require('express');
 const bodyparser = require('body-parser');
 

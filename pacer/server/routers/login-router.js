@@ -1,5 +1,5 @@
 const UserDAO = require('../dao/user-dao');
-const PublicUser = require('../entities/user');
+const PublicUser = require('../entities/public-user');
 const jwt = require('jwt-simple')
 const sha512 = require('../utility/sha512').sha512;
 const config = require('../app-config.json')
