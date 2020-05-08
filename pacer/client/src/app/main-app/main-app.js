@@ -91,7 +91,7 @@ class MainApp extends React.Component {
                   settingsClick={() => this.setState({
                     modalWindow: ModalWindowEnum.settings,
                   })}
-                  chatsClick={(userToChat) => this.showChat(userToChat)}
+                  chatsClick={() => this.showChat(null)}
                   mapClick={() => this.setState({
                     mainContainer: MainContainerEnum.map,
                   })}

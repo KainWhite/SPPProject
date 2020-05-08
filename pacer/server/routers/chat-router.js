@@ -1,3 +1,4 @@
+const UserDAO = require("../dao/user-dao");
 const ChatDAO = require('../dao/chat-dao');
 const MessageDAO = require('../dao/message-dao');
 const express = require('express');
@@ -7,12 +8,17 @@ const chatRouter = express.Router();
 
 chatRouter.use(bodyparser.json());
 
-chatRouter.get('/', async function(req, res, next) {
+chatRouter.get('/:userId', async function(req, res, next) {
     const daoResponse = await ChatDAO.getAllByOwner(req.params.userId);
     handleResponse(daoResponse, res, 'chats');
 });
 
-chatRouter.get('/:userId', async function(req, res, next) {
+chatRouter.get('/user/:userId', async function(req, res, next) {
+    const daoResponse = await UserDAO.getById(req.params.userId);
+    handleResponse(daoResponse, res, 'user');
+});
+
+chatRouter.get('/chat/id', async function(req, res, next) {
     let daoResponse = await ChatDAO.getByUsers(req.params.user1Id, req.params.user2Id);
     if (daoResponse.error) {
         res.json(daoResponse);

@@ -4,9 +4,6 @@ import {ModalWindow} from '../common-components/modalWindow';
 import {RoundImage} from '../common-components/roundImage';
 
 class UserProfile extends React.Component{
-  constructor(props) {
-    super(props);
-  }
 
   handleOpenChat = (event) => {
     this.props.chatClick(this.props.user);

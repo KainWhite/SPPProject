@@ -1,6 +1,6 @@
 import './map.scss';
 import React from 'react';
-import {YMaps, Map, Placemark} from 'react-yandex-maps';
+import {YMaps, Map} from 'react-yandex-maps';
 import {UserPlacemark} from './user-placemark/user-placemark';
 
 class YandexMap extends React.Component {

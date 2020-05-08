@@ -5,6 +5,8 @@
 .chat__screen {
   display: flex;
   overflow: hidden;
+  height: 100%;
+  background-color: #34302d;
 }
 
 .chat__users {

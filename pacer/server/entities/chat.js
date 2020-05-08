@@ -7,8 +7,8 @@ class Chat {
             return null;
         }
         this.id = responseObject.id;
-        this.user1Id = responseObject.user1Id;
-        this.user2Id = responseObject.user2Id;
+        this.user1Id = responseObject.user1_id;
+        this.user2Id = responseObject.user2_id;
     }
 
     static getCreateSql() {

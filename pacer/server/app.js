@@ -7,6 +7,7 @@ const authHandler = require('./middleware/auth-handler');
 const cors = require('./middleware/cors');
 
 const userRouter = require('./routers/user-router');
+const chatRouter = require('./routers/chat-router');
 const loginRouter = require('./routers/login-router');
 const uploadImageRouter = require('./routers/upload-image-router');
 const GenericDao = require('./dao/generic-dao');
@@ -28,5 +29,6 @@ app.use(authHandler);
 app.use('/login', loginRouter);
 app.use('/users', userRouter);
 app.use('/upload-image', uploadImageRouter);
+app.use('/chat', chatRouter);
 
 module.exports = app;

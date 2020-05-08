@@ -2,10 +2,6 @@ import React from 'react';
 import './topbar.scss';
 
 class Topbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <header className="main-header">
