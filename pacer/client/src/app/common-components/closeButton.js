@@ -6,7 +6,7 @@ class CloseButton extends React.Component {
   render() {
     return (
       <div className="CloseButtonWrapper">
-        <span className="CloseButton" onClick={this.props.onClose}>❌</span>
+        <span className="CloseButton" onClick={this.props.onClose} role="img">❌</span>
       </div>
     );
   }

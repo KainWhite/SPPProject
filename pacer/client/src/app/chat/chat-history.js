@@ -1,29 +1,35 @@
 import React from 'react';
 import {ChatMessage} from './chat-message';
-import {ChatProfile} from "./chat-profile";
-import {RoundImage} from "../common-components/roundImage";
 
 class ChatHistory extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            messageText: ''
+        };
+    }
+
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({  });
+        this.messagesEnd.scrollIntoView({});
     }
 
     componentDidMount() {
         this.scrollToBottom();
     }
 
-    loadHistory = () => {
-        let history = [];
-        //temp
-        let i = 0;
-        for (let msg of this.props.history) {
-            history.push(
-                <ChatMessage message={msg.text} by={msg.author} key={i++}/>
-            );
-        }
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
 
-        return history;
+
+    handleChange = (event) => {
+        this.setState({messageText: event.target.value});
+    }
+
+    handleSubmit = (event) => {
+        this.props.onMessageSend(this.state.messageText);
+        event.preventDefault();
     }
 
     render() {
@@ -36,10 +42,25 @@ class ChatHistory extends React.Component {
                         <span className='chat__history-status'>{this.props.user.status}</span>
                     </div>
                 </div>
-                {this.loadHistory()}
-                <div style={{ float:"left", clear: "both" }}
-                     ref={(el) => { this.messagesEnd = el; }}>
+                <div className="chat__history-content">
+                    {this.props.history.map(msg => {
+                        return (
+                            <ChatMessage message={msg.text} by={msg.author} key={msg.id}/>
+                        );
+                    })}
+                    <div style={{float: "left", clear: "both"}}
+                         ref={(el) => {
+                             this.messagesEnd = el;
+                         }}>
+                    </div>
                 </div>
+                <form className="chat__history-form" onSubmit={this.handleSubmit}>
+                    <input className="chat__history-input" type="text" placeholder="Enter your message..."
+                           maxLength="4096" value={this.state.messageText} onChange={this.handleChange}/>
+                    <button type="submit" className="chat__history-button">
+                        <i className="fas fa-chevron-circle-right"/>
+                    </button>
+                </form>
             </div>
         );
     }

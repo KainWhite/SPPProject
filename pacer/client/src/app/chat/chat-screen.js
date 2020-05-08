@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {ModalWindow} from '../common-components/modalWindow';
 import {ChatUsers} from './chat-users';
 import {ChatHistory} from './chat-history';
 
 import "./css/chat.scss"
+import API from "../api";
 
 class ChatScreen extends React.Component {
     constructor(props) {
@@ -14,11 +14,17 @@ class ChatScreen extends React.Component {
             height: 0,
             isUserOpen: true,
             isHistoryOpen: false,
+            chatId: 0,
+            chats: [],
+            users: [],
             history: [],
-        }
+            userToChat: null,
+        };
+        //this.getChats();
     }
 
     componentDidMount() {
+        this.getChats();
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
     }
@@ -27,91 +33,81 @@ class ChatScreen extends React.Component {
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
-    updateWindowDimensions = () =>{
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    getChats = async () => {
+        let response = await API.get("chat/" + this.props.currentUser.id, null, { headers: {
+                "Content-Type": "application/json"}});
+        if(response.data.error) {
+            return;
+        }
+        this.setState({chats: response.data.chats});
+        let users = [];
+        for(const chat of this.state.chats) {
+            let userId = chat.user1Id === this.props.currentUser.id ? chat.user2Id : chat.user1Id;
+            response = await API.get("chat/user/" + userId, null, { headers: {
+                    "Content-Type": "application/json"}});
+            users.push(response.data.user);
+        }
+        this.setState({users: users});
+    };
+
+    updateWindowDimensions = () => {
+        this.setState({width: window.innerWidth, height: window.innerHeight});
         if (window.innerWidth < 841) {
-            this.setState( {
+            this.setState({
                 isUserOpen: !this.state.isHistoryOpen,
             });
         } else {
-            this.setState( {
+            this.setState({
                 isUserOpen: true,
                 isHistoryOpen: (this.props.userToChat != null || this.state.history.length !== 0),
             });
         }
-    }
-
-
-    currentUser = {
-        nickname: 'Daniil Yaskevich',
-        imgUrl: 'http://localhost:3000/images/notFound.jpg',
-        status: 'online',
     };
 
-    users = [
-        {
-            nickname: 'Daniil Yaskevich',
-            imgUrl: 'http://localhost:3000/images/notFound.jpg',
-            lastMessage: 'Some text message',
-            msgTime: '1:10 PM',
-        },
-        {
-            nickname: 'Nikita Bitkin',
-            imgUrl: 'http://localhost:3000/images/notFound.jpg',
-            lastMessage: 'Some text message',
-            msgTime: '1:10 PM',
-        },
-        {
-            nickname: 'Anton Kimaev',
-            imgUrl: 'http://localhost:3000/images/notFound.jpg',
-            lastMessage: 'Some text message',
-            msgTime: '1:10 PM',
-        },
-        {
-            nickname: 'Anton Kimaev',
-            imgUrl: 'http://localhost:3000/images/notFound.jpg',
-            lastMessage: 'Some text message',
-            msgTime: '1:10 PM',
-        },
-        {
-            nickname: 'Anton Kimaev',
-            imgUrl: 'http://localhost:3000/images/notFound.jpg',
-            lastMessage: 'Some text message',
-            msgTime: '1:10 PM',
-        },
-        {
-            nickname: 'Anton Kimaev',
-            imgUrl: 'http://localhost:3000/images/notFound.jpg',
-            lastMessage: 'Some text message',
-            msgTime: '1:10 PM',
-        },
-    ];
+
 
     reloadHistory = (user) => {
+        this.setState({userToChat: user});
         //getHistoryFromDB();
-        this.setState({history: [
+        this.setState({
+            history: [
                 {
                     text: 'second message',
                     author: 'right',
+                    id: 1,
                 },
-            ], isHistoryOpen: true});
+            ], isHistoryOpen: true, isUserOpen: this.state.width > 841
+        });
     };
 
     returnToUsers = () => {
-        this.setState( {
+        this.setState({
             isUserOpen: true,
             isHistoryOpen: false,
         })
-    }
+    };
+
+    onMessageSend = async (message) => {
+        //const response  = API.post("/user" + 1, [this.props.currentUser, message, this.state.chatId], { headers: {
+                //"Content-Type": "application/json"}});
+        let history = this.state.history;
+        history.push({
+                text: message,
+                author: 'right',
+                id: 11
+            }
+        );
+        this.setState({history: history});
+    };
 
     render() {
         return (
-                <div className="chat__screen">
-                    {this.state.isUserOpen && <ChatUsers users={this.users} onUserClick={this.reloadHistory}/>}
-                    {this.state.isHistoryOpen &&
-                    <ChatHistory user={this.currentUser} history={this.state.history}
-                                 onBackClick={() => this.returnToUsers}/>}
-                </div>
+            <div className="chat__screen">
+                {this.state.isUserOpen && <ChatUsers users={this.state.users} onUserClick={this.reloadHistory}/>}
+                {this.state.isHistoryOpen &&
+                <ChatHistory user={this.state.userToChat} history={this.state.history}
+                             onBackClick={() => this.returnToUsers} onMessageSend={this.onMessageSend}/>}
+            </div>
         );
     }
 }

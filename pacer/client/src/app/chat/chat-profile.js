@@ -5,7 +5,7 @@ import {RoundImage} from '../common-components/roundImage';
 class ChatProfile extends React.Component {
     render() {
         return (
-            <div className='chat__users-profile' onClick={() => this.props.onClick(this)}>
+            <div className='chat__users-profile' onClick={() => this.props.onUserClick(this.props.user)}>
                 <div className='chat__users-img-container'>
                     <RoundImage className='chat__users-image' imgUrl={this.props.imgUrl} alt="User avatar"/>
                 </div>

@@ -52,7 +52,7 @@ class EditableUserProfile extends React.Component{
 
       const file = this.state.imgFileName;
 
-      if (file != '') {
+      if (file !== '') {
         let formData = new FormData();
         formData.append('profilepic', file);
 

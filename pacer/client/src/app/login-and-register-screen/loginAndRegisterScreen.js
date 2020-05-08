@@ -137,10 +137,6 @@ class LoginScreen extends React.Component{
 }
 
 class RegisterScreen extends React.Component{
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <>
