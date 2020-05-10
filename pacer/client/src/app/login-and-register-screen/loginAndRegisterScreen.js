@@ -18,7 +18,7 @@ class AuthScreen extends React.Component {
 
   handleLogin = async (loginData) => {
     try {
-      const response = await API.post(`login`, loginData, 
+      const response = await API.post(`login`, loginData,
       { headers: {
           "Content-Type": "application/json"}});
 
@@ -30,11 +30,11 @@ class AuthScreen extends React.Component {
       } else {
         this.setState({errorMsg: response.data.error});
       }
-  
+
     } catch(err) {
       this.setState({errorMsg: "Sorry, something went wrong on server :("});
     }
-  }
+  };
 
   handleRegister = async (registerData) => {
     console.log(registerData);
@@ -44,7 +44,7 @@ class AuthScreen extends React.Component {
     registerData.longitude = 1;
 
     try {
-      const response = await API.post(`users/create`, registerData, 
+      const response = await API.post(`users/create`, registerData,
       { headers: {
           "Content-Type": "application/json"}});
       console.log(response)
@@ -55,29 +55,29 @@ class AuthScreen extends React.Component {
       else {
         this.setState({errorMsg: response.data.error});
       }
-  
+
     } catch(err) {
       this.setState({errorMsg: "Sorry, something went wrong on server :("});
     }
-  }
+  };
 
   handleSwitchToRegister = () => {
     this.setState({  showRegister: true
                    , });
-  }
+  };
 
   handleSwitchToLogin = () => {
     this.setState({  showRegister: false
                    , });
-  }
+  };
 
   render() {
-    return (      
+    return (
       <div className="authAligner">
         <div className="authScreen">
           {this.state.showRegister ?
-              <RegisterScreen registerHandler={this.handleRegister} onSwitchToLogin={this.handleSwitchToLogin} errorMsg={this.state.errorMsg}/> 
-            : <LoginScreen loginHandler={this.handleLogin} onSwitchToRegister={this.handleSwitchToRegister} errorMsg={this.state.errorMsg}/> 
+              <RegisterScreen registerHandler={this.handleRegister} onSwitchToLogin={this.handleSwitchToLogin} errorMsg={this.state.errorMsg}/>
+            : <LoginScreen loginHandler={this.handleLogin} onSwitchToRegister={this.handleSwitchToRegister} errorMsg={this.state.errorMsg}/>
           }
         </div>
       </div>
@@ -97,22 +97,21 @@ class LoginScreen extends React.Component{
     this.props.loginHandler(loginData);
 
     event.preventDefault();
-  }
+  };
 
   handleInputChange = (event) => {
     const target = event.target;
-    
+
     this.setState({
       [target.name]: target.value
     });
 
     event.preventDefault();
-  }
+  };
 
   getLoginData() {
-    const loginData = {  email: this.state.email
-                       , password: this.state.password};
-    return loginData;
+    return {  email: this.state.email
+            , password: this.state.password};
   }
 
   render() {
@@ -120,7 +119,7 @@ class LoginScreen extends React.Component{
     const formTemplate = [  {title: "Email:", name:"email", type: "email"}
                           , {title: "Password:", name:"password", type: "password"}];
 
-    return (      
+    return (
         <>
           <h2 className="AlignedItem">Log in</h2>
           <form className="AlignedItem Aligner" onSubmit={this.handleSubmit}>

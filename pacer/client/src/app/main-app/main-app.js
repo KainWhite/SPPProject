@@ -14,7 +14,6 @@ import "./main-app.scss";
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.currentUser);
     this.state = {
       sidepaneVisible: false,
       sidepaneStyle: {
@@ -71,7 +70,7 @@ class MainApp extends React.Component {
                               modalWindow: ModalWindowEnum.none,
                             })}/>;
       case ModalWindowEnum.settings:
-        return <SettingsScreen data={this.props.currentUser.settings}
+        return <SettingsScreen currentUser={this.props.currentUser}
                                onClose={() => this.setState({
                                  modalWindow: ModalWindowEnum.none,
                                })}/>;
@@ -101,7 +100,6 @@ class MainApp extends React.Component {
             this.state.mainContainer === MainContainerEnum.map ?
               <YandexMap currentUser={this.props.currentUser}
                          profileClick={(userToShowProfile) => {
-                           console.log(userToShowProfile);
                            this.setState({
                              userToShowProfile: userToShowProfile,
                              modalWindow: ModalWindowEnum.profileUser,

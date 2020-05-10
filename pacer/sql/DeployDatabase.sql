@@ -137,7 +137,6 @@ INSERT INTO `pacer_database`.`user` (
   `longitude`,
   `role_id`)
 VALUES (
-  '1',
   'a@a.com',
   '7bc4b6722ad8ff9bda38491382c446a28fa081723c8b36f38e45fd38eb912c4503af1ced92159e930fd24a61d543d5ef1cd5dec4021883f5b336ec46c199f328',
   'b77f0140cab9be25cfcc2e9b2a1aa272e81eec50befe556092af39f6cd6bf8bbd001491cf87ebee2e72a4d862f8c621c2d97051d178b802c5938d9e6c310a89921cf5f134e5e9006b1305e363fae4acafd28570149a2ff3edad06fc860cbd1d8e1be8cae23707c8fb223096c5b38592913a4b6899acde4208b49cc561617bba9',
@@ -149,6 +148,10 @@ VALUES (
   '53.91',
   '27.56',
   '1');
+
+TRUNCATE TABLE `pacer_database`.`user_settings`;
+INSERT INTO `pacer_database`.`user_settings` (`user_id`, `search_radius`)
+VALUES (1, 10);
 
 SET FOREIGN_KEY_CHECKS = 1;
 

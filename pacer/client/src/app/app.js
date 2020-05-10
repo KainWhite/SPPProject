@@ -27,7 +27,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.error(this.state);
     return (
       <React.Fragment>
         {
