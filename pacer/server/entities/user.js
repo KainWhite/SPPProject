@@ -2,6 +2,13 @@ const utility = require('../utility/sha512');
 
 class User {
   static tableName = 'user';
+  static connectedTables = {
+    settings: {
+      name: 'user_settings',
+      attribute: 'id',
+      connectedAttribute: 'user_id',
+    },
+  };
   static className = 'User';
 
   constructor(responseObject) {

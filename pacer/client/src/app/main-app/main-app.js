@@ -24,8 +24,6 @@ class MainApp extends React.Component {
       },
       mainContainer: MainContainerEnum.map,
       modalWindow: ModalWindowEnum.none,
-      userToChat: null,
-      userToShowProfile: null,
     }
   }
 
@@ -72,7 +70,7 @@ class MainApp extends React.Component {
                               modalWindow: ModalWindowEnum.none,
                             })}/>;
       case ModalWindowEnum.settings:
-        return <SettingsScreen data={this.props.currentUser.settings}
+        return <SettingsScreen currentUser={this.props.currentUser}
                                onClose={() => this.setState({
                                  modalWindow: ModalWindowEnum.none,
                                })}/>;
@@ -102,7 +100,6 @@ class MainApp extends React.Component {
             this.state.mainContainer === MainContainerEnum.map ?
               <YandexMap currentUser={this.props.currentUser}
                          profileClick={(userToShowProfile) => {
-                           console.log(userToShowProfile)
                            this.setState({
                              userToShowProfile: userToShowProfile,
                              modalWindow: ModalWindowEnum.profileUser,

@@ -16,11 +16,14 @@ class UserProfile extends React.Component{
       <ModalWindow onClose={this.props.onClose}>
         <div className="AlignedItem">
           <div className="Aligner">
-            <RoundImage imgUrl={this.props.user.imgUrl} alt="User avatar"/>
+            <RoundImage imgUrl={this.props.user.imageUrl} alt="User avatar"/>
           </div>
         </div>
         <div className="AlignedItem">
-          <span className="Aligner">{this.props.user.nickname}, {this.props.user.age} y.o.</span>
+          <span className="Aligner">
+            {this.props.user.nickname}
+            {this.props.user.age? ', ' + this.props.user.age + 'y.o.' : ''}
+          </span>
         </div>
         <p className="AlignedItem AboutP">{this.props.user.about}</p>
         <button className="AlignedItem" onClick={this.handleOpenChat}>
