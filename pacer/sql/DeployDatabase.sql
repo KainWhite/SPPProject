@@ -47,10 +47,22 @@ CREATE TABLE IF NOT EXISTS `pacer_database`.`user` (
   CONSTRAINT `role_id`
     FOREIGN KEY (`role_id`)
     REFERENCES `pacer_database`.`role` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Trigger to create user_settings every time we create user
+-- -----------------------------------------------------
+DROP TRIGGER IF EXISTS `user_trg_create_settings`;
+DELIMITER $$
+CREATE TRIGGER `user_trg_create_settings` AFTER INSERT ON `user`
+FOR EACH ROW
+BEGIN
+  INSERT INTO `pacer_database`.`user_settings` (`user_id`)
+  VALUES (NEW.`id`);
+END $$
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- Table `pacer_database`.`user_settings`
@@ -63,8 +75,8 @@ CREATE TABLE IF NOT EXISTS `pacer_database`.`user_settings` (
   CONSTRAINT `user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `pacer_database`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -73,21 +85,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pacer_database`.`chat` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `user1_id` INT NOT NULL,
-  `user2_id` INT NOT NULL,
+  `user1_id` INT,
+  `user2_id` INT,
   PRIMARY KEY (`id`),
   INDEX `chat_ix_user1_id` (`user1_id` ASC) VISIBLE,
   INDEX `chat_ix_user2_id` (`user2_id` ASC) VISIBLE,
   CONSTRAINT `user1_id`
     FOREIGN KEY (`user1_id`)
     REFERENCES `pacer_database`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
   CONSTRAINT `user2_id`
     FOREIGN KEY (`user2_id`)
     REFERENCES `pacer_database`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -97,7 +109,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `pacer_database`.`message` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
-  `user_sender_id` INT NOT NULL,
+  `user_sender_id` INT,
   `text` VARCHAR(4096) NOT NULL,
   `datetime` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
@@ -106,13 +118,13 @@ CREATE TABLE IF NOT EXISTS `pacer_database`.`message` (
   CONSTRAINT `chat_id`
     FOREIGN KEY (`chat_id`)
     REFERENCES `pacer_database`.`chat` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
   CONSTRAINT `user_sender_id`
     FOREIGN KEY (`user_sender_id`)
     REFERENCES `pacer_database`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -150,8 +162,8 @@ VALUES (
   '1');
 
 TRUNCATE TABLE `pacer_database`.`user_settings`;
-INSERT INTO `pacer_database`.`user_settings` (`user_id`, `search_radius`)
-VALUES (1, 10);
+INSERT INTO `pacer_database`.`user_settings` (`user_id`)
+VALUES (1);
 
 SET FOREIGN_KEY_CHECKS = 1;
 
