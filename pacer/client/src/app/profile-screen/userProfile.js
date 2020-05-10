@@ -20,7 +20,10 @@ class UserProfile extends React.Component{
           </div>
         </div>
         <div className="AlignedItem">
-          <span className="Aligner">{this.props.user.nickname}, {this.props.user.age} y.o.</span>
+          <span className="Aligner">
+            {this.props.user.nickname}
+            {this.props.user.age? ', ' + this.props.user.age + 'y.o.' : ''}
+          </span>
         </div>
         <p className="AlignedItem AboutP">{this.props.user.about}</p>
         <button className="AlignedItem" onClick={this.handleOpenChat}>
