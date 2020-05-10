@@ -51,6 +51,14 @@ class MainApp extends React.Component {
       mainContainer: MainContainerEnum.chat,
       userToChat: userToChat,
     });
+    this.toggleSidepane();
+  }
+
+  showMap() {
+    this.setState({
+      mainContainer: MainContainerEnum.map,
+    });
+    this.toggleSidepane();
   }
 
   renderSwitchModalWindow(modalWindow) {
@@ -90,9 +98,7 @@ class MainApp extends React.Component {
                     modalWindow: ModalWindowEnum.settings,
                   })}
                   chatsClick={() => this.showChat(null)}
-                  mapClick={() => this.setState({
-                    mainContainer: MainContainerEnum.map,
-                  })}
+                  mapClick={() => this.showMap()}
                   logoutClick={this.props.logoutClick}/>
         <div className={"main"} style={this.state.mainStyle}>
           <Topbar toggleSidepane={() => this.toggleSidepane()}/>
