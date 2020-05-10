@@ -118,9 +118,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Add default values
 -- -----------------------------------------------------
-INSERT INTO `pacer_database`.`role` (`id`, `name`) VALUES ('1', 'user');
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE `pacer_database`.`role`;
+INSERT INTO `pacer_database`.`role` (`name`) VALUES ('user');
+
+TRUNCATE TABLE `pacer_database`.`user`;
 INSERT INTO `pacer_database`.`user` (
-  `id`,
   `email`,
   `password_hash`,
   `salt`,
@@ -145,6 +149,8 @@ VALUES (
   '53.91',
   '27.56',
   '1');
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
