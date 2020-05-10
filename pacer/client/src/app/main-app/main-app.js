@@ -14,6 +14,7 @@ import "./main-app.scss";
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.currentUser);
     this.state = {
       sidepaneVisible: false,
       sidepaneStyle: {
@@ -24,8 +25,6 @@ class MainApp extends React.Component {
       },
       mainContainer: MainContainerEnum.map,
       modalWindow: ModalWindowEnum.none,
-      userToChat: null,
-      userToShowProfile: null,
     }
   }
 
@@ -102,7 +101,7 @@ class MainApp extends React.Component {
             this.state.mainContainer === MainContainerEnum.map ?
               <YandexMap currentUser={this.props.currentUser}
                          profileClick={(userToShowProfile) => {
-                           console.log(userToShowProfile)
+                           console.log(userToShowProfile);
                            this.setState({
                              userToShowProfile: userToShowProfile,
                              modalWindow: ModalWindowEnum.profileUser,

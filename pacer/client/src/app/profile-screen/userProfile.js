@@ -16,7 +16,7 @@ class UserProfile extends React.Component{
       <ModalWindow onClose={this.props.onClose}>
         <div className="AlignedItem">
           <div className="Aligner">
-            <RoundImage imgUrl={this.props.user.imgUrl} alt="User avatar"/>
+            <RoundImage imgUrl={this.props.user.imageUrl} alt="User avatar"/>
           </div>
         </div>
         <div className="AlignedItem">

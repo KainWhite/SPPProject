@@ -10,7 +10,7 @@ function UserPlacemarkBalloon(props) {
       <div class="placemark-balloon__image">
         ${
           new RoundImage({
-            imgUrl: props.user.imgUrl,
+            imgUrl: props.user.imageUrl,
             alt: "Some cool photo"
           }).renderAsString()
         }

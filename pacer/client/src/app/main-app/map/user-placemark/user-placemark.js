@@ -13,7 +13,6 @@ function UserPlacemark(props) {
               Layout.superclass.build.call(this);
 
               this.element = $('.map__placemark-balloon', this.getParentElement());
-              console.log(this.element);
               this.element
                   .find('#placemark-balloon__profile-btn_user-id_' + props.user.id)
                   .on('click',
