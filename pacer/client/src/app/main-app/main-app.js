@@ -47,6 +47,7 @@ class MainApp extends React.Component {
   }
 
   showChat(userToChat) {
+    console.log(userToChat);
     this.setState({
       mainContainer: MainContainerEnum.chat,
       userToChat: userToChat,

@@ -63,9 +63,9 @@ class UserDAO extends GenericDao {
     const kmPerDeg = 111.225; // km
     const earthRad = 6371; // km
     const sql = `
-      SELECT latitude, longitude, nickname, age, about, image_url, distance
+      SELECT latitude, longitude, id, nickname, age, about, image_url, distance
       FROM (
-        SELECT latitude, longitude, nickname, age, about, image_url,
+        SELECT latitude, longitude, id, nickname, age, about, image_url,
           ${earthRad} * ATAN(
             SQRT(
               POWER(
