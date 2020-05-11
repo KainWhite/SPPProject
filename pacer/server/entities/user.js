@@ -23,7 +23,7 @@ class User {
     this.age = responseObject.age;
     this.about = responseObject.about;
     this.imageUrl = responseObject.image_url ? responseObject.image_url : "http://localhost:3000/images/notFound.jpg";
-    this.isOnline = responseObject.is_online == true;
+    this.isOnline = responseObject.is_online === true;
     this.latitude = responseObject.latitude;
     this.longitude = responseObject.longitude;
     this.roleId = responseObject.role_id;
@@ -80,7 +80,6 @@ class User {
               age = ?,
               about = ?,
               image_url = ?,
-              is_online = ?,
               latitude = ?,
               longitude = ?
              WHERE id = ?`;
@@ -96,10 +95,8 @@ class User {
       user.age,
       user.about,
       user.imageUrl,
-      user.isOnline,
       user.latitude,
       user.longitude,
-
       user.id
     ];
   }

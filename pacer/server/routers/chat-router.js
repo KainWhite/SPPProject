@@ -9,27 +9,37 @@ const chatRouter = express.Router();
 chatRouter.use(bodyparser.json());
 
 chatRouter.get('/:userId', async function(req, res, next) {
-    const daoResponse = await ChatDAO.getAllByOwner(req.params.userId);
+    let daoResponse = await ChatDAO.getAllByOwner(req.params.userId);
     handleResponse(daoResponse, res, 'chats');
 });
 
 chatRouter.get('/user/:userId', async function(req, res, next) {
-    const daoResponse = await UserDAO.getById(req.params.userId);
+    let daoResponse = await UserDAO.getById(req.params.userId);
     handleResponse(daoResponse, res, 'user');
 });
 
-chatRouter.get('/chat/id', async function(req, res, next) {
+chatRouter.get('/chatId/:user1Id/:user2Id', async function(req, res, next) {
     let daoResponse = await ChatDAO.getByUsers(req.params.user1Id, req.params.user2Id);
-    if (daoResponse.error) {
-        res.json(daoResponse);
-        return;
-    }
-    daoResponse = await MessageDAO.getByChat(daoResponse.chatId);
+    handleResponse(daoResponse, res, 'chat');
+});
+
+chatRouter.get('/chat/:chatId', async function(req, res, next) {
+    let daoResponse  = await MessageDAO.getByChat(req.params.chatId);
     handleResponse(daoResponse, res, 'history');
 });
 
-chatRouter.post('/:userId', async function(req, res, next) {
-    const daoResponse = await MessageDAO.create(req.body);
+chatRouter.get('/chatCreate/:user1Id/:user2Id', async function(req, res, next) {
+    let daoResponse = await ChatDAO.create([req.params.user1Id, req.params.user2Id]);
+    handleResponse(daoResponse, res, 'chat');
+});
+
+chatRouter.post('/message', async function(req, res, next) {
+    let daoResponse = await MessageDAO.create(req.body);
+    handleResponse(daoResponse, res, 'message');
+});
+
+chatRouter.get('/lastMessage/:chatId', async function(req, res, next) {
+    let daoResponse = await MessageDAO.getLastMessage(req.params.chatId);
     handleResponse(daoResponse, res, 'message');
 });
 
