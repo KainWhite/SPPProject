@@ -11,7 +11,7 @@ class ChatProfile extends React.Component {
                 </div>
                 <div className='chat__users-content'>
                     <h1 className="chat__users-nickname">{this.props.nickname}</h1>
-                    <span className='chat__users-last-message'>{this.props.lastMessage}</span>
+                    <span className='chat__users-last-message'>{this.props.lastMessage ? this.props.lastMessage.substr(0, 15) : ''}</span>
                 </div>
                 <div className='chat__users-metrics'>
                     <span className='chat__users-time'>{this.props.msgTime}</span>

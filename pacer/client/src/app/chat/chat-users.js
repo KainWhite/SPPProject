@@ -21,7 +21,7 @@ class ChatUsers extends React.Component {
             <div className="chat__users">
                 {this.props.users.map((user, idx) => {
                     return (
-                        <ChatProfile imgUrl={user.imgUrl} nickname={user.nickname}
+                        <ChatProfile imgUrl={user.imageUrl} nickname={user.nickname}
                                      key={user.id}
                                      lastMessage={this.props.messages[idx].text}
                                      msgTime={this.formatTime(this.props.messages[idx].dateTime)}

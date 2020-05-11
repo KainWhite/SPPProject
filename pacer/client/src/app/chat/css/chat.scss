@@ -80,6 +80,7 @@
 
 .chat__history {
   flex-basis: 55%;
+  max-width: 55%;
   display: flex;
   flex-flow: column;
   padding: 1rem 2rem;
@@ -126,6 +127,7 @@
   padding: 1rem;
   max-width: 75%;
   background-color: #34302d;
+  word-break: break-word;
 }
 
 .chat__history-msg-left {
