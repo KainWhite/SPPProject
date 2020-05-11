@@ -7,10 +7,10 @@ class Message {
             return null;
         }
         this.id = responseObject.id;
-        this.chatId = responseObject.chatId;
-        this.userSenderId = responseObject.userSenderId;
+        this.chatId = responseObject.chat_id;
+        this.userSenderId = responseObject.user_sender_id;
         this.text = responseObject.text;
-        this.dateTime = responseObject.dateTime
+        this.dateTime = responseObject.datetime
     }
 
     static getCreateSql() {

@@ -9,6 +9,13 @@ class MessageDao extends GenericDao {
         const rows = await this.connection.query(sql, [chatId]);
         return rows.length > 0 ? rows.map(row => new Message(row)) : {error: `Chat is clear`};
     }
+
+    static async getLastMessage(chatId) {
+        const sql = `SELECT * FROM ${this.entityClass.tableName} WHERE chat_id = ? ORDER BY datetime DESC LIMIT 1`;
+        const rows = await this.connection.query(sql, [chatId]);
+        return new Message(rows[0]);
+    }
+
 }
 
 module.exports = MessageDao;
