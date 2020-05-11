@@ -27,7 +27,7 @@ class ChatScreen extends React.Component {
         this.getChats();
         this.reloadHistory(this.props.userToChat, null);
 
-        setInterval(() => {
+        this.interval = setInterval(() => {
             this.getChats();
             if (this.state.userToChat) {
                 this.reloadHistory(this.state.userToChat, this.state.chatId);
@@ -40,6 +40,9 @@ class ChatScreen extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
+        if(this.interval) {
+            clearInterval(this.interval);
+        }
     }
 
     getChats = async () => {
