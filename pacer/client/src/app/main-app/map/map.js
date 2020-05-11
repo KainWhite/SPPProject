@@ -2,53 +2,75 @@ import './map.scss';
 import React from 'react';
 import {YMaps, Map} from 'react-yandex-maps';
 import {UserPlacemark} from './user-placemark/user-placemark';
+import API from '../../api';
 
 class YandexMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: this.props.currentUser,
-      usersNearby: [{
-        id: 1,
-        coordinates: [53.91, 27.56],
-        nickname: "Active User Nearby",
-        imgUrl: "http://localhost:3000/images/notFound.jpg",
-        isOnline: true,
-      },{
-        id: 2,
-        coordinates: [53.89, 27.54],
-        nickname: "Inactive User Nearby",
-        imgUrl: "http://localhost:3000/images/notFound.jpg",
-        isOnline: false,
-      }],
+      usersNearby: [],
     }
   }
 
-  updateMyCoordinates() {
+  updateCurrentUserCoordinates() {
     navigator.geolocation.getCurrentPosition((position) => {
-      this.setState(prevState => ({
-        currentUser: {
-          ...prevState.currentUser,
-          coordinates: [position.coords.latitude, position.coords.longitude],
-        }
-      }));
-    })
+      this.props.updateCurrentUser({
+        ...this.props.currentUser,
+        coordinates: [position.coords.latitude, position.coords.longitude],
+      });
+    });
+    API.put(
+        "users/" + this.props.currentUser.id,
+        this.props.currentUser,
+        {headers: { "Content-Type": "application/json"}});
     this.currentUserCoordinatesSet = true;
   }
 
+  getUsersNearby() {
+    API.get('users/nearby', {
+              params: {
+                latitude: this.props.currentUser.coordinates[0],
+                longitude: this.props.currentUser.coordinates[1],
+                searchRadius: this.props.userSettings.searchRadius,
+              },
+              headers: { "Content-Type": "application/json"}
+            })
+        .then(res => {
+          console.log(res);
+          if (!res.data.error) {
+            this.setState({
+              usersNearby: res.data.usersNearby,
+            });
+          } else {
+            console.error(res.data.error);
+          }
+        }, err => {
+          console.error(err);
+        });
+  }
+
   componentDidMount() {
-    this.updateMyCoordinates();
+    this.updateCurrentUserCoordinates();
+    this.getUsersNearby();
     this.getUsersNearbyTimerID = setInterval(() => {
-      /*todo call server for getting users with setstate here*/
+      this.getUsersNearby();
     }, 10000);
-    this.sendMyCoordsTimerID = setInterval(() => {
-      /*todo push my coords to server with setstate here*/
-    }, 1000);
+    this.updateCurrentUserCoordinatesTimerID = setInterval(() => {
+      this.updateCurrentUserCoordinates();
+    }, 10000);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.userSettings !== this.props.userSettings ||
+        (prevProps.userSettings && this.props.userSettings &&
+         prevProps.userSettings.searchRadius !== this.props.userSettings.searchRadius)) {
+      this.getUsersNearby();
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.getUsersNearbyTimerID);
-    clearInterval(this.sendMyCoordsTimerID);
+    clearInterval(this.updateCurrentUserCoordinatesTimerID);
   }
 
   render() {
@@ -62,7 +84,7 @@ class YandexMap extends React.Component {
                          balloonMaxWidth: 200,
                        }}
                        user={userNearby}
-                       currentUser={this.state.currentUser}
+                       currentUser={this.props.currentUser}
                        profileClick={this.props.profileClick}
                        chatClick={this.props.chatClick}/>);
     return (
@@ -72,22 +94,22 @@ class YandexMap extends React.Component {
                apikey: "f8a4a7fe-f442-4a37-af5a-a4dec57c863f"}}>
           {
             this.currentUserCoordinatesSet && (
-              <Map state={{center: this.state.currentUser.coordinates, zoom: 12}}
+              <Map defaultState={{center: this.props.currentUser.coordinates, zoom: 12}}
                    options={{autoFitToViewport: 'always'}}
                    height="100%"
                    width="100%"
                    modules={["geolocation", "geocode"]}>
-                <UserPlacemark geometry={this.state.currentUser.coordinates}
+                {usersNearbyPlacemarks}
+                <UserPlacemark geometry={this.props.currentUser.coordinates}
                                options={{
                                  iconColor: '#ff0000',
                                  hideIconOnBalloonOpen: false,
                                  balloonMaxWidth: 200,
                                }}
-                               user={this.state.currentUser}
-                               currentUser={this.state.currentUser}
+                               user={this.props.currentUser}
+                               currentUser={this.props.currentUser}
                                profileClick={this.props.profileClick}
                                chatClick={this.props.chatClick}/>
-                {usersNearbyPlacemarks}
               </Map>
             )
           }

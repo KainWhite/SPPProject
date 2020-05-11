@@ -1,4 +1,5 @@
 const UserDAO = require('../dao/user-dao');
+const User = require('../entities/user');
 const PublicUser = require('../dto/public-user');
 const express = require('express');
 const bodyparser = require('body-parser');
@@ -21,6 +22,19 @@ userRouter.get('/', async function(req, res, next) {
 });
 
 /**
+ * Get all users nearby
+ */
+userRouter.get('/nearby', async function(req, res, next) {
+  let daoResponse = await UserDAO.getNearby(req.query.latitude,
+                                            req.query.longitude,
+                                            req.query.searchRadius);
+  if (!daoResponse.error) {
+    daoResponse = daoResponse.map(user => new PublicUser(user));
+  }
+  handleDefaultDaoResponse(daoResponse, res, 'usersNearby');
+});
+
+/**
  * Get user by id
  */
 userRouter.get('/:userId', async function(req, res, next) {
@@ -35,7 +49,7 @@ userRouter.get('/:userId', async function(req, res, next) {
  * Create user
  */
 userRouter.post('/create', async function(req, res, next) {
-  let daoResponse = await UserDAO.create(req.body);
+  let daoResponse = await UserDAO.create(User.fromPublicUser(req.body));
   if (!daoResponse.error) {
     daoResponse = new PublicUser(daoResponse);
   }
@@ -46,8 +60,7 @@ userRouter.post('/create', async function(req, res, next) {
  * Update user
  */
 userRouter.put('/:userId', async function(req, res, next) {
-  req.body.id = req.params.userId;
-  let daoResponse = await UserDAO.update(req.body);
+  let daoResponse = await UserDAO.update(User.fromPublicUser(req.body));
   if (!daoResponse.error) {
     daoResponse = new PublicUser(daoResponse);
   }

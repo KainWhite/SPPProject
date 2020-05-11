@@ -39,7 +39,7 @@ class EditableUserProfile extends React.Component{
         console.log(response.data);
 
         if (!response.data.error) {
-          this.props.onUserUpdate(response.data.user);
+          this.props.updateCurrentUser(response.data.user);
         }
 
       } catch(err) {
@@ -70,7 +70,7 @@ class EditableUserProfile extends React.Component{
               "Content-Type": "application/json"}});
 
           if (!avatarResponce.data.error) {
-            this.props.onUserUpdate(avatarResponce.data.user);
+            this.props.updateCurrentUser(avatarResponce.data.user);
             this.setState({imageUrl: user.imageUrl});
           }
         } catch(err) {

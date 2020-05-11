@@ -41,10 +41,13 @@ class GenericDao {
       return {error: `Entity ${this.entityClass.className} with
                       id = ${entity.id} doesn't exist!`};
     }
-
+    const updateEntity = {
+      ...oldEntity,
+      ...entity,
+    };
     const sql = this.entityClass.getUpdateSql();
     await this.connection.query(sql,
-        this.entityClass.getUpdatePlaceholdersArray(entity, oldEntity));
+        this.entityClass.getUpdatePlaceholdersArray(updateEntity));
     return await this.getById(entity.id);
   }
 }

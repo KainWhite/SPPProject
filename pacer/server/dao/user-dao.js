@@ -1,4 +1,5 @@
 const GenericDao = require('./generic-dao');
+const UserSettingsDAO = require('./user-settings-dao');
 const User = require('../entities/user');
 
 function validateEmail(email) {
@@ -36,10 +37,10 @@ class UserDAO extends GenericDao {
     if (!validateEmail(user.email)) {
       return {error: "Invalid email provided."};
     }
-    if (user.password.length < 8) {
+    if (user.password && user.password.length < 8) {
       return {error: "Password is too short (8 characters min)."};
     }
-    if (user.password !== user.confirmPassword) {
+    if (user.password && user.password !== user.confirmPassword) {
       return {error: "Passwords do not match."};
     }
     if (user.age <= 0) {
@@ -55,6 +56,47 @@ class UserDAO extends GenericDao {
                    WHERE id = ${this.connection.escape(id)}`;
       await this.connection.query(sql, [imageUrl, id]);
       return await this.getById(id);
+  }
+
+  static async getNearby(latitude, longitude, searchRadius) {
+    console.log(searchRadius);
+    const kmPerDeg = 111.225; // km
+    const earthRad = 6371; // km
+    const sql = `
+      SELECT latitude, longitude, nickname, age, about, image_url, distance
+      FROM (
+        SELECT latitude, longitude, nickname, age, about, image_url,
+          ${earthRad} * ATAN(
+            SQRT(
+              POWER(
+                COS(RADIANS(latitude)) *
+                SIN(ABS(RADIANS(${longitude}) - RADIANS(longitude))),
+                2
+              ) +
+              POWER(
+                COS(RADIANS(${latitude})) * SIN(RADIANS(latitude)) -
+                SIN(RADIANS(${latitude})) * COS(RADIANS(latitude)) *
+                  COS(ABS(RADIANS(${longitude}) - RADIANS(longitude))),
+                2
+              )
+            ) / (
+              SIN(RADIANS(${latitude})) * SIN(RADIANS(latitude)) +
+              COS(RADIANS(${latitude})) * COS(RADIANS(latitude)) *
+                COS(ABS(RADIANS(${longitude}) - RADIANS(longitude)))
+            )
+          ) AS distance
+        FROM ${this.entityClass.tableName}
+        WHERE latitude
+          BETWEEN ${latitude} - (${searchRadius} / ${kmPerDeg})
+              AND ${latitude} + (${searchRadius} / ${kmPerDeg})
+          AND longitude
+          BETWEEN ${longitude} - (${searchRadius} / (${kmPerDeg} * COS(RADIANS(${latitude}))))
+              AND ${longitude} + (${searchRadius} / (${kmPerDeg} * COS(RADIANS(${latitude}))))
+      ) AS d
+      WHERE distance <= ${searchRadius}
+    `;
+    const rows = await this.connection.query(sql);
+    return rows.map(row => new this.entityClass(row));
   }
 
   static async updateStatus(userId, isOnline) {

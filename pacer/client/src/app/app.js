@@ -16,14 +16,23 @@ class App extends React.Component {
     };
   }
 
-  onAuthorized = (newState, user, token) => {
+  onAuthorized = (newState, user, userSettings, token) => {
     API.defaults.headers.common['x-auth'] = token;
-    this.setState({authorized: newState, currentUser: user});
+    this.setState({
+      authorized: newState,
+      currentUser: user,
+      userSettings: userSettings,
+    });
   };
 
-  onUserUpdate = (newUser) => {
+  updateCurrentUser = (newUser) => {
     console.log(newUser);
     this.setState({currentUser: newUser});
+  };
+
+  updateUserSettings = (newSettings) => {
+    console.log(newSettings);
+    this.setState({userSettings: newSettings});
   };
 
   render() {
@@ -33,7 +42,9 @@ class App extends React.Component {
           this.state.authorized === AuthorizedEnum.unauthorized ?
             <AuthScreen authHandler={this.onAuthorized}/> :
             <MainApp currentUser={this.state.currentUser}
-                     onUserUpdate={this.onUserUpdate}
+                     userSettings={this.state.userSettings}
+                     updateCurrentUser={this.updateCurrentUser}
+                     updateUserSettings={this.updateUserSettings}
                      logoutClick={() => {
                         this.setState({
                           authorized: AuthorizedEnum.unauthorized,

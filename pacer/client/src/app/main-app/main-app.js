@@ -67,7 +67,7 @@ class MainApp extends React.Component {
         return;
       case ModalWindowEnum.profileSelf:
         return <EditableUserProfile user={this.props.currentUser}
-                                    onUserUpdate={this.props.onUserUpdate}
+                                    updateCurrentUser={this.props.updateCurrentUser}
                                     onClose={() => this.setState({
                                       modalWindow: ModalWindowEnum.none,
                                     })}/>;
@@ -79,9 +79,11 @@ class MainApp extends React.Component {
                             })}/>;
       case ModalWindowEnum.settings:
         return <SettingsScreen currentUser={this.props.currentUser}
+                               userSettings={this.props.userSettings}
                                onClose={() => this.setState({
                                  modalWindow: ModalWindowEnum.none,
-                               })}/>;
+                               })}
+                               updateUserSettings={this.props.updateUserSettings}/>;
       default:
         console.error("Unsupported modal window " + modalWindow);
     }
@@ -105,6 +107,8 @@ class MainApp extends React.Component {
           {
             this.state.mainContainer === MainContainerEnum.map ?
               <YandexMap currentUser={this.props.currentUser}
+                         userSettings={this.props.userSettings}
+                         updateCurrentUser={this.props.updateCurrentUser}
                          profileClick={(userToShowProfile) => {
                            this.setState({
                              userToShowProfile: userToShowProfile,
