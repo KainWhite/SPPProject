@@ -49,7 +49,7 @@ userRouter.get('/:userId', async function(req, res, next) {
  * Create user
  */
 userRouter.post('/create', async function(req, res, next) {
-  let daoResponse = await UserDAO.create(User.fromPublicUser(req.body));
+  let daoResponse = await UserDAO.create(req.body);
   if (!daoResponse.error) {
     daoResponse = new PublicUser(daoResponse);
   }
