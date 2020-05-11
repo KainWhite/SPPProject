@@ -19,14 +19,14 @@ class AuthScreen extends React.Component {
   handleLogin = async (loginData) => {
     try {
       const response = await API.post(`login`, loginData,
-      { headers: {
-          "Content-Type": "application/json"}});
+        { headers: { "Content-Type": "application/json"}});
 
       if (!response.data.error) {
         const token = response.data.token;
         const currentUser = response.data.currentUser;
+        const userSettings = response.data.userSettings;
         this.setState({errorMsg: ""});
-        this.props.authHandler(AuthorizedEnum.authorized, currentUser, token);
+        this.props.authHandler(AuthorizedEnum.authorized, currentUser, userSettings, token);
       } else {
         this.setState({errorMsg: response.data.error});
       }

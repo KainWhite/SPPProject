@@ -13,7 +13,6 @@ userSettingsRouter.get('/:userSettingsId', async function(req, res, next) {
 
 userSettingsRouter.put('/:userSettingsId', async function(req, res, next) {
   req.body.id = req.params.userSettingsId;
-  console.log(req.body);
   let daoResponse = await UserSettingsDao.update(req.body);
   handleDefaultDaoResponse(daoResponse, res, 'userSettings');
 });

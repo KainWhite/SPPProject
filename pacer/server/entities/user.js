@@ -29,6 +29,21 @@ class User {
     this.roleId = responseObject.role_id;
   }
 
+  static fromPublicUser(publicUser) {
+    return {
+      id: publicUser.id,
+      email: publicUser.email,
+      nickname: publicUser.nickname,
+      age: publicUser.age,
+      about: publicUser.about,
+      imageUrl: publicUser.imageUrl,
+      isOnline: publicUser.isOnline,
+      latitude: publicUser.coordinates[0],
+      longitude: publicUser.coordinates[1],
+      roleId: publicUser.roleId,
+    };
+  }
+
   static getCreateSql() {
     return `INSERT INTO ${this.tableName} (
               email,
@@ -71,11 +86,12 @@ class User {
              WHERE id = ?`;
   }
 
-  static getUpdatePlaceholdersArray(user, oldUser) {
-    const passwordData = utility.sha512(user.password, oldUser.salt);
+  static getUpdatePlaceholdersArray(user) {
+    const passwordHash = user.password ?
+        utility.sha512(user.password, user.salt).passwordHash : user.passwordHash;
     return [
       user.email,
-      passwordData.passwordHash,
+      passwordHash,
       user.nickname,
       user.age,
       user.about,

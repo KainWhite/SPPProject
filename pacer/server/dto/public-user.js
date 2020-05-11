@@ -7,10 +7,8 @@ class PublicUser {
       this.about = user.about;
       this.imageUrl = user.imageUrl;
       this.isOnline = user.isOnline;
-      this.latitude = user.latitude;
-      this.longitude = user.longitude;
+      this.coordinates = [user.latitude, user.longitude];
       this.roleId = user.roleId;
-      this.settings = user.settings;
     }
 }
 

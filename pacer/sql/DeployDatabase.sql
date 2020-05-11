@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS `pacer_database`.`user` (
   `role_id` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   INDEX `user_ix_role_id` (`role_id` ASC) VISIBLE,
+  INDEX `user_ix_latitude` (`latitude` ASC) VISIBLE,
+  INDEX `user_ix_longitude` (`longitude` ASC) VISIBLE,
   UNIQUE INDEX `user_ux_email` (`email` ASC) VISIBLE,
   UNIQUE INDEX `user_ux_nickname` (`nickname` ASC) VISIBLE,
   CONSTRAINT `role_id`
@@ -135,6 +137,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE `pacer_database`.`role`;
 INSERT INTO `pacer_database`.`role` (`name`) VALUES ('user');
 
+TRUNCATE TABLE `pacer_database`.`user_settings`;
 TRUNCATE TABLE `pacer_database`.`user`;
 INSERT INTO `pacer_database`.`user` (
   `email`,
@@ -152,7 +155,7 @@ VALUES (
   'a@a.com',
   '7bc4b6722ad8ff9bda38491382c446a28fa081723c8b36f38e45fd38eb912c4503af1ced92159e930fd24a61d543d5ef1cd5dec4021883f5b336ec46c199f328',
   'b77f0140cab9be25cfcc2e9b2a1aa272e81eec50befe556092af39f6cd6bf8bbd001491cf87ebee2e72a4d862f8c621c2d97051d178b802c5938d9e6c310a89921cf5f134e5e9006b1305e363fae4acafd28570149a2ff3edad06fc860cbd1d8e1be8cae23707c8fb223096c5b38592913a4b6899acde4208b49cc561617bba9',
-  'User',
+  'UserA',
   '54',
   'I\'m too old for this',
   'http://localhost:3000/images/notFound.jpg',
@@ -160,10 +163,54 @@ VALUES (
   '53.91',
   '27.56',
   '1');
-
-TRUNCATE TABLE `pacer_database`.`user_settings`;
-INSERT INTO `pacer_database`.`user_settings` (`user_id`)
-VALUES (1);
+INSERT INTO `pacer_database`.`user` (
+  `email`,
+  `password_hash`,
+  `salt`,
+  `nickname`,
+  `age`,
+  `about`,
+  `image_url`,
+  `is_online`,
+  `latitude`,
+  `longitude`,
+  `role_id`)
+VALUES (
+  'b@b.com',
+  '7bc4b6722ad8ff9bda38491382c446a28fa081723c8b36f38e45fd38eb912c4503af1ced92159e930fd24a61d543d5ef1cd5dec4021883f5b336ec46c199f328',
+  'b77f0140cab9be25cfcc2e9b2a1aa272e81eec50befe556092af39f6cd6bf8bbd001491cf87ebee2e72a4d862f8c621c2d97051d178b802c5938d9e6c310a89921cf5f134e5e9006b1305e363fae4acafd28570149a2ff3edad06fc860cbd1d8e1be8cae23707c8fb223096c5b38592913a4b6899acde4208b49cc561617bba9',
+  'UserB',
+  '100',
+  'I\'m very old, let me rest',
+  'http://localhost:3000/images/notFound.jpg',
+  false,
+  '53.91',
+  '27.56',
+  '1');
+INSERT INTO `pacer_database`.`user` (
+  `email`,
+  `password_hash`,
+  `salt`,
+  `nickname`,
+  `age`,
+  `about`,
+  `image_url`,
+  `is_online`,
+  `latitude`,
+  `longitude`,
+  `role_id`)
+VALUES (
+  'c@c.com',
+  '7bc4b6722ad8ff9bda38491382c446a28fa081723c8b36f38e45fd38eb912c4503af1ced92159e930fd24a61d543d5ef1cd5dec4021883f5b336ec46c199f328',
+  'b77f0140cab9be25cfcc2e9b2a1aa272e81eec50befe556092af39f6cd6bf8bbd001491cf87ebee2e72a4d862f8c621c2d97051d178b802c5938d9e6c310a89921cf5f134e5e9006b1305e363fae4acafd28570149a2ff3edad06fc860cbd1d8e1be8cae23707c8fb223096c5b38592913a4b6899acde4208b49cc561617bba9',
+  'UserC',
+  '15',
+  'You\'re weak and in pain',
+  'http://localhost:3000/images/notFound.jpg',
+  false,
+  '53.89',
+  '27.54',
+  '1');
 
 SET FOREIGN_KEY_CHECKS = 1;
 
