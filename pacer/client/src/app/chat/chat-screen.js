@@ -100,14 +100,14 @@ class ChatScreen extends React.Component {
         if (user) {
             this.setState({userToChat: user});
             if (!chatId) {
-                let response = await API.get("chatId/" + this.props.currentUser.id + '/' + this.state.userToChat.id, null,
+                let response = await API.get("chatId/" + this.props.currentUser.id + '/' + user.id, null,
                     {
                         headers: {
                             "Content-Type": "application/json"
                         }
                     });
                 if (response.data.error) {
-                    response = await API.post("chatCreate/" + this.props.currentUser.id + '/' + this.state.userToChat.id, null,
+                    response = await API.post("chatCreate/" + this.props.currentUser.id + '/' + user.id, null,
                         {
                             headers: {
                                 "Content-Type": "application/json"

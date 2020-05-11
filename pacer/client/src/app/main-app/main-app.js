@@ -27,9 +27,19 @@ class MainApp extends React.Component {
     }
   }
 
-  toggleSidepane() {
+  toggleSidepane(close) {
     const sidepaneStyle = {};
     const mainStyle = {};
+    if(close) {
+      sidepaneStyle.width = '0';
+      mainStyle.marginLeft = '0';
+      this.setState({
+        sidepaneVisible: false,
+        sidepaneStyle: sidepaneStyle,
+        mainStyle: mainStyle,
+      });
+      return;
+    }
     if (this.state.sidepaneVisible) {
       sidepaneStyle.width = '0';
       mainStyle.marginLeft = '0';
@@ -52,14 +62,14 @@ class MainApp extends React.Component {
       mainContainer: MainContainerEnum.chat,
       userToChat: userToChat,
     });
-    this.toggleSidepane();
+    this.toggleSidepane(true);
   }
 
   showMap() {
     this.setState({
       mainContainer: MainContainerEnum.map,
     });
-    this.toggleSidepane();
+    this.toggleSidepane(true);
   }
 
   renderSwitchModalWindow(modalWindow) {
