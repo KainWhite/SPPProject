@@ -12,34 +12,19 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      authorized: AuthorizedEnum.authorized,
-      currentUser: {
-        id: 0,
-        coordinates: null,
-        nickname: "Current User",
-        imgUrl: "http://localhost:3000/images/notFound.jpg",
-        settings: {
-          searchRadius: 10,
-        }
-      }
+      authorized: AuthorizedEnum.unauthorized,
     };
-  }
-
-  // redundant (?)
-  getAuthorizedState() {
-    let authorized; // todo call backend here to get it
-    this.setState({authorized: authorized});
   }
 
   onAuthorized = (newState, user, token) => {
     API.defaults.headers.common['x-auth'] = token;
     this.setState({authorized: newState, currentUser: user});
-  }
+  };
 
   onUserUpdate = (newUser) => {
     console.log(newUser);
     this.setState({currentUser: newUser});
-  }
+  };
 
   render() {
     return (
@@ -54,7 +39,7 @@ class App extends React.Component {
                           authorized: AuthorizedEnum.unauthorized,
                           currentUser: undefined});
                         delete API.defaults.headers.common['x-auth'];
-                      }}/>
+                     }}/>
         }
       </React.Fragment>
     );

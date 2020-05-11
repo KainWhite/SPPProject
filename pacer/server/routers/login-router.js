@@ -1,8 +1,8 @@
 const UserDAO = require('../dao/user-dao');
-const PublicUser = require('../entities/public-user');
-const jwt = require('jwt-simple')
+const PublicUser = require('../dto/public-user');
+const jwt = require('jwt-simple');
 const sha512 = require('../utility/sha512').sha512;
-const config = require('../app-config.json')
+const config = require('../app-config.json');
 const express = require('express');
 const bodyparser = require('body-parser');
 
@@ -24,14 +24,10 @@ loginRouter.post ('/', async function(req, res, next) {
     res.json({error: "Such user doesn't exist."});
     return;
   }
-  const hash = sha512(password, user.salt)
+  const hash = sha512(password, user.salt);
   if (hash.passwordHash === user.passwordHash) {
     // success
-    const token = jwt.encode({email: email}, config.secretKey)
-
-    delete user.passwordHash;
-    delete user.salt;
-
+    const token = jwt.encode({email: email}, config.secretKey);
     res.json({token: token, currentUser: new PublicUser(user)})
   }
   else {

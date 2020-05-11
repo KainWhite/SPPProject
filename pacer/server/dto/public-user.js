@@ -1,5 +1,3 @@
-const User = require('./user');
-
 class PublicUser {
     constructor(user) {
       this.id = user.id;
@@ -12,6 +10,7 @@ class PublicUser {
       this.latitude = user.latitude;
       this.longitude = user.longitude;
       this.roleId = user.roleId;
+      this.settings = user.settings;
     }
 }
 
