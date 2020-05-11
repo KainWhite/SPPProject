@@ -9,6 +9,8 @@ class ChatScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props.currentUser);
+        console.log(props.userToChat);
         this.state = {
             width: 0,
             height: 0,

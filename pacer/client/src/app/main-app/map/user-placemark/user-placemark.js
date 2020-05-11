@@ -20,7 +20,9 @@ function UserPlacemark(props) {
                       (event) => this.profileClick(event.data.user));
               this.element
                   .find('#placemark-balloon__chat-btn_user-id_' + props.user.id)
-                  .on('click', {user: this.user}, $.proxy(this.chatClick, this));
+                  .on('click',
+                      {user: this.user},
+                      (event) => this.chatClick(event.data.user));
             },
 
             clear: function() {
