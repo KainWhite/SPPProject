@@ -4,14 +4,16 @@ import {ChatProfile} from "./chat-profile";
 class ChatUsers extends React.Component {
 
     formatTime = (time) => {
-        let date = new Date(time);
-        if(date.getDay() === new Date().getDay()) {
-            return date.getHours() + ':' + date.getMinutes();
-        }
-        if(date.getDay() === new Date(new Date().setDate(new Date().getDate()-1)).getDay()) {
-            return 'yesterday';
-        }
-        return 'days';
+        if(time) {
+            let date = new Date(time);
+            if (date.getDay() === new Date().getDay()) {
+                return date.getHours() + ':' + date.getMinutes();
+            }
+            if (date.getDay() === new Date(new Date().setDate(new Date().getDate() - 1)).getDay()) {
+                return 'yesterday';
+            }
+            return 'days';
+        } else return '';
     };
 
     render() {
