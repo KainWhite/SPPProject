@@ -1,12 +1,12 @@
 import React from 'react';
-
 import {ChatUsers} from './chat-users';
 import {ChatHistory} from './chat-history';
-
 import "./css/chat.scss"
 import API from "../api";
+import Moment from 'moment'
 
 class ChatScreen extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -14,17 +14,26 @@ class ChatScreen extends React.Component {
             height: 0,
             isUserOpen: true,
             isHistoryOpen: false,
-            chatId: 0,
             chats: [],
             users: [],
             history: [],
+            messages: [],
             userToChat: null,
+            chatId: 0,
         };
-        //this.getChats();
     }
 
     componentDidMount() {
         this.getChats();
+        this.reloadHistory(this.props.userToChat, null);
+
+        setInterval(() => {
+            this.getChats();
+            if (this.state.userToChat) {
+                this.reloadHistory(this.state.userToChat, this.state.chatId);
+            }
+        }, 1000);
+
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
     }
@@ -34,20 +43,38 @@ class ChatScreen extends React.Component {
     }
 
     getChats = async () => {
-        let response = await API.get("chat/" + this.props.currentUser.id, null, { headers: {
-                "Content-Type": "application/json"}});
-        if(response.data.error) {
+        let response = await API.get("chat/" + this.props.currentUser.id, null, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        if (response.data.error) {
+            this.setState({users: []});
             return;
         }
-        this.setState({chats: response.data.chats});
+        const chats = response.data.chats;
         let users = [];
-        for(const chat of this.state.chats) {
+        let messages = [];
+        for (const chat of chats) {
             let userId = chat.user1Id === this.props.currentUser.id ? chat.user2Id : chat.user1Id;
-            response = await API.get("chat/user/" + userId, null, { headers: {
-                    "Content-Type": "application/json"}});
-            users.push(response.data.user);
+            let responseUser = await API.get("chat/user/" + userId, null, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            let responseChat = await API.get("chat/lastMessage/" + chat.id, null, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            users.push(responseUser.data.user);
+            messages.push(responseChat.data.message);
         }
-        this.setState({users: users});
+        this.setState({
+            chats: chats,
+            users: users,
+            messages: messages
+        });
     };
 
     updateWindowDimensions = () => {
@@ -64,20 +91,44 @@ class ChatScreen extends React.Component {
         }
     };
 
+    reloadHistory = async (user, chatId) => {
+        if (user) {
+            this.setState({userToChat: user});
+            if (!chatId) {
+                let response = await API.get("chatId/" + this.props.currentUser.id + '/' + this.state.userToChat.id, null,
+                    {
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+                if (response.data.error) {
+                    response = await API.post("chatCreate/" + this.props.currentUser.id + '/' + this.state.userToChat.id, null,
+                        {
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        });
+                    this.setState({
+                        users: this.state.users.unshift(user),
+                        chats: this.state.chats.unshift(response.data.chat),
+                    });
+                }
+                chatId = response.data.chat.id;
+            }
 
-
-    reloadHistory = (user) => {
-        this.setState({userToChat: user});
-        //getHistoryFromDB();
-        this.setState({
-            history: [
-                {
-                    text: 'second message',
-                    author: 'right',
-                    id: 1,
-                },
-            ], isHistoryOpen: true, isUserOpen: this.state.width > 841
-        });
+            let response = await API.get("chat/chat/" + chatId, null, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            let history = response.data.history ? response.data.history : [];
+            history.forEach((message) => {
+                message.author = this.props.currentUser.id === message.userSenderId ? 'right' : 'left';
+            });
+            this.setState({
+                history: history, isHistoryOpen: true, isUserOpen: this.state.width > 841, chatId: chatId,
+            });
+        }
     };
 
     returnToUsers = () => {
@@ -88,22 +139,29 @@ class ChatScreen extends React.Component {
     };
 
     onMessageSend = async (message) => {
-        //const response  = API.post("/user" + 1, [this.props.currentUser, message, this.state.chatId], { headers: {
-                //"Content-Type": "application/json"}});
-        let history = this.state.history;
-        history.push({
+        if (message !== '') {
+            const stamp = Moment().format("YYYY-MM-DD HH:mm:ss");
+            let response = await API.post("chat/message", {
+                chatId: this.state.chatId,
+                userSenderId: this.props.currentUser.id,
                 text: message,
-                author: 'right',
-                id: 11
+                dateTime: stamp,
+            }, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            if (!response.error) {
+                this.reloadHistory(this.state.userToChat, this.state.chatId);
             }
-        );
-        this.setState({history: history});
+        }
     };
 
     render() {
         return (
             <div className="chat__screen">
-                {this.state.isUserOpen && <ChatUsers users={this.state.users} onUserClick={this.reloadHistory}/>}
+                {this.state.isUserOpen &&
+                <ChatUsers users={this.state.users} chats={this.state.chats} messages={this.state.messages} onUserClick={this.reloadHistory}/>}
                 {this.state.isHistoryOpen &&
                 <ChatHistory user={this.state.userToChat} history={this.state.history}
                              onBackClick={() => this.returnToUsers} onMessageSend={this.onMessageSend}/>}

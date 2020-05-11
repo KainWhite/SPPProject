@@ -39,7 +39,7 @@ class ChatHistory extends React.Component {
                     <i className="fas fa-arrow-left chat__history-arrow" onClick={this.props.onBackClick()}/>
                     <div className='chat__history-profile'>
                         <h1 className="chat__history-nickname">{this.props.user.nickname}</h1>
-                        <span className='chat__history-status'>{this.props.user.status}</span>
+                        <span className='chat__history-status'>{this.props.user.status ? "online" : "offline"}</span>
                     </div>
                 </div>
                 <div className="chat__history-content">

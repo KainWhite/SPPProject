@@ -1,7 +1,18 @@
 const jwt = require('jwt-simple');
-const config = require('../app-config.json')
+const config = require('../app-config.json');
 
 const UserDAO = require('../dao/user-dao');
+
+let userStamps = new Map();
+
+setInterval(() => {
+  userStamps.forEach(async (stamp, userId, map) => {
+    if(new Date().getTime() - stamp > 59000) {
+      await UserDAO.updateStatus(userId, false);
+      map.delete(userId);
+    }
+  });
+  }, 60000);
 
 async function handleAuth(req, res, next) {
   // URLs available for everyone
@@ -22,10 +33,14 @@ async function handleAuth(req, res, next) {
     return res.json({error: "Invalid token."});
   }
 
-  const user = await UserDAO.getByEmail(email);
+  let user = await UserDAO.getByEmail(email);
   if (!user) {
     return res.json({error: "Invalid token."});
   }
+
+  userStamps.set(user.id, new Date().getTime());
+  await UserDAO.updateStatus(user.id, true);
+
   req.user = user;
   next();
 }

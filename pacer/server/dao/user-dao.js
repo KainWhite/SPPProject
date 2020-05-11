@@ -56,6 +56,14 @@ class UserDAO extends GenericDao {
       await this.connection.query(sql, [imageUrl, id]);
       return await this.getById(id);
   }
+
+  static async updateStatus(userId, isOnline) {
+    const sql = `UPDATE ${this.entityClass.tableName} SET
+                     is_online = ${isOnline}
+                   WHERE id = ${userId}`;
+    await this.connection.query(sql, []);
+    return await this.getById(userId);
+  }
 }
 
 module.exports = UserDAO;

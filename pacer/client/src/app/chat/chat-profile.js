@@ -5,7 +5,7 @@ import {RoundImage} from '../common-components/roundImage';
 class ChatProfile extends React.Component {
     render() {
         return (
-            <div className='chat__users-profile' onClick={() => this.props.onUserClick(this.props.user)}>
+            <div className='chat__users-profile' onClick={() => this.props.onUserClick(this.props.user, this.props.chatId)}>
                 <div className='chat__users-img-container'>
                     <RoundImage className='chat__users-image' imgUrl={this.props.imgUrl} alt="User avatar"/>
                 </div>
@@ -15,7 +15,7 @@ class ChatProfile extends React.Component {
                 </div>
                 <div className='chat__users-metrics'>
                     <span className='chat__users-time'>{this.props.msgTime}</span>
-                    <span className='chat__users-received'>1</span>
+                    {/*<span className='chat__users-received'>1</span>*/}
                 </div>
             </div>
         );
