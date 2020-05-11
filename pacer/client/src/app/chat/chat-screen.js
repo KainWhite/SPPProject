@@ -9,8 +9,6 @@ class ChatScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.currentUser);
-        console.log(props.userToChat);
         this.state = {
             width: 0,
             height: 0,
@@ -26,9 +24,8 @@ class ChatScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getChats();
         this.reloadHistory(this.props.userToChat, null);
-
+        this.getChats();
         this.interval = setInterval(() => {
             this.getChats();
             if (this.state.userToChat) {
@@ -54,7 +51,12 @@ class ChatScreen extends React.Component {
             }
         });
         if (response.data.error) {
-            this.setState({users: []});
+            this.setState({
+                users: [],
+                chats: [],
+                messages: [],
+                isHistoryOpen: false,}
+                );
             return;
         }
         const chats = response.data.chats;
@@ -97,17 +99,17 @@ class ChatScreen extends React.Component {
     };
 
     reloadHistory = async (user, chatId) => {
-        if (user) {
+        if (user && user.id !== this.props.currentUser.id) {
             this.setState({userToChat: user});
             if (!chatId) {
-                let response = await API.get("chatId/" + this.props.currentUser.id + '/' + user.id, null,
+                let response = await API.get("chat/chatId/" + this.props.currentUser.id + '/' + user.id, null,
                     {
                         headers: {
                             "Content-Type": "application/json"
                         }
                     });
                 if (response.data.error) {
-                    response = await API.post("chatCreate/" + this.props.currentUser.id + '/' + user.id, null,
+                    response = await API.post("chat/chatCreate/" + this.props.currentUser.id + '/' + user.id, null,
                         {
                             headers: {
                                 "Content-Type": "application/json"
@@ -118,8 +120,12 @@ class ChatScreen extends React.Component {
                         chats: this.state.chats.unshift(response.data.chat),
                     });
                 }
+                this.getChats();
                 chatId = response.data.chat.id;
             }
+            this.setState( {
+                isUserOpen: this.state.width > 841, chatId: chatId,
+            });
 
             let response = await API.get("chat/chat/" + chatId, null, {
                 headers: {
@@ -131,7 +137,7 @@ class ChatScreen extends React.Component {
                 message.author = this.props.currentUser.id === message.userSenderId ? 'right' : 'left';
             });
             this.setState({
-                history: history, isHistoryOpen: true, isUserOpen: this.state.width > 841, chatId: chatId,
+                history: history, isHistoryOpen: true,
             });
         }
     };
@@ -165,11 +171,12 @@ class ChatScreen extends React.Component {
     render() {
         return (
             <div className="chat__screen">
-                {this.state.isUserOpen &&
+                {this.state.isUserOpen && this.state.users.length > 0 &&
                 <ChatUsers users={this.state.users} chats={this.state.chats} messages={this.state.messages} onUserClick={this.reloadHistory}/>}
-                {this.state.isHistoryOpen &&
+                {this.state.isHistoryOpen && this.state.userToChat &&
                 <ChatHistory user={this.state.userToChat} history={this.state.history}
                              onBackClick={() => this.returnToUsers} onMessageSend={this.onMessageSend}/>}
+                {this.state.users.length === 0 ? <h1 className="chat__info">No chats available</h1> : ''}
             </div>
         );
     }

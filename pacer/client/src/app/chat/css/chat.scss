@@ -171,6 +171,12 @@
   }
 }
 
+.chat__info {
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+}
+
 @media only screen and (max-width: 1300px) {
   .chat__users-profile {
     min-height: 100px;

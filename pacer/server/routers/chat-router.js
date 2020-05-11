@@ -28,8 +28,8 @@ chatRouter.get('/chat/:chatId', async function(req, res, next) {
     handleResponse(daoResponse, res, 'history');
 });
 
-chatRouter.get('/chatCreate/:user1Id/:user2Id', async function(req, res, next) {
-    let daoResponse = await ChatDAO.create([req.params.user1Id, req.params.user2Id]);
+chatRouter.post('/chatCreate/:user1Id/:user2Id', async function(req, res, next) {
+    let daoResponse = await ChatDAO.create({user1Id: req.params.user1Id, user2Id: req.params.user2Id});
     handleResponse(daoResponse, res, 'chat');
 });
 
@@ -42,11 +42,6 @@ chatRouter.get('/lastMessage/:chatId', async function(req, res, next) {
     let daoResponse = await MessageDAO.getLastMessage(req.params.chatId);
     handleResponse(daoResponse, res, 'message');
 });
-
-// chatRouter.put('/:userId', async function(req, res, next) {
-//     const daoResponse = await ChatDAO.update(req.body);
-//     handleResponse(daoResponse, res, 'message');
-// });
 
 function handleResponse(daoResponse, res, propertyName) {
     if (daoResponse.error) {
