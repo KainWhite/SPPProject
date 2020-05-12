@@ -24,7 +24,7 @@ class ChatScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.reloadHistory(this.props.userToChat, null);
+        this.reloadHistory(this.props.userToChat, null, true);
         this.getChats();
         this.interval = setInterval(() => {
             this.getChats();
@@ -98,7 +98,7 @@ class ChatScreen extends React.Component {
         }
     };
 
-    reloadHistory = async (user, chatId) => {
+    reloadHistory = async (user, chatId, updateState = false) => {
         if (user && user.id !== this.props.currentUser.id) {
             this.setState({userToChat: user});
             if (!chatId) {
@@ -124,7 +124,7 @@ class ChatScreen extends React.Component {
                 chatId = response.data.chat.id;
             }
             this.setState( {
-                isUserOpen: this.state.width > 841, chatId: chatId,
+                chatId: chatId,
             });
 
             let response = await API.get("chat/chat/" + chatId, null, {
@@ -137,8 +137,14 @@ class ChatScreen extends React.Component {
                 message.author = this.props.currentUser.id === message.userSenderId ? 'right' : 'left';
             });
             this.setState({
-                history: history, isHistoryOpen: true,
+                history: history,
             });
+            if(updateState) {
+                this.setState( {
+                    isUserOpen: this.state.width > 841,
+                    isHistoryOpen: true,
+                })
+            }
         }
     };
 
