@@ -18,10 +18,14 @@ class ChatHistory extends React.Component {
         this.scrollToBottom();
     }
 
-    componentDidUpdate() {
-        this.scrollToBottom();
+    componentDidUpdate(props, state, snapshot) {
+        if(this.props.user !== props.user) {
+            this.scrollToBottom();
+            this.setState({
+                messageText: '',
+            })
+        }
     }
-
 
     handleChange = (event) => {
         this.setState({messageText: event.target.value});
